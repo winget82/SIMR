@@ -33,17 +33,26 @@
 <!--then also have 2 dropdowns to the left of it - one for chapter, one for verse-->
 
         <ul>
-            <li><button onclick="myDropdown()" class="dropbtn">Book</button></li>
-            <li><button onclick="myDropdown()" class="dropbtn">Chapter</button></li>
-            <li><button onclick="myDropdown()" class="dropbtn">Verse</button></li>
+            <li><button onclick="myDropdownBook()" class="dropbtn" id="book">Book</button></li>
+                <div id="myDropdownBook" class="dropdown-content">
+                    <a onclick="button_clickBook()">Genesis</a>
+                    <a onclick="button_clickBook()">Exodus</a>
+                    <a onclick="button_clickBook()">Leviticus</a>
+                </div>
+            <li><button onclick="myDropdownChapter()" class="dropbtn" id="chapter">Chapter</button></li>
+                <div id="myDropdownChapter" class="dropdown-content">
+                    <a onclick="button_clickChapter()">1</a>
+                    <a onclick="button_clickChapter()">2</a>
+                    <a onclick="button_clickChapter()">3</a>
+                </div>
+            <li><button onclick="myDropdownVerse()" class="dropbtn" id="verse">Verse</button></li>
+                <div id="myDropdownVerse" class="dropdown-content">
+                    <a onclick="button_clickVerse()">:1</a>
+                    <a onclick="button_clickVerse()">:2</a>
+                    <a onclick="button_clickVerse()">:3</a>
+                </div>
         </ul>
     
-        <div id="myDropdown" class="dropdown-content">
-            <a>Genesis</a>
-            <a>Exodus</a>
-            <a>Leviticus</a>
-        </div>
-
         
 
     </div>
