@@ -24,44 +24,42 @@
             </div>
         </div>
 
-    <h2 id="SIMR" class="gradient">Scripture Indices and Ministry Resources</h2>
-    <!--<p>Click on the button to open the dropdown menu.</p>-->
+        <h2 id="SIMR" class="gradient">Scripture Indices and Ministry Resources</h2>
 
-    <div class="dropdown">
+        <div class="dropdown">
 
-<!--set this button up to change its text to be that of the book chosen-->
-<!--then also have 2 dropdowns to the left of it - one for chapter, one for verse-->
+            <ul>
+                <li><select class="dropSelection" id="BookSelect">
+                    <option onclick="selectedChoiceBook()" value="Book">Book</option>
+                    <option onclick="selectedChoiceBook()" value="Genesis">Genesis</option>
+                    <option onclick="selectedChoiceBook()" value="Exodus">Exodus</option>
+                    <option onclick="selectedChoiceBook()" value="Leviticus">Leviticus</option>
+                </select></li>
 
-        <ul>
-            <li><button onclick="myDropdownBook()" class="dropbtn" id="book">Book</button></li>
-                <div id="myDropdownBook" class="dropdown-content">
-                    <a onclick="button_clickBook()">Genesis</a>
-                    <a onclick="button_clickBook()">Exodus</a>
-                    <a onclick="button_clickBook()">Leviticus</a>
-                </div>
-            <li><button onclick="myDropdownChapter()" class="dropbtn" id="chapter">Chapter</button></li>
-                <div id="myDropdownChapter" class="dropdown-content">
-                    <a onclick="button_clickChapter()">1</a>
-                    <a onclick="button_clickChapter()">2</a>
-                    <a onclick="button_clickChapter()">3</a>
-                </div>
-            <li><button onclick="myDropdownVerse()" class="dropbtn" id="verse">Verse</button></li>
-                <div id="myDropdownVerse" class="dropdown-content">
-                    <a onclick="button_clickVerse()">:1</a>
-                    <a onclick="button_clickVerse()">:2</a>
-                    <a onclick="button_clickVerse()">:3</a>
-                </div>
-        </ul>
-    
-        
+                <li><select class="dropSelection" id="ChapterSelect">
+                    <option onclick="selectedChoiceChapter()" value="Chapter">Chapter</option>
+                    <option onclick="selectedChoiceChapter()" value="CH_1">1</option>
+                    <option onclick="selectedChoiceChapter()" value="CH_2">2</option>
+                    <option onclick="selectedChoiceChapter()" value="CH_3">3</option>
+                </select></li>
 
-    </div>
+                <li><select class="dropSelection"id="VerseSelect">
+                    <option onclick="selectedChoiceVerse()" value="Verse">Verse</option>
+                    <option onclick="selectedChoiceVerse()" value="V_1">:1</option>
+                    <option onclick="selectedChoiceVerse()" value="V_2">:2</option>
+                    <option onclick="selectedChoiceVerse()" value="V_3">:3</option>
+                </select></li>
+
+                <li><button onclick="searchChoice()" class="dropSelection" id="selectionButton">Search</button></li>
+                <!--BUTTON AT END OF THESE TO "SEARCH" AND THEN IT WILL onclick trigger a
+                a function to compile the returned value of the three drop selections into a string
+                that will later be used to find the verse reference in the json files-->
+            </ul>
+
+        </div>
 
     <script src="SIMR.js" type="text/javascript"></script>
+
     </body>
+
 </html>
-<!--get ideas from this video-->
-<!--https://www.youtube.com/watch?v=ZK1l2f1QkrY-->
-<!--and also this site-->
-<!--https://www.w3schools.com/howto-->
-<!--help.github.com-->
