@@ -5,7 +5,7 @@ function selectedChoiceBook() {
     var textReturnedBook;
     for (var i = 0; i < buttonsCount; i += 1) {
         buttons[i].onclick = function(e) {
-            alert(this.innerText);
+            //alert(this.innerText);
             textReturnedBook = this.innerText;
             return textReturnedBook;
             //return this.value;
@@ -19,7 +19,7 @@ function selectedChoiceChapter() {
     var textReturnedChapter;
     for (var i = 0; i < buttonsCount; i += 1) {
         buttons[i].onclick = function(e) {
-            alert(this.innerText);
+            //alert(this.innerText);
             textReturnedChapter = this.innerText;
             return textReturnedChapter;
             //return this.value;
@@ -33,17 +33,13 @@ function selectedChoiceVerse() {
     var textReturnedVerse;
     for (var i = 0; i < buttonsCount; i += 1) {
         buttons[i].onclick = function(e) {
-            alert(this.innerText);
+            //alert(this.innerText);
             textReturnedVerse = this.innerText;
             return textReturnedVerse;
             //return this.value;
         };
     }
 }
-
-var Book = selectedChoiceBook();
-var Chapter = selectedChoiceChapter();
-var Verse = selectedChoiceVerse();
 
 /*FUNCTION TO RETURN A STRING OF COMPILED RETURNS FROM SELECTION DROPDOWNS TO BE USED
 AS STRING TO SEARCH JSON FILES*/
@@ -61,6 +57,6 @@ function searchChoice() {
     var Verse = verse.options[i].text;
     
     var searchString = Book + " " + Chapter + Verse;
-    alert(searchString);
+    //alert(searchString);
     return searchString;
 }
