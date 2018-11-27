@@ -118,12 +118,20 @@
                     <option onclick="selectedChoiceVerse()" value="V_3">:3</option>
                 </select></li>
 
-                <li><button onclick="searchChoice()" class="dropSelection" id="selectionButton">Search</button></li>
+                <li><button onclick="searchClicked()" class="dropSelection" id="selectionButton">Search</button></li>
                 <!--BUTTON AT END OF THESE TO "SEARCH" AND THEN IT WILL onclick trigger a
                 a function to compile the returned value of the three drop selections into a string
                 that will later be used to find the verse reference in the json files-->
             </ul>
 
+        </div>
+
+        <div>
+            <p id="kjvText"></p>
+            <br>
+            <p id="bereanText"></p>
+            <br>
+            <p id="scriptureindexText"></p>
         </div>
 
     <script src="SIMR.js" type="text/javascript"></script>

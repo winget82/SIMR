@@ -60,3 +60,72 @@ function searchChoice() {
     //alert(searchString);
     return searchString;
 }
+
+/*JSON functions*/
+/*see https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON*/
+    
+function KJV(searchString) {
+    var kjv_json = 'https://raw.githubusercontent.com/winget82/SIMR/master/json_files/KJV_json.json';
+    var request_kjv = new XMLHttpRequest();
+    request_kjv.open('GET', kjv_json);
+    request_kjv.responseType = 'json';
+    request_kjv.send();
+    request_kjv.onload = function() {
+        var KJVjsonResponse = request_kjv.response;
+        populateKJVtext(KJVjsonResponse, searchString);
+    }
+}
+
+function populateKJVtext(KJVjsonResponse, searchString) {
+    //function to search through kjv json file and find match according to scripture searched for
+    //changes text (HTML) to show results of search on webpage
+    //found = next(i for i in scriptures_lst if verse in i)
+    //return found
+}
+
+function Berean(searchString) {
+    var berean_json = 'https://raw.githubusercontent.com/winget82/SIMR/master/json_files/berean_json.json';
+    var request_berean = new XMLHttpRequest();
+    request_berean.open('GET', berean_json);
+    request_berean.responseType = 'json';
+    request_berean.send();
+    request_berean.onload = function() {
+        var BereanjsonResponse = request_berean.response;
+        populateBereanText(BereanjsonResponse, searchString);
+    }
+}
+
+function populateBereanText(BereanjsonResponse, searchString) {
+    //function to search through berean json file and find match according to scripture searched for
+    //changes text (HTML) to show results of search on webpage
+    //if berean_inp in berean:
+        //bi = berean.index(berean_inp)  # This is based on verse seached for.
+        //# Sets bi to the index of verse searched for
+        //return bi
+}
+
+function Scriptindex(searchString) {
+    var scriptindex_json = 'https://raw.githubusercontent.com/winget82/SIMR/master/json_files/scriptindex_json.json';
+    var request_scriptindex = new XMLHttpRequest();
+    request_scriptindex.open('GET', scriptindex_json);
+    request_scriptindex.responseType = 'json';
+    request_scriptindex.send();
+    request_scriptindex.onload = function() {
+        var ScriptindexjsonResponse = request_scriptindex.response;
+        populateScriptindexText(ScriptindexjsonResponse, searchString);
+    }
+}
+
+function populateScriptindexText(ScriptindexjsonResponse, searchString) {
+    //function to search through scripture index json file and find match according to scripture searched for
+    //changes text (HTML) to show results of search on webpage
+    //found2 = next(i for i in twi_index if twi_inp in i)
+    //return found2
+}
+
+function searchClicked() {
+    var searchString = searchChoice();
+    KJV(searchString);
+    Berean(searchString);
+    Scriptindex(searchString);
+}
