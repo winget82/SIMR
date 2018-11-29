@@ -62,9 +62,9 @@ function searchChoice() {
 }
 
 /*JSON functions*/
-/*see https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON*/
-    
+
 function KJV(searchString) {
+    //var kjv_json = JSON.parse($.getJSON({'url': "https://raw.githubusercontent.com/winget82/SIMR/master/json_files/KJV_json.json", 'async': false}).responseText);
     var kjv_json = 'https://raw.githubusercontent.com/winget82/SIMR/master/json_files/KJV_json.json';
     var request_kjv = new XMLHttpRequest();
     request_kjv.open('GET', kjv_json);
@@ -77,6 +77,18 @@ function KJV(searchString) {
 }
 
 function populateKJVtext(KJVjsonResponse, searchString) {
+    for (i=0; i<KJVjsonResponse.length; i++) {
+        for (j=0; j<i.length; j++){
+            if (j[0] == searchString) {
+                kjvText = j[1];
+                alert(kjvText);
+                document.getElementById("kjvText").innerHTML = kjvText;
+                //return kjvText;
+            }
+        }
+    document.getElementById("kjvText").innerHTML = searchString;
+    //alert("function ran " + searchString);
+    }
     //function to search through kjv json file and find match according to scripture searched for
     //changes text (HTML) to show results of search on webpage
     //found = next(i for i in scriptures_lst if verse in i)
@@ -126,6 +138,10 @@ function populateScriptindexText(ScriptindexjsonResponse, searchString) {
 function searchClicked() {
     var searchString = searchChoice();
     KJV(searchString);
-    Berean(searchString);
-    Scriptindex(searchString);
+    //Berean(searchString);
+    //Scriptindex(searchString);
 }
+
+/*see https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON*/
+//https://codepen.io/KryptoniteDove/post/load-json-file-locally-using-pure-javascript
+//https://codeburst.io/javascript-what-the-heck-is-a-callback-aba4da2deced
