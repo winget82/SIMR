@@ -64,8 +64,7 @@ function searchChoice() {
 /*JSON functions*/
 
 function KJV(searchString) {
-    //var kjv_json = JSON.parse($.getJSON({'url': "https://raw.githubusercontent.com/winget82/SIMR/master/json_files/KJV_json.json", 'async': false}).responseText);
-    var kjv_json = 'https://raw.githubusercontent.com/winget82/SIMR/master/json_files/KJV_json.json';
+    var kjv_json = 'https://raw.githubusercontent.com/winget82/SIMR/master/json_files/KJV_json_d.json';
     var request_kjv = new XMLHttpRequest();
     request_kjv.open('GET', kjv_json);
     request_kjv.responseType = 'json';
@@ -73,26 +72,14 @@ function KJV(searchString) {
     request_kjv.onload = function() {
         var KJVjsonResponse = request_kjv.response;
         populateKJVtext(KJVjsonResponse, searchString);
-    }
 }
 
 function populateKJVtext(KJVjsonResponse, searchString) {
-    for (i=0; i<KJVjsonResponse.length; i++) {
-        for (j=0; j<i.length; j++){
-            if (j[0] == searchString) {
-                kjvText = j[1];
-                alert(kjvText);
-                document.getElementById("kjvText").innerHTML = kjvText;
-                //return kjvText;
-            }
-        }
-    document.getElementById("kjvText").innerHTML = searchString;
+    console.log(KJVjsonResponse)
+    var matchingResults = KJVjsonResponse[searchString];//https://stackoverflow.com/questions/922544/using-variable-keys-to-access-values-in-javascript-objects
+    document.getElementById("kjvText").innerHTML = searchString + ' - ' + matchingResults;
     //alert("function ran " + searchString);
     }
-    //function to search through kjv json file and find match according to scripture searched for
-    //changes text (HTML) to show results of search on webpage
-    //found = next(i for i in scriptures_lst if verse in i)
-    //return found
 }
 
 function Berean(searchString) {
