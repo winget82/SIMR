@@ -63,6 +63,19 @@ function searchChoice() {
     return searchString;
 }
 /*------------------------------------------------------------------------------------------------*/
+/*upper right search box*/
+/*------------------------------------------------------------------------------------------------*/
+function searchBox() {
+    var searchString = document.getElementById("sBoxForm").onsubmit = function() {
+        document.getElementById("sBox").value;
+        }        
+    alert("function ran");    
+    KJV(searchString);
+    strKJV(searchString);
+    //GETTING CROSS-ORIGIN REQUEST ERROR WITH THIS FUNCTION.  LOOK INTO HOW TO FIX.
+    //https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
+}
+/*------------------------------------------------------------------------------------------------*/
 /*JSON functions*/
 /*------------------------------------------------------------------------------------------------*/
 function KJV(searchString) {
