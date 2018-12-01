@@ -61,8 +61,9 @@ function searchChoice() {
     return searchString;
 }
 
+/*------------------------------------------------------------------------------------------------*/
 /*JSON functions*/
-
+/*------------------------------------------------------------------------------------------------*/
 function KJV(searchString) {
     var kjv_json = 'https://raw.githubusercontent.com/winget82/SIMR/master/json_files/KJV_json_d.json';
     var request_kjv = new XMLHttpRequest();
@@ -77,11 +78,30 @@ function KJV(searchString) {
 function populateKJVtext(KJVjsonResponse, searchString) {
     console.log(KJVjsonResponse)
     var matchingResults = KJVjsonResponse[searchString];//https://stackoverflow.com/questions/922544/using-variable-keys-to-access-values-in-javascript-objects
-    document.getElementById("kjvText").innerHTML = searchString + ' - ' + matchingResults;
+    document.getElementById("kjvText").innerHTML = "KJV: " + searchString + ' - ' + matchingResults;
     //alert("function ran " + searchString);
     }
 }
+/*------------------------------------------------------------------------------------------------*/
+function strKJV(searchString) {
+    var strKJV_json = 'https://raw.githubusercontent.com/winget82/SIMR/master/json_files/strKJVjson_d.json';
+    var request_strKJV = new XMLHttpRequest();
+    request_strKJV.open('GET', strKJV_json);
+    request_strKJV.responseType = 'json';
+    request_strKJV.send();
+    request_strKJV.onload = function() {
+        var strKJVjsonResponse = request_strKJV.response;
+        populateStrKJVtext(strKJVjsonResponse, searchString);
+}
 
+function populateStrKJVtext(KJVjsonResponse, searchString) {
+    console.log(strKJVjsonResponse)
+    var matchingResults = strKJVjsonResponse[searchString];//https://stackoverflow.com/questions/922544/using-variable-keys-to-access-values-in-javascript-objects
+    document.getElementById("strKJVText").innerHTML = "KJV with Strong's Numbers: " + searchString + ' - ' + matchingResults;
+    //alert("function ran " + searchString);
+    }
+}
+/*------------------------------------------------------------------------------------------------*/
 function Berean(searchString) {
     var berean_json = 'https://raw.githubusercontent.com/winget82/SIMR/master/json_files/berean_json.json';
     var request_berean = new XMLHttpRequest();
