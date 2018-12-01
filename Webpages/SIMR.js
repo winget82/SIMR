@@ -1,4 +1,5 @@
 /*FUNCTIONS TO RETURN THE VALUE OF SELECTION FROM SELECTIONS DROPDOWNS*/
+/*------------------------------------------------------------------------------------------------*/
 function selectedChoiceBook() {
     var buttons = document.getElementsByTagName("option");
     var buttonsCount = buttons.length;
@@ -40,9 +41,10 @@ function selectedChoiceVerse() {
         };
     }
 }
-
+/*------------------------------------------------------------------------------------------------*/
 /*FUNCTION TO RETURN A STRING OF COMPILED RETURNS FROM SELECTION DROPDOWNS TO BE USED
 AS STRING TO SEARCH JSON FILES*/
+/*------------------------------------------------------------------------------------------------*/
 function searchChoice() {
     var book = document.getElementById("BookSelect");
     var i = book.selectedIndex;
@@ -60,7 +62,6 @@ function searchChoice() {
     //alert(searchString);
     return searchString;
 }
-
 /*------------------------------------------------------------------------------------------------*/
 /*JSON functions*/
 /*------------------------------------------------------------------------------------------------*/
@@ -76,15 +77,15 @@ function KJV(searchString) {
 }
 
 function populateKJVtext(KJVjsonResponse, searchString) {
-    console.log(KJVjsonResponse)
+    //console.log(KJVjsonResponse)
     var matchingResults = KJVjsonResponse[searchString];//https://stackoverflow.com/questions/922544/using-variable-keys-to-access-values-in-javascript-objects
-    document.getElementById("kjvText").innerHTML = "KJV: " + searchString + ' - ' + matchingResults;
+    document.getElementById("kjvText").innerHTML = "<b>KJV:</b><br>" + "<i><b>" + searchString + "</b></i>" + ' - ' + matchingResults;
     //alert("function ran " + searchString);
     }
 }
 /*------------------------------------------------------------------------------------------------*/
 function strKJV(searchString) {
-    var strKJV_json = 'https://raw.githubusercontent.com/winget82/SIMR/master/json_files/strKJVjson_d.json';
+    var strKJV_json = 'https://raw.githubusercontent.com/winget82/SIMR/master/json_files/strKJVjson.json';
     var request_strKJV = new XMLHttpRequest();
     request_strKJV.open('GET', strKJV_json);
     request_strKJV.responseType = 'json';
@@ -94,10 +95,10 @@ function strKJV(searchString) {
         populateStrKJVtext(strKJVjsonResponse, searchString);
 }
 
-function populateStrKJVtext(KJVjsonResponse, searchString) {
-    console.log(strKJVjsonResponse)
+function populateStrKJVtext(strKJVjsonResponse, searchString) {
+    //console.log(strKJVjsonResponse)
     var matchingResults = strKJVjsonResponse[searchString];//https://stackoverflow.com/questions/922544/using-variable-keys-to-access-values-in-javascript-objects
-    document.getElementById("strKJVText").innerHTML = "KJV with Strong's Numbers: " + searchString + ' - ' + matchingResults;
+    document.getElementById("strKJVText").innerHTML = "<b>KJV with Strong's Numbers:</b><br>" + "<i><b>" + searchString + "</b></i>" + ' - ' + matchingResults;
     //alert("function ran " + searchString);
     }
 }
@@ -122,7 +123,7 @@ function populateBereanText(BereanjsonResponse, searchString) {
         //# Sets bi to the index of verse searched for
         //return bi
 }
-
+/*------------------------------------------------------------------------------------------------*/
 function Scriptindex(searchString) {
     var scriptindex_json = 'https://raw.githubusercontent.com/winget82/SIMR/master/json_files/scriptindex_json.json';
     var request_scriptindex = new XMLHttpRequest();
@@ -141,14 +142,11 @@ function populateScriptindexText(ScriptindexjsonResponse, searchString) {
     //found2 = next(i for i in twi_index if twi_inp in i)
     //return found2
 }
-
+/*------------------------------------------------------------------------------------------------*/
 function searchClicked() {
     var searchString = searchChoice();
     KJV(searchString);
+    strKJV(searchString);
     //Berean(searchString);
     //Scriptindex(searchString);
 }
-
-/*see https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON*/
-//https://codepen.io/KryptoniteDove/post/load-json-file-locally-using-pure-javascript
-//https://codeburst.io/javascript-what-the-heck-is-a-callback-aba4da2deced
