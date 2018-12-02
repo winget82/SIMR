@@ -149,30 +149,16 @@ function Scriptindex(searchString) {
     }
 }
 
-
-
-function register(){
-    var toPrint = "";
-    for(var i = 0; i < matchingResults.length; i++){
-        toPrint += "<br>"+ids[i];
-    }
-    return toPrint; // <-- to be printed to the div
-}
-document.getElementById('ids').innerHTML = register();
-
-
-
 function populateScriptindexText(ScriptindexjsonResponse, searchString) {
     //console.log(ScriptindexjsonResponse)
     var matchingResults = ScriptindexjsonResponse[searchString];//https://stackoverflow.com/questions/922544/using-variable-keys-to-access-values-in-javascript-objects  
     //need to format the following to display more aestheticly pleasing
 
-    var toPrint = "";
+    var toPrint = []
     for(var i = 0; i < matchingResults.length; i++){
         toPrint += matchingResults[i];
     }
-    //document.getElementById("scriptureindexText").innerHTML = "<b>TWI Scripture Index:</b><br>" + "<i><b>" + searchString + "</b></i>" + ' - ' + matchingResults;
-
+    //need to figure out how to get rid of the empty values in this list, it is not printing out correctly
     document.getElementById("scriptureindexText").innerHTML = "<b>TWI Scripture Index:</b><br>" + "<i><b>" + searchString + "</b></i>" + ' - ' + toPrint;
     //alert("function ran " + searchString);
 }
@@ -181,6 +167,7 @@ function searchClicked() {
     var searchString = searchChoice();
     KJV(searchString);
     strKJV(searchString);
+    //Septuagin(searchString);
     //Berean(searchString);
     Scriptindex(searchString);
 }
