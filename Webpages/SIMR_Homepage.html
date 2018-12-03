@@ -27,7 +27,12 @@
         <h2 id="SIMR" class="gradient">Scripture Indices and Ministry Resources</h2>
 
         <div class="dropdown">
-
+<!--check these website for number of chapters per each Book
+    https://www.biblebelievers.com/believers-org/kjv-stats.html
+    https://www.blueletterbible.org/study/misc/66books.cfm
+    make a python dictionary of {book:[list of dictionaries for each chapter, each chapter
+    being a key to a list of verses {chapter:[verse, verse, verse,etc]}]} then convert to json
+    to utilize in a script to generate the dropdown options-->
             <ul>
                 <li><select class="dropSelection" id="BookSelect">
                     <option onclick="selectedChoiceBook()" value="Book">Book</option>
