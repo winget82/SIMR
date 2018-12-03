@@ -153,13 +153,27 @@ function populateScriptindexText(ScriptindexjsonResponse, searchString) {
     //console.log(ScriptindexjsonResponse)
     var matchingResults = ScriptindexjsonResponse[searchString];//https://stackoverflow.com/questions/922544/using-variable-keys-to-access-values-in-javascript-objects  
     //need to format the following to display more aestheticly pleasing
-
-    var toPrint = []
-    for(var i = 0; i < matchingResults.length; i++){
-        toPrint += matchingResults[i];
+    //may need to go back and reformat original scripture index data to be more easily manipulated
+    //does not seem to be breaking cleanly
+    //COULD TRY TO DO A ONETIME SPLIT ON REGEX MATCHES TO FNC, RHST, ADV, ETC WITH RETAINING THE REGEX MATCHES IN THE LIST
+    var toPrintA = matchingResults.toString().split("\n");
+    //remove empties in list
+    var toPrintB = toPrintA.filter(Boolean);
+    //build a string
+    var toPrintC = "";
+    for(var i = 0; i < toPrintB.length; i++){
+        toPrintC += toPrintB[i];
     }
-    //need to figure out how to get rid of the empty values in this list, it is not printing out correctly
-    document.getElementById("scriptureindexText").innerHTML = "<b>TWI Scripture Index:</b><br>" + "<i><b>" + searchString + "</b></i>" + ' - ' + toPrint;
+    //split back into list
+    var toPrintD = toPrintC.split(",");
+    //remove empties
+    var toPrintE = toPrintD.filter(Boolean);
+    //build a string
+    var toPrintF = "";
+    for(var i = 0; i < toPrintE.length; i++){
+        toPrintF += toPrintE[i] + "<br>";
+    }
+    document.getElementById("scriptureindexText").innerHTML = "<b>TWI Scripture Index:</b><br>" + "<i><b>" + searchString + "</b></i>" + ':<br><br>' + toPrintF;
     //alert("function ran " + searchString);
 }
 /*------------------------------------------------------------------------------------------------*/
