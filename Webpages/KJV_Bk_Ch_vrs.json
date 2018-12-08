@@ -2,359 +2,359 @@
     { "GENESIS":
         { "CHAPTER":
             [
-                {"1":
+                {"TOTAL":
+                    {
+                    "TOTAL":"50"
+                    }
+                },
+                {"C1":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "1",
                         "VERSES": "31"
                     }
                 },
-                {"2":
+                {"C2":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "2",
                         "VERSES": "25"
                     }
                 },           
-                {"3":
+                {"C3":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "3",
                         "VERSES": "24"
                     }
                 },
-                {"4":
+                {"C4":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "4",
                         "VERSES": "26"
                     }
                 },
-                {"5":
+                {"C5":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "5",
                         "VERSES": "32"
                     }
                 },
-                {"6":
+                {"C6":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "6",
                         "VERSES": "22"
                     }
                 },
-                {"7":
+                {"C7":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "7",
                         "VERSES": "24"
                     }
                 },
-                {"8":
+                {"C8":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "8",
                         "VERSES": "22"
                     }
                 },
-                {"9":
+                {"C9":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "9",
                         "VERSES": "29"
                     }
                 },
-                {"10":
+                {"C10":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "10",
                         "VERSES": "32"
                     }
                 },
-                {"11":
+                {"C11":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "11",
                         "VERSES": "32"
                     }
                 },
-                {"12":
+                {"C12":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "12",
                         "VERSES": "20"
                     }
                 },
-                {"13":
+                {"C13":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "13",
                         "VERSES": "18"
                     }
                 },
-                {"14":
+                {"C14":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "14",
                         "VERSES": "24"
                     }
                 },
-                {"15":
+                {"C15":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "15",
                         "VERSES": "21"
                     }
                 },
-                {"16":
+                {"C16":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "16",
                         "VERSES": "16"
                     }
                 },
-                {"17":
+                {"C17":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "17",
                         "VERSES": "27"
                     }
                 },
-                {"18":
+                {"C18":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "18",
                         "VERSES": "33"
                     }
                 },
-                {"19":
+                {"C19":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "19",
                         "VERSES": "38"
                     }
                 },
-                {"20":
+                {"C20":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "20",
                         "VERSES": "18"
                     }
                 },
-                {"21":
+                {"C21":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "21",
                         "VERSES": "34"
                     }
                 },
-                {"22":
+                {"C22":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "22",
                         "VERSES": "24"
                     }
                 },
-                {"23":
+                {"C23":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "23",
                         "VERSES": "20"
                     }
                 },
-                {"24":
+                {"C24":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "24",
                         "VERSES": "67"
                     }
                 },
-                {"25":
+                {"C25":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "25",
                         "VERSES": "34"
                     }
                 },
-                {"26":
+                {"C26":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "26",
                         "VERSES": "35"
                     }
                 },
-                {"27":
+                {"C27":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "27",
                         "VERSES": "46"
                     }
                 },
-                {"28":
+                {"C28":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "28",
                         "VERSES": "22"
                     }
                 },
-                {"29":
+                {"C29":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "29",
                         "VERSES": "35"
                     }
                 },
-                {"30":
+                {"C30":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "30",
                         "VERSES": "43"
                     }
                 },
-                {"31":
+                {"C31":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "31",
                         "VERSES": "55"
                     }
                 },
-                {"32":
+                {"C32":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "32",
                         "VERSES": "32"
                     }
                 },
-                {"33":
+                {"C33":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "33",
                         "VERSES": "20"
                     }
                 },
-                {"34":
+                {"C34":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "34",
                         "VERSES": "31"
                     }
                 },
-                {"35":
+                {"C35":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "35",
                         "VERSES": "29"
                     }
                 },
-                {"36":
+                {"C36":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "36",
                         "VERSES": "43"
                     }
                 },
-                {"37":
+                {"C37":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "37",
                         "VERSES": "36"
                     }
                 },
-                {"38":
+                {"C38":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "38",
                         "VERSES": "30"
                     }
                 },
-                {"39":
+                {"C39":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "39",
                         "VERSES": "23"
                     }
                 },
-                {"40":
+                {"C40":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "40",
                         "VERSES": "23"
                     }
                 },
-                {"41":
+                {"C41":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "41",
                         "VERSES": "57"
                     }
                 },
-                {"42":
+                {"C42":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "42",
                         "VERSES": "38"
                     }
                 },
-                {"43":
+                {"C43":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "43",
                         "VERSES": "34"
                     }
                 },
-                {"44":
+                {"C44":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "44",
                         "VERSES": "34"
                     }
                 },
-                {"45":
+                {"C45":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "45",
                         "VERSES": "28"
                     }
                 },
-                {"46":
+                {"C46":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "46",
                         "VERSES": "34"
                     }
                 },
-                {"47":
+                {"C47":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "47",
                         "VERSES": "31"
                     }
                 },
-                {"48":
+                {"C48":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "48",
                         "VERSES": "22"
                     }
                 },
-                {"49":
+                {"C49":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "49",
                         "VERSES": "33"
                     }
                 },
-                {"50":
+                {"C50":
                     {
                         "BOOK": "Genesis",
                         "CHAPTER": "50",
                         "VERSES": "26"
-                    }
-                },
-                {"TOTAL":
-                    {
-                        "TOTAL":"50"
                     }
                 }
             ]
