@@ -1,0 +1,337 @@
+{
+    "Bible":
+        {"KJV":
+            [
+            {"Genesis": {
+                "TotalChapters" : 50,
+                "VersesEachCh" : [31,25,24,26,32,22,24,22,29,32,32,20,18,24,21,16,27,33,38,18,34,24,20,67,34,35,46,22,35,43,55,32,20,31,29,43,36,30,23,23,57,38,34,34,28,34,31,22,33,26]
+                  }
+            },
+            {"Exodus": {
+                "TotalChapters" : 40,
+                "VersesEachCh" : [22,25,22,31,23,30,25,32,35,29,10,51,22,31,27,36,16,27,25,26,36,31,33,18,40,37,21,43,46,38,18,35,23,35,35,38,29,31,43,38]
+                  }
+            },
+            {"Leviticus": {
+                "TotalChapters" : 27,
+                "VersesEachCh" : [17,16,17,35,19,30,38,36,24,20,47,8,59,57,33,34,16,30,37,27,24,33,44,23,55,46,34]
+                  }
+            },
+            {"Numbers": {
+                "TotalChapters" : 36,
+                "VersesEachCh" : [54,34,51,49,31,27,89,26,23,36,35,16,33,45,41,50,13,32,22,29,35,41,30,25,18,65,23,31,40,16,54,42,56,29,34,13]
+                  }
+            },
+            {"Deuteronomy": {
+                "TotalChapters" : 34,
+                "VersesEachCh" : [46,37,29,49,33,25,26,20,29,22,32,32,18,29,23,22,20,22,21,20,23,30,25,22,19,19,26,68,29,20,30,52,29,12]
+                  }
+            },
+            {"Joshua": {
+                "TotalChapters" : 24,
+                "VersesEachCh" : [18,24,17,24,15,27,26,35,27,43,23,24,33,15,63,10,18,28,51,9,45,34,16,33]
+                  }
+            },
+            {"Judges": {
+                "TotalChapters" : 21,
+                "VersesEachCh" : [36,23,31,24,31,40,25,35,57,18,40,15,25,20,20,31,13,31,30,48,25]
+                  }
+            },
+            {"Ruth": {
+                "TotalChapters" : 4,
+                "VersesEachCh" : []
+                  }
+            },
+            {"1 Samuel": {
+                "TotalChapters" : 31,
+                "VersesEachCh" : []
+                  }
+            },
+            {"2 Samuel": {
+                "TotalChapters" : 24,
+                "VersesEachCh" : []
+                  }
+            },
+            {"1 Kings": {
+                "TotalChapters" : 22,
+                "VersesEachCh" : []
+                  }
+            },
+            {"2 Kings": {
+                "TotalChapters" : 25,
+                "VersesEachCh" : []
+                  }
+            },
+            {"1 Chronicles": {
+                "TotalChapters" : 29,
+                "VersesEachCh" : []
+                  }
+            },
+            {"2 Chronicles": {
+                "TotalChapters" : 36,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Ezra": {
+                "TotalChapters" : 10,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Nehemiah": {
+                "TotalChapters" : 13,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Esther": {
+                "TotalChapters" : 10,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Job": {
+                "TotalChapters" : 42,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Psalms": {
+                "TotalChapters" : 150,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Proverbs": {
+                "TotalChapters" : 31,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Ecclesiastes": {
+                "TotalChapters" : 12,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Song of Solomon": {
+                "TotalChapters" : 8,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Isaiah": {
+                "TotalChapters" : 66,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Jeremiah": {
+                "TotalChapters" : 52,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Lamentations": {
+                "TotalChapters" : 5,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Ezekiel": {
+                "TotalChapters" : 48,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Daniel": {
+                "TotalChapters" : 12,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Hosea": {
+                "TotalChapters" : 14,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Joel": {
+                "TotalChapters" : 3,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Amos": {
+                "TotalChapters" : 9,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Obadiah": {
+                "TotalChapters" : 1,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Jonah": {
+                "TotalChapters" : 4,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Micah": {
+                "TotalChapters" : 7,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Nahum": {
+                "TotalChapters" : 3,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Habakkuk": {
+                "TotalChapters" : 3,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Zephaniah": {
+                "TotalChapters" : 3,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Haggai": {
+                "TotalChapters" : 2,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Zechariah": {
+                "TotalChapters" : 14,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Malachi": {
+                "TotalChapters" : 4,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Matthew": {
+                "TotalChapters" : 28,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Mark": {
+                "TotalChapters" : 16,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Luke": {
+                "TotalChapters" : 24,
+                "VersesEachCh" : []
+                  }
+            },
+            {"John": {
+                "TotalChapters" : 21,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Acts": {
+                "TotalChapters" : 28,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Romans": {
+                "TotalChapters" : 16,
+                "VersesEachCh" : []
+                  }
+            },
+            {"1 Corinthians": {
+                "TotalChapters" : 16,
+                "VersesEachCh" : []
+                  }
+            },
+            {"2 Corinthians": {
+                "TotalChapters" : 13,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Galatians": {
+                "TotalChapters" : 6,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Ephesians": {
+                "TotalChapters" : 6,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Philippians": {
+                "TotalChapters" : 4,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Colossians": {
+                "TotalChapters" : 4,
+                "VersesEachCh" : []
+                  }
+            },
+            {"1 Thessalonians": {
+                "TotalChapters" : 5,
+                "VersesEachCh" : []
+                  }
+            },
+            {"2 Thessalonians": {
+                "TotalChapters" : 3,
+                "VersesEachCh" : []
+                  }
+            },
+            {"1 Timothy": {
+                "TotalChapters" : 6,
+                "VersesEachCh" : []
+                  }
+            },
+            {"2 Timothy": {
+                "TotalChapters" : 4,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Titus": {
+                "TotalChapters" : 3,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Philemon": {
+                "TotalChapters" : 1,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Hebrews": {
+                "TotalChapters" : 13,
+                "VersesEachCh" : []
+                  }
+            },
+            {"James": {
+                "TotalChapters" : 5,
+                "VersesEachCh" : []
+                  }
+            },
+            {"1 Peter": {
+                "TotalChapters" : 5,
+                "VersesEachCh" : []
+                  }
+            },
+            {"2 Peter": {
+                "TotalChapters" : 3,
+                "VersesEachCh" : []
+                  }
+            },
+            {"1 John": {
+                "TotalChapters" : 5,
+                "VersesEachCh" : []
+                  }
+            },
+            {"2 John": {
+                "TotalChapters" : 1,
+                "VersesEachCh" : []
+                  }
+            },
+            {"3 John": {
+                "TotalChapters" : 1,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Jude": {
+                "TotalChapters" : 1,
+                "VersesEachCh" : []
+                  }
+            },
+            {"Revelation": {
+                "TotalChapters" : 22,
+                "VersesEachCh" : []
+                  }
+            }      
+            ]
+        }
+}
