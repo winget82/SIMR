@@ -1,4 +1,4 @@
-"""This is functions to import for SIMR GUI"""
+"""These are functions to import for SIMR GUI"""
 
 # ---------------------------------------------------------------------
 # IMPORTS - PACKAGES & MODULES UTILIZED
@@ -165,6 +165,16 @@ def berean():
 
 def scriptIndex():
     print("Getting Scripture Index...")
+
+
+#-----------------------------------------------------------------------
+# TOOLBAR FUNCTIONS
+#-----------------------------------------------------------------------
+
+
+def outText():
+    print("out Text...")
+
 
 #-----------------------------------------------------------------------
 #HANDLE MOUSE EVENTS (FUNCTIONS)

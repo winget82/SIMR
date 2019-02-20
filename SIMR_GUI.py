@@ -1,4 +1,12 @@
-from tkinter import *
+"""This program pulls in a verse of your choosing with several available
+public domain KJV references to help with studying or putting together a
+teaching."""
+
+#-----------------------------------------------------------------------
+# IMPORTS
+# ----------------------------------------------------------------------
+
+from tkinter import * #GET RID OF WILDCARD IMPORT EVENTUALLY
 import tkinter.messagebox
 import tempfile
 import SIMR as s
@@ -14,7 +22,6 @@ ICON = (b'\x00\x00\x01\x00\x01\x00\x10\x10\x00\x00\x01\x00\x08\x00h\x05\x00\x00'
 _, ICON_PATH = tempfile.mkstemp()
 with open(ICON_PATH, 'wb') as icon_file:
     icon_file.write(ICON)
-
 
 
 # ---------------------------------------------------------------------
@@ -86,7 +93,7 @@ with open(fpath + sept) as sept_file2:
 #-----------------------------------------------------------------------
 # WINDOW / APP
 #-----------------------------------------------------------------------
-myRoot = Tk()#THIS MAKES THE WINDOW THE MAIN ROOT WINDOW
+myRoot = Tk()#THE MAIN ROOT WINDOW
 myRoot.minsize(640,480)#set minimum size of window
 myRootHeight = myRoot.winfo_height()#get window height
 myRootWidth = myRoot.winfo_width()#get window width
@@ -96,6 +103,7 @@ myRoot.iconbitmap(default=ICON_PATH)#utilize blank icon to cover feather
 myMenu = Menu(myRoot)
 myRoot.config(menu=myMenu)
 myRoot.title("SIMR - Scripture Indices and Ministry Resources")
+
 
 # File Menu
 fileMenu = Menu(myMenu, tearoff=0)#tearoff gets rid of dashed line
@@ -151,11 +159,17 @@ bereanButton.pack(side=LEFT,padx=2, pady=2)
 scriptIndexButton = Button(myToolbar, text="Scripture Index", command=s.scriptIndex)
 scriptIndexButton.pack(side=LEFT,padx=2, pady=2)
 
-myToolbar.pack(side=TOP, fill=X)#display the toolbar, fill=X makes the toolbar fill the x axis (Y would fill the Y axis - height)
+entryText = StringVar(myToolbar)
+entryText.set("Search...")
+searchBox = Entry(myToolbar, textvariable=entryText)
+searchBox.pack(side=LEFT, padx=2, pady=2)
+inputText = searchBox.get()
+
+myToolbar.pack(side=TOP, fill=X)#display the toolbar, fill=X makes the toolbar fill the x axis
 
 
 #STATUS BAR AT BOTTOM
-status = Label(myRoot, text="Displays your status here...", bd=1, relief=SUNKEN, anchor=E)#bd is border, anchor is East (makes text for the label on the left)
+status = Label(myRoot, text="Displays your status here...", bd=1, relief=SUNKEN, anchor=E)#bd is border, anchor is East (makes text for the label on the right)
 #try putting a function in the text part to see if you can get text to be dynamic
 status.pack(side=BOTTOM, fill=X)#displays this at the bottom and at the width of the window
 
@@ -167,6 +181,13 @@ myFrame.bind("<Button-1>", s.leftClick)#bind the leftClick function to the left 
 myFrame.bind("<Button-2>", s.middleClick)#bind the middleClick function to the middle mouse button
 myFrame.bind("<Button-3>", s.rightClick)#bind the rightClick function to the right mouse button
 myFrame.pack(fill=BOTH, expand=True)#fill frame to window and make it expandable
+
+
+#LABEL FOR TEXT OUTPUT
+textOut = Label(myFrame, text=s.outText())
+textOut.pack(side=TOP, anchor=W)
+#LOOK INTO THIS FOR UPDATING TEXT ON THE FRAME AFTER SUBMITTING TEXT IN SEARCH BOX
+#https://www.daniweb.com/programming/software-development/threads/312235/refresh-canvas-in-tkinter
 
 
 #SAVE THIS FOR LAST
