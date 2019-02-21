@@ -185,3 +185,31 @@ function searchClicked() {
     //Berean(searchString);
     Scriptindex(searchString);
 }
+/*-------------------------------------------------------------------------------------------------*/
+/*
+function populateChapters() {
+    var chapters_json = 'https://raw.githubusercontent.com/winget82/SIMR/master/json_files/BiblesVerseCount.json';
+    var request_chapters = new XMLHttpRequest();
+    request_chapters.open('GET', chapters_json);
+    request_chapters.responseType = 'json';
+    request_chapters.send();
+    request_chapters.onload = function() {
+        var chapters_jsonResponse = request_chapters.response;
+//need to set this up to get selected book and populate the chapters
+//chapters_jsonResponse.Bible.KJV[1].Exodus.TotalChapters
+
+}
+
+function populateVerses() {
+    var verses_json = 'https://raw.githubusercontent.com/winget82/SIMR/master/json_files/BiblesVerseCount.json';
+    var request_verses = new XMLHttpRequest();
+    request_verses.open('GET', verses_json);
+    request_verses.responseType = 'json';
+    request_verses.send();
+    request_verses.onload = function() {
+        var verses_jsonResponse = request_verses.response;
+//need to set this up to get selected book and populate the chapters
+//chapters_jsonResponse.Bible.KJV[1].Exodus.VersesEachCh[3] - will get total verse count for chapter 4
+
+}
+*/

@@ -35,92 +35,90 @@
     to utilize in a script to generate the dropdown options-->
             <ul>
                 <li><select class="dropSelection" id="BookSelect">
-                    <option onclick="selectedChoiceBook()" value="Book">Book</option>
-                    <option onclick="selectedChoiceBook()" value="Genesis">Genesis</option>
-                    <option onclick="selectedChoiceBook()" value="Exodus">Exodus</option>
-                    <option onclick="selectedChoiceBook()" value="Leviticus">Leviticus</option>
-                    <option onclick="selectedChoiceBook()" value="Numbers">Numbers</option>
-                    <option onclick="selectedChoiceBook()" value="Deuteronomy">Deuteronomy</option>
-                    <option onclick="selectedChoiceBook()" value="Joshua">Joshua</option>
-                    <option onclick="selectedChoiceBook()" value="Judges">Judges</option>
-                    <option onclick="selectedChoiceBook()" value="Ruth">Ruth</option>
-                    <option onclick="selectedChoiceBook()" value="1 Samuel">1 Samuel</option>
-                    <option onclick="selectedChoiceBook()" value="2 Samuel">2 Samuel</option>
-                    <option onclick="selectedChoiceBook()" value="1 Kings">1 Kings</option>
-                    <option onclick="selectedChoiceBook()" value="2 Kings">2 Kings</option>
-                    <option onclick="selectedChoiceBook()" value="1 Chronicles">1 Chronicles</option>
-                    <option onclick="selectedChoiceBook()" value="2 Chronicles">2 Chronicles</option>
-                    <option onclick="selectedChoiceBook()" value="Ezra">Ezra</option>
-                    <option onclick="selectedChoiceBook()" value="Nehemiah">Nehemiah</option>
-                    <option onclick="selectedChoiceBook()" value="Esther">Esther</option>
-                    <option onclick="selectedChoiceBook()" value="Job">Job</option>
-                    <option onclick="selectedChoiceBook()" value="Psalms">Psalms</option>
-                    <option onclick="selectedChoiceBook()" value="Proverbs">Proverbs</option>
-                    <option onclick="selectedChoiceBook()" value="Ecclesiastes">Ecclesiastes</option>
-                    <option onclick="selectedChoiceBook()" value="Song of Solomon">Song of Solomon</option>
-                    <option onclick="selectedChoiceBook()" value="Isaiah">Isaiah</option>
-                    <option onclick="selectedChoiceBook()" value="Jeremiah">Jeremiah</option>
-                    <option onclick="selectedChoiceBook()" value="Lamentations">Lamentations</option>
-                    <option onclick="selectedChoiceBook()" value="Ezekiel">Ezekiel</option>
-                    <option onclick="selectedChoiceBook()" value="Daniel">Daniel</option>
-                    <option onclick="selectedChoiceBook()" value="Hosea">Hosea</option>
-                    <option onclick="selectedChoiceBook()" value="Joel">Joel</option>
-                    <option onclick="selectedChoiceBook()" value="Amos">Amos</option>
-                    <option onclick="selectedChoiceBook()" value="Obadiah">Obadiah</option>
-                    <option onclick="selectedChoiceBook()" value="Jonah">Jonah</option>
-                    <option onclick="selectedChoiceBook()" value="Micah">Micah</option>
-                    <option onclick="selectedChoiceBook()" value="Nahum">Nahum</option>
-                    <option onclick="selectedChoiceBook()" value="Habakkuk">Habakkuk</option>
-                    <option onclick="selectedChoiceBook()" value="Zephaniah">Zephaniah</option>
-                    <option onclick="selectedChoiceBook()" value="Haggai">Haggai</option>
-                    <option onclick="selectedChoiceBook()" value="Zechariah">Zechariah</option>
-                    <option onclick="selectedChoiceBook()" value="Malachi">Malachi</option>
-                    <option onclick="selectedChoiceBook()" value="Matthew">Matthew</option>
-                    <option onclick="selectedChoiceBook()" value="Mark">Mark</option>
-                    <option onclick="selectedChoiceBook()" value="Luke">Luke</option>
-                    <option onclick="selectedChoiceBook()" value="John">John</option>
-                    <option onclick="selectedChoiceBook()" value="Acts">Acts</option>
-                    <option onclick="selectedChoiceBook()" value="Romans">Romans</option>
-                    <option onclick="selectedChoiceBook()" value="1 Corinthians">1 Corinthians</option>
-                    <option onclick="selectedChoiceBook()" value="2 Corinthians">2 Corinthians</option>
-                    <option onclick="selectedChoiceBook()" value="Galatians">Galatians</option>
-                    <option onclick="selectedChoiceBook()" value="Ephesians">Ephesians</option>
-                    <option onclick="selectedChoiceBook()" value="Philippians">Philippians</option>
-                    <option onclick="selectedChoiceBook()" value="Colossians">Colossians</option>
-                    <option onclick="selectedChoiceBook()" value="1 Thessalonians">1 Thessalonians</option>
-                    <option onclick="selectedChoiceBook()" value="2 Thessalonians">2 Thessalonians</option>
-                    <option onclick="selectedChoiceBook()" value="1 Timothy">1 Timothy</option>
-                    <option onclick="selectedChoiceBook()" value="2 Timothy">2 Timothy</option>
-                    <option onclick="selectedChoiceBook()" value="Titus">Titus</option>
-                    <option onclick="selectedChoiceBook()" value="Philemon">Philemon</option>
-                    <option onclick="selectedChoiceBook()" value="Hebrews">Hebrews</option>
-                    <option onclick="selectedChoiceBook()" value="James">James</option>
-                    <option onclick="selectedChoiceBook()" value="1 Peter">1 Peter</option>
-                    <option onclick="selectedChoiceBook()" value="2 Peter">2 Peter</option>
-                    <option onclick="selectedChoiceBook()" value="1 John">1 John</option>
-                    <option onclick="selectedChoiceBook()" value="2 John">2 John</option>
-                    <option onclick="selectedChoiceBook()" value="3 John">3 John</option>
-                    <option onclick="selectedChoiceBook()" value="Jude">Jude</option>
-                    <option onclick="selectedChoiceBook()" value="Revelation">Revelation</option>
+                    <option value="Book">Book</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Genesis">Genesis</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Exodus">Exodus</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Leviticus">Leviticus</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Numbers">Numbers</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Deuteronomy">Deuteronomy</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Joshua">Joshua</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Judges">Judges</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Ruth">Ruth</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="1 Samuel">1 Samuel</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="2 Samuel">2 Samuel</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="1 Kings">1 Kings</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="2 Kings">2 Kings</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="1 Chronicles">1 Chronicles</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="2 Chronicles">2 Chronicles</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Ezra">Ezra</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Nehemiah">Nehemiah</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Esther">Esther</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Job">Job</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Psalms">Psalms</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Proverbs">Proverbs</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Ecclesiastes">Ecclesiastes</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Song of Solomon">Song of Solomon</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Isaiah">Isaiah</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Jeremiah">Jeremiah</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Lamentations">Lamentations</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Ezekiel">Ezekiel</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Daniel">Daniel</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Hosea">Hosea</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Joel">Joel</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Amos">Amos</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Obadiah">Obadiah</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Jonah">Jonah</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Micah">Micah</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Nahum">Nahum</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Habakkuk">Habakkuk</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Zephaniah">Zephaniah</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Haggai">Haggai</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Zechariah">Zechariah</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Malachi">Malachi</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Matthew">Matthew</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Mark">Mark</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Luke">Luke</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="John">John</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Acts">Acts</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Romans">Romans</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="1 Corinthians">1 Corinthians</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="2 Corinthians">2 Corinthians</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Galatians">Galatians</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Ephesians">Ephesians</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Philippians">Philippians</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Colossians">Colossians</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="1 Thessalonians">1 Thessalonians</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="2 Thessalonians">2 Thessalonians</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="1 Timothy">1 Timothy</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="2 Timothy">2 Timothy</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Titus">Titus</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Philemon">Philemon</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Hebrews">Hebrews</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="James">James</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="1 Peter">1 Peter</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="2 Peter">2 Peter</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="1 John">1 John</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="2 John">2 John</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="3 John">3 John</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Jude">Jude</option>
+                    <option onclick="selectedChoiceBook();populateChapters()" value="Revelation">Revelation</option>
 
                 </select></li>
 
                 <li><select class="dropSelection" id="ChapterSelect">
-                    <!--NEED TO LEARN HOW TO ADJUST THIS SECTIONS OPTION VALUES BASED ON BOOK
+                    <!--NEED TO ADJUST THIS SECTIONS OPTION VALUES BASED ON BOOK
                     SELECTED USING JAVASCRIPT-->
-                    <option onclick="selectedChoiceChapter()" value="Chapter">Chapter</option>
-                    <option onclick="selectedChoiceChapter()" value="CH_1">1</option>
-                    <option onclick="selectedChoiceChapter()" value="CH_2">2</option>
-                    <option onclick="selectedChoiceChapter()" value="CH_3">3</option>
+                    <option value="Chapter">Chapter</option>
+                    <option onclick="selectedChoiceChapter();populateVerses()" value="CH_1">1</option>
+                   
                 </select></li>
 
                 <li><select class="dropSelection"id="VerseSelect">
-                    <!--NEED TO LEARN HOW TO ADJUST THIS SECTIONS OPTION VALUES BASED ON BOOK
+                    <!--NEED TO ADJUST THIS SECTIONS OPTION VALUES BASED ON BOOK
                     AND CHAPTER SELECTED USING JAVASCRIPT-->
-                    <option onclick="selectedChoiceVerse()" value="Verse">Verse</option>
+                    <option value="Verse">Verse</option>
                     <option onclick="selectedChoiceVerse()" value="V_1">:1</option>
-                    <option onclick="selectedChoiceVerse()" value="V_2">:2</option>
-                    <option onclick="selectedChoiceVerse()" value="V_3">:3</option>
+                    
                 </select></li>
 
                 <li><button onclick="searchClicked()" class="dropSelection" id="selectionButton">Search</button></li>
