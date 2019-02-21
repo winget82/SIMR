@@ -1,3 +1,12 @@
+var kjvBooks = ["Genesis","Exodus","Leviticus","Numbers","Deuteronomy","Joshua","Judges","Ruth",
+"1 Samuel","2 Samuel","1 Kings","2 Kings","1 Chronicles","2 Chronicles","Ezra","Nehemiah","Esther",
+"Job","Psalms","Proverbs","Ecclesiastes","Song of Solomon","Isaiah","Jeremiah","Lamentations",
+"Ezekiel","Daniel","Hosea","Joel","Amos","Obadiah","Jonah","Micah","Nahum","Habakkuk","Zephaniah",
+"Haggai","Zechariah","Malachi","Matthew","Mark","Luke","John","Acts","Romans","1 Corinthians",
+"2 Corinthians","Galatians","Ephesians","Philippians","Colossians","1 Thessalonians",
+"2 Thessalonians","1 Timothy","2 Timothy","Titus","Philemon","Hebrews","James","1 Peter",
+"2 Peter","1 John","2 John","3 John","Jude","Revelation"]
+
 /*FUNCTIONS TO RETURN THE VALUE OF SELECTION FROM SELECTIONS DROPDOWNS*/
 /*------------------------------------------------------------------------------------------------*/
 function selectedChoiceBook() {
@@ -186,8 +195,10 @@ function searchClicked() {
     Scriptindex(searchString);
 }
 /*-------------------------------------------------------------------------------------------------*/
-/*
+
 function populateChapters() {
+    var selectedBook = selectedChoiceBook();
+    var kjvIndex = kjvBooks.indexOf(selectedBook);//kjvIndex will store the index of the kjv book of the bible chosen in drop down
     var chapters_json = 'https://raw.githubusercontent.com/winget82/SIMR/master/json_files/BiblesVerseCount.json';
     var request_chapters = new XMLHttpRequest();
     request_chapters.open('GET', chapters_json);
@@ -195,12 +206,27 @@ function populateChapters() {
     request_chapters.send();
     request_chapters.onload = function() {
         var chapters_jsonResponse = request_chapters.response;
+        getChapters(chapters_jsonResponse, kjvIndex, selectedBook)}
+    }
+function getChapters(chapters_jsonResponse, kjvIndex, selectedChoiceBook) {
+    //Get chapter total from json file for chosen book of the bible 
+    var chapterTotal = chapters_jsonResponse.Bible.KJV[kjvIndex][selectedChoiceBook].TotalChapters;
+    var i = 1;
+    while (i <= chapterTotal)  {
+        var option = document.createElement("option");
+        var book = options[i].text = i;
+        var select = document.getElementById("ChapterSelect");
+        select.appendChild(option);
+        i++;}
+    
 //need to set this up to get selected book and populate the chapters
 //chapters_jsonResponse.Bible.KJV[1].Exodus.TotalChapters
-
+//make an array of the books of the bible then if the name of the selectedChoiceBook() matches, get the index of the match
+//that index can go here ...Bible.KJV[here].Matthew.TotalChapters
+//https://stackoverflow.com/questions/5182772/append-option-to-select-menu
 }
-
-function populateVerses() {
+/*
+function populateVerses(selectedChoiceBook, selectedChoiceChapter) {
     var verses_json = 'https://raw.githubusercontent.com/winget82/SIMR/master/json_files/BiblesVerseCount.json';
     var request_verses = new XMLHttpRequest();
     request_verses.open('GET', verses_json);
