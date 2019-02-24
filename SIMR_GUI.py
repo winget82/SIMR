@@ -116,7 +116,6 @@ class simrGUI:
         self.editMenu.add_command(label="Undo", command=self.undoAction)
         self.editMenu.add_command(label="Redo", command=self.redoAction)
 
-
         # Read various bibles
         self.readMenu = Menu(self.myMenu, tearoff=0)
         self.myMenu.add_cascade(label="Read", menu=self.readMenu)
@@ -146,27 +145,27 @@ class simrGUI:
         #TOOLBAR
         self.myToolbar = Frame(self.myRoot)
         
-        self.kjvButton = Button(self.myToolbar, text="KJV", command=self.kjv)
+        self.kjvButton = Button(self.myToolbar, text="KJV", command=self.kjvButtonT)
         self.kjvButton.pack(side=LEFT,padx=2, pady=2)
-        self.kjvSButton = Button(self.myToolbar, text="KJV w/ Strong's", command=self.kjvs)
+        self.kjvSButton = Button(self.myToolbar, text="KJV w/ Strong's", command=self.kjvsButtonT)
         self.kjvSButton.pack(side=LEFT,padx=2, pady=2)
         
-        self.septButton = Button(self.myToolbar, text="Septuagint", command=self.sept)
+        self.septButton = Button(self.myToolbar, text="Septuagint", command=self.septButtonT)
         self.septButton.pack(side=LEFT,padx=2, pady=2)
         
-        self.bereanButton = Button(self.myToolbar, text="Berean", command=self.berean)
+        self.bereanButton = Button(self.myToolbar, text="Berean", command=self.bereanButtonT)
         self.bereanButton.pack(side=LEFT,padx=2, pady=2)
         
-        self.scriptIndexButton = Button(self.myToolbar, text="Scripture Index", command=self.scriptIndex)
+        self.scriptIndexButton = Button(self.myToolbar, text="Scripture Index", command=self.scriptIndexButtonT)
         self.scriptIndexButton.pack(side=LEFT,padx=2, pady=2)
         
         self.entryText = StringVar(self.myToolbar)
-        self.entryText.set("Search...")
+        #self.entryText.set("")
         self.searchBox = Entry(self.myToolbar, textvariable=self.entryText)
         self.searchBox.pack(side=LEFT, padx=2, pady=2)
-        self.searchButton = Button(self.myToolbar, text="Search", command=self.search)
+        self.searchButton = Button(self.myToolbar, text="Search All", command=self.searchAll)
         self.searchButton.pack(side=LEFT,padx=2, pady=2)
-        self.searchBox.bind('<Return>', self.search)
+        self.searchBox.bind('<Return>', self.searchAll)
         self.myToolbar.pack(side=TOP, fill=X)
 
 
@@ -342,7 +341,7 @@ class simrGUI:
 
     def kjv(self):
         print("Getting King James Version...")
-
+        
     def kjvs(self):
         print("Getting King James Version with Strong's...")
 
@@ -360,15 +359,66 @@ class simrGUI:
     # TOOLBAR METHODS
     #-----------------------------------------------------------------------
 
-    def outText(self, text):
-        print(text)
+#    def outText(self, text):
+#        print(text)
 
     #search button on toolbar
-    def search(self, event=None):
-            searchText = self.searchBox.get()
-            self.update_myFrameLabel(searchText)
-            print(searchText)
-            return searchText
+    def searchAll(self, event=None):
+        searchText = self.searchBox.get()
+        self.searchBox.delete(0, END)
+        kjv = self.kjv_search(searchText)
+        kjvLabel = "KJV - " + kjv[0] + " - " + kjv[1]
+        #kjvs = self.
+        #kjvsLabel = 
+        #sept = self.
+        #septLabel = 
+        #berean = self.
+        #bereanLabel = 
+        #twi = self.
+        #twiLabel = 
+        self.update_myFrameLabel(kjvLabel)
+        print(searchText)
+        return searchText
+
+    def kjvButtonT(self, event=None):
+        print("Getting King James Version...")
+        searchText = self.searchBox.get()
+        self.searchBox.delete(0, END)
+        txt = self.kjv_search(searchText)
+        self.update_myFrameLabel("KJV - " + txt[0] + " - " + txt[1])
+        print(txt)
+
+    def kjvsButtonT(self, event=None):
+        print("Getting King James Version with Strong's...")
+        searchText = self.searchBox.get()
+        self.searchBox.delete(0, END)
+        #txt = 
+        self.update_myFrameLabel(searchText)
+        print("KJV w/ Strong's - " + searchText)
+
+    def septButtonT(self, event=None):
+        print("Getting Septuagint...")
+        searchText = self.searchBox.get()
+        self.searchBox.delete(0, END)
+        #txt = 
+        self.update_myFrameLabel(searchText)
+        print("Septuagint - " + searchText)
+
+    def bereanButtonT(self, event=None):
+        print("Getting Berean...")
+        searchText = self.searchBox.get()
+        self.searchBox.delete(0, END)
+        #txt = 
+        self.update_myFrameLabel(searchText)
+        print("Berean - " + searchText)
+
+    def scriptIndexButtonT(self, event=None):
+        print("Getting Scripture Index...")
+        searchText = self.searchBox.get()
+        self.searchBox.delete(0, END)
+        #txt = 
+        self.update_myFrameLabel(searchText)
+        print("Scripture Index - " + searchText)
 
 
     #-----------------------------------------------------------------------
@@ -377,13 +427,15 @@ class simrGUI:
 
     def leftClick(self, event):
         print("Left")
+        #make selection here, etc
 
     def middleClick(self, event):
         print("Middle")
-
+        
     def rightClick(self, event):
         print("Right")
-
+        #make right-click menu here
+        
 
     #-----------------------------------------------------------------------
     #FRAME METHODS
