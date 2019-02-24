@@ -366,8 +366,8 @@ class simrGUI:
     def searchAll(self, event=None):
         searchText = self.searchBox.get()
         self.searchBox.delete(0, END)
-        kjv = self.kjv_search(searchText)
-        kjvLabel = "KJV - " + kjv[0] + " - " + kjv[1]
+        #kjv = self.
+        #kjvLabel = 
         #kjvs = self.
         #kjvsLabel = 
         #sept = self.
@@ -376,25 +376,34 @@ class simrGUI:
         #bereanLabel = 
         #twi = self.
         #twiLabel = 
-        self.update_myFrameLabel(kjvLabel)
-        print(searchText)
-        return searchText
+        self.update_myFrameLabel()
+        print()
 
     def kjvButtonT(self, event=None):
         print("Getting King James Version...")
         searchText = self.searchBox.get()
         self.searchBox.delete(0, END)
         txt = self.kjv_search(searchText)
-        self.update_myFrameLabel("KJV - " + txt[0] + " - " + txt[1])
+        self.update_myFrameLabel("KJV - " + ' - '.join(txt))
         print(txt)
+        return "KJV - " + ' - '.join(txt)
 
     def kjvsButtonT(self, event=None):
         print("Getting King James Version with Strong's...")
         searchText = self.searchBox.get()
         self.searchBox.delete(0, END)
-        #txt = 
-        self.update_myFrameLabel(searchText)
-        print("KJV w/ Strong's - " + searchText)
+        
+        try:
+            ot = self.kjvstrnumOT_search(searchText)
+            self.update_myFrameLabel("KJV w/ Strong's - " + ' - '.join(ot))
+            print(ot)
+            return "KJV w/ Strong's - " + ' - '.join(ot)
+            
+        except:
+            nt = self.kjvstrnumNT_search(searchText)
+            self.update_myFrameLabel("KJV w/ Strong's - " + ' - '.join(nt))
+            print(nt)
+            return "KJV w/ Strong's - " + ' - '.join(nt)
 
     def septButtonT(self, event=None):
         print("Getting Septuagint...")
