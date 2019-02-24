@@ -1,19 +1,16 @@
-"""This program pulls in a verse of your choosing with several available
-public domain KJV references to help with studying or putting together a
-teaching."""
+# ---------------------------------------------------------------------
+# IMPORTS - PACKAGES & MODULES UTILIZED
+# ---------------------------------------------------------------------
 
-#-----------------------------------------------------------------------
-# IMPORTS
-# ----------------------------------------------------------------------
-
-from tkinter import * #GET RID OF WILDCARD IMPORT EVENTUALLY
-import tkinter.messagebox
-import tempfile
-import SIMR as s
+import re
+#from openpyxl import load_workbook
+import codecs
 import json
+from tkinter import *
+
 
 #-----------------------------------------------------------------------
-#Make a temp blank icon on the fly (Windows) to get rid of tkinter feather
+#Make a temp blank icon on the fly (WINDOWS ONLY) to get rid of tkinter feather
 #ICON = (b'\x00\x00\x01\x00\x01\x00\x10\x10\x00\x00\x01\x00\x08\x00h\x05\x00\x00'
 #        b'\x16\x00\x00\x00(\x00\x00\x00\x10\x00\x00\x00 \x00\x00\x00\x01\x00'
 #        b'\x08\x00\x00\x00\x00\x00@\x05\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
@@ -94,119 +91,311 @@ with open(fpath + sept) as sept_file2:
 # WINDOW / APP
 #-----------------------------------------------------------------------
 
-#keep this function in the same file as the toolbar, doesn't work when imported separately
-#cannot pass parameters in command= for the button and searchBox is not defined in other file
-#event=None and having the function in this file solves the issue
-def search(event=None):
-    searchText = searchBox.get()
-    print(searchText)
-    return searchText
+class simrGUI:
+    def __init__(self):
+        self.myRoot = Tk()
+        self.myRoot.minsize(640,480)
+        #self.myRoot.iconbitmap(default=ICON_PATH)#utilize blank icon to cover feather
 
-myRoot = Tk()#THE MAIN ROOT WINDOW
-myRoot.minsize(640,480)#set minimum size of window
-myRootHeight = myRoot.winfo_height()#get window height
-myRootWidth = myRoot.winfo_width()#get window width
-#myRoot.iconbitmap(default=ICON_PATH)#utilize blank icon to cover feather
+        #MAIN MENU
+        self.myMenu = Menu(self.myRoot)
+        self.myRoot.config(menu=self.myMenu)
+        self.myRoot.title("SIMR - Scripture Indices and Ministry Resources")
 
-#MAIN MENU
-myMenu = Menu(myRoot)
-myRoot.config(menu=myMenu)
-myRoot.title("SIMR - Scripture Indices and Ministry Resources")
+        # File Menu
+        self.fileMenu = Menu(self.myMenu, tearoff=0)
+        self.myMenu.add_cascade(label="File", menu=self.fileMenu)
+        self.fileMenu.add_command(label="New Project", command=self.newProject)
+        self.fileMenu.add_command(label="Save", command=self.saveProject)
+        self.fileMenu.add_separator()
+        self.fileMenu.add_command(label="Exit", command=self.exitApp)
 
-
-# File Menu
-fileMenu = Menu(myMenu, tearoff=0)#tearoff gets rid of dashed line
-myMenu.add_cascade(label="File", menu=fileMenu)#this adds a cascading (drop-down) menu
-fileMenu.add_command(label="New Project", command=s.newProject)#command is set to a function
-fileMenu.add_command(label="Save", command=s.saveProject)
-fileMenu.add_separator()#draws solid line seperator in cascading (drop-down)menu
-fileMenu.add_command(label="Exit", command=s.exitApp)
-
-# Edit Menu
-editMenu = Menu(myMenu, tearoff=0)
-myMenu.add_cascade(label="Edit", menu=editMenu)
-editMenu.add_command(label="Undo", command=s.undoAction)
-editMenu.add_command(label="Redo", command=s.redoAction)
-
-# Read various bibles
-readMenu = Menu(myMenu, tearoff=0)
-myMenu.add_cascade(label="Read", menu=readMenu)
-readMenu.add_command(label="KJV")
-readMenu.add_command(label="KJV w/ Strong's")
-readMenu.add_command(label="Septuagint")
-readMenu.add_command(label="Berean")
-
-# Books (Reference Books - in public domain)
-booksMenu = Menu(myMenu, tearoff=0)
-myMenu.add_cascade(label="Books", menu=booksMenu)
-booksMenu.add_command(label="Number in Scripture")
-booksMenu.add_command(label="Witness of the Stars")
-booksMenu.add_command(label="How to Enjoy the Bible")
-
-# TWI Menu
-twiMenu = Menu(myMenu, tearoff=0)
-myMenu.add_cascade(label="TWI", menu=twiMenu)
-twiMenu.add_command(label="Scripture Index")
-twiMenu.add_command(label="STS List")
-
-# Help Menu
-helpMenu = Menu(myMenu, tearoff=0)
-myMenu.add_cascade(label="Help", menu=helpMenu)
-helpMenu.add_command(label="Documentation", command=s.documentation)
-
-#TOOLBAR
-myToolbar = Frame(myRoot)
-
-kjvButton = Button(myToolbar, text="KJV", command=s.kjv)
-kjvButton.pack(side=LEFT,padx=2, pady=2)#display button with padding of 2 pixels on either end of toolbar
-kjvSButton = Button(myToolbar, text="KJV w/ Strong's", command=s.kjvs)
-kjvSButton.pack(side=LEFT,padx=2, pady=2)
-septButton = Button(myToolbar, text="Septuagint", command=s.sept)
-septButton.pack(side=LEFT,padx=2, pady=2)
-bereanButton = Button(myToolbar, text="Berean", command=s.berean)
-bereanButton.pack(side=LEFT,padx=2, pady=2)
-scriptIndexButton = Button(myToolbar, text="Scripture Index", command=s.scriptIndex)
-scriptIndexButton.pack(side=LEFT,padx=2, pady=2)
-
-entryText = StringVar(myToolbar)
-entryText.set("Search...")
-searchBox = Entry(myToolbar, textvariable=entryText)
-searchBox.pack(side=LEFT, padx=2, pady=2)
-searchButton = Button(myToolbar, text="Search", command=search)#this command is being run automatically when program is ran and doesn't work correctly
-searchButton.pack(side=LEFT,padx=2, pady=2)
-#https://stackoverflow.com/questions/16996432/how-do-i-bind-the-enter-key-to-a-function-in-tkinter
-searchBox.bind('<Return>', search)
-myToolbar.pack(side=TOP, fill=X)#display the toolbar, fill=X makes the toolbar fill the x axis
+        # Edit Menu
+        self.editMenu = Menu(self.myMenu, tearoff=0)
+        self.myMenu.add_cascade(label="Edit", menu=self.editMenu)
+        self.editMenu.add_command(label="Undo", command=self.undoAction)
+        self.editMenu.add_command(label="Redo", command=self.redoAction)
 
 
-#STATUS BAR AT BOTTOM
-status = Label(myRoot, text="Displays your status here...", bd=1, relief=SUNKEN, anchor=E)#bd is border, anchor is East (makes text for the label on the right)
-#try putting a function in the text part to see if you can get text to be dynamic
-status.pack(side=BOTTOM, fill=X)#displays this at the bottom and at the width of the window
+        # Read various bibles
+        self.readMenu = Menu(self.myMenu, tearoff=0)
+        self.myMenu.add_cascade(label="Read", menu=self.readMenu)
+        self.readMenu.add_command(label="KJV")
+        self.readMenu.add_command(label="KJV w/ Strong's")
+        self.readMenu.add_command(label="Septuagint")
+        self.readMenu.add_command(label="Berean")
+
+        # Books (Reference Books - in public domain)
+        self.booksMenu = Menu(self.myMenu, tearoff=0)
+        self.myMenu.add_cascade(label="Books", menu=self.booksMenu)
+        self.booksMenu.add_command(label="Number in Scripture")
+        self.booksMenu.add_command(label="Witness of the Stars")
+        self.booksMenu.add_command(label="How to Enjoy the Bible")
+
+        # TWI Menu
+        self.twiMenu = Menu(self.myMenu, tearoff=0)
+        self.myMenu.add_cascade(label="TWI", menu=self.twiMenu)
+        self.twiMenu.add_command(label="Scripture Index")
+        self.twiMenu.add_command(label="STS List")
+
+        # Help Menu
+        self.helpMenu = Menu(self.myMenu, tearoff=0)
+        self.myMenu.add_cascade(label="Help", menu=self.helpMenu)
+        self.helpMenu.add_command(label="Documentation", command=self.documentation)
+
+        #TOOLBAR
+        self.myToolbar = Frame(self.myRoot)
+        
+        self.kjvButton = Button(self.myToolbar, text="KJV", command=self.kjv)
+        self.kjvButton.pack(side=LEFT,padx=2, pady=2)
+        self.kjvSButton = Button(self.myToolbar, text="KJV w/ Strong's", command=self.kjvs)
+        self.kjvSButton.pack(side=LEFT,padx=2, pady=2)
+        
+        self.septButton = Button(self.myToolbar, text="Septuagint", command=self.sept)
+        self.septButton.pack(side=LEFT,padx=2, pady=2)
+        
+        self.bereanButton = Button(self.myToolbar, text="Berean", command=self.berean)
+        self.bereanButton.pack(side=LEFT,padx=2, pady=2)
+        
+        self.scriptIndexButton = Button(self.myToolbar, text="Scripture Index", command=self.scriptIndex)
+        self.scriptIndexButton.pack(side=LEFT,padx=2, pady=2)
+        
+        self.entryText = StringVar(self.myToolbar)
+        self.entryText.set("Search...")
+        self.searchBox = Entry(self.myToolbar, textvariable=self.entryText)
+        self.searchBox.pack(side=LEFT, padx=2, pady=2)
+        self.searchButton = Button(self.myToolbar, text="Search", command=self.search)
+        self.searchButton.pack(side=LEFT,padx=2, pady=2)
+        self.searchBox.bind('<Return>', self.search)
+        self.myToolbar.pack(side=TOP, fill=X)
 
 
-#HANDLE MOUSE EVENTS
-#Make a frame / invisible widget to bind events to
-myFrame = Frame(myRoot)
-myFrame.bind("<Button-1>", s.leftClick)#bind the leftClick function to the left mouse button
-myFrame.bind("<Button-2>", s.middleClick)#bind the middleClick function to the middle mouse button
-myFrame.bind("<Button-3>", s.rightClick)#bind the rightClick function to the right mouse button
-myFrame.pack(fill=BOTH, expand=True)#fill frame to window and make it expandable
+        #STATUS BAR AT BOTTOM
+        self.status = Label(self.myRoot, text="Displays your status here...", bd=1, relief=SUNKEN, anchor=E)
+        #try putting a function in the text part to see if you can get text to be dynamic
+        self.status.pack(side=BOTTOM, fill=X)#displays this at the bottom and at the width of the window
 
 
-#LABEL FOR TEXT OUTPUT
-textOut = Label(myFrame, text=returnedText)
-textOut.pack(side=TOP, anchor=W)
-#LOOK INTO THIS FOR UPDATING TEXT ON THE FRAME AFTER SUBMITTING TEXT IN SEARCH BOX
-#https://www.daniweb.com/programming/software-development/threads/312235/refresh-canvas-in-tkinter
+        #HANDLE MOUSE EVENTS
+        #Make a frame / invisible widget to bind events to
+        self.myFrame = Frame(self.myRoot)
+        self.myFrame.bind("<Button-1>", self.leftClick)
+        self.myFrame.bind("<Button-2>", self.middleClick)
+        self.myFrame.bind("<Button-3>", self.rightClick)
+        self.myFrame.pack(fill=BOTH, expand=True)
+        
+        self.returnedText = 'Display returned text on frame'
+        
+        #LABEL FOR TEXT OUTPUT
+        self.textOut = Label(self.myFrame, text=self.returnedText)
+        self.textOut.pack(side=TOP, anchor=W)
+        
+        #MAIN LOOP FOR TKINTER
+        self.myRoot.mainloop()
+
+        # if you save this as .pyw then you can double click the icon and the
+        # python console window will be hidden
 
 
-#SAVE THIS FOR LAST
-myRoot.mainloop()
+    # /////////////////////////////////////////////////////////////////////
+    # METHODS OF THE SIMRGUI CLASS
+    # \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-#LOOK INTO TKINTER'S .trace_variable() to update text on frames
+    #-----------------------------------------------------------------------
+    # Search Methods
+    #-----------------------------------------------------------------------
 
-# if you save this as .pyw then you can double click the icon and the
-# python console window will be hidden
+    # Search KJV verse
+    def kjv_search(self, verse):
+        #found = next(i for i in scriptures_lst if kjv_inp in i)
+        found = next(i for i in scriptures_lst if verse in i)
+        return found
+
+    # Search KJV w/ Strong's verse
+    def kjvstrnumOT_search(self, searchOT_ks):
+        found_snOT = next(i for i in OT_sn if searchOT_ks in i)
+        return found_snOT
+
+    def kjvstrnumNT_search(self, searchNT_ks):
+        found_snNT = next(i for i in NT_sn if searchNT_ks in i)
+        return found_snNT
+
+    # Search for Berean verses
+    def berean_search(self, berean_inp):
+        if berean_inp in berean:
+            bi = berean.index(berean_inp)  # This is based on verse seached for.
+            # Sets bi to the index of verse searched for
+            return bi
+
+    # Search through TWI scripture index
+    def twi_scripture_index(self, twi_inp):
+        found2 = next(i for i in twi_index if twi_inp in i)
+        return found2
+
+    # Search through septuagint
+    def septuagint_search(self, sept_inp):
+        found3 = next(i for i in septuagint_lst3 if sept_inp in i)
+        return found3
+
+    # Search for Strong's defintion
+    def strongs_search(self):
+        inp = input("Enter Strong's Number proceeded by CAPITAL G or H: ")
+        if inp in strongscsvlst:
+            sc = strongscsvlst.index(inp)  # This is based on verse seached for.
+            # Sets sc to the strongs number searched for
+            return sc
+
+    # OT Hebrew Strong's Definitions Search
+    def strnumOT(self, OTsearch):
+        # OT Strongs Search
+        # This finds all <strongs numbers> on all lines printing result without <>
+        OTstring = ''.join(OTsearch)
+        sn_listOT = re.findall('\<(\d+)\>', OTstring)
+        # print(sn_listOT)
+        SNH = []
+        for items in sn_listOT:
+            hebrew = 'H' + items
+            SNH.append(hebrew)
+        # print(hebrew)
+        return SNH
+
+    def get_strhebdefs(self, SNH):
+        scH_lst = []
+        for item in SNH:
+            if item in strongscsvlst:
+                sc = strongscsvlst.index(item)  # This is based on verse seached for.
+                # Sets sc to the strongs number searched for
+                sc_index0 = strongscsvlst[sc]
+                sc_index1 = strongscsvlst[sc + 1]
+                sc_index2 = strongscsvlst[sc + 2]
+                sc_index3 = strongscsvlst[sc + 3]
+                sc_index4 = strongscsvlst[sc + 4]
+                sc_index5 = strongscsvlst[sc + 5]
+                sc_index6 = strongscsvlst[sc + 6]
+                scH = ('\n' + sc_index0 + ' - ' + sc_index1 + ' - '
+                       + sc_index2 + ' (' + sc_index3 + ') ' + sc_index4 +
+                       ' ' + sc_index5 + ', ' + sc_index6 + '\n')
+                if scH not in scH_lst:
+                    scH_lst.append(scH)
+        return scH_lst
+
+    # NT Greek Strong's Definitions Search
+    def strnumNT(self, NTsearch):
+        # NT Strongs Search
+        # This finds all <strongs numbers> on all lines printing result without <>
+        NTstring = ''.join(NTsearch)
+        sn_listNT = re.findall('\<(\d+)\>', NTstring)
+        # print(sn_listNT)
+        SNG = []
+        for items in sn_listNT:
+            greek = 'G' + items
+            SNG.append(greek)
+        # print(greek)
+        return SNG
+
+    def get_strgredefs(self, SNG):
+        scG_lst = []
+        for item in SNG:
+            if item in strongscsvlst:
+                sc = strongscsvlst.index(item)  # This is based on verse seached for.
+                # Sets sc to the strongs number searched for
+                sc_index0 = strongscsvlst[sc]
+                sc_index1 = strongscsvlst[sc + 1]
+                sc_index2 = strongscsvlst[sc + 2]
+                sc_index3 = strongscsvlst[sc + 3]
+                sc_index4 = strongscsvlst[sc + 4]
+                sc_index5 = strongscsvlst[sc + 5]
+                sc_index6 = strongscsvlst[sc + 6]
+                scG = ('\n' + sc_index0 + ' - ' + sc_index1 + ' - '
+                       + sc_index2 + ' (' + sc_index3 + ') ' + sc_index4 +
+                       ' ' + sc_index5 + ', ' + sc_index6 + '\n')
+                if scG not in scG_lst:
+                    scG_lst.append(scG)
+        return scG_lst
+
+
+    #-----------------------------------------------------------------------
+    # MENU FUNCTIONS
+    #-----------------------------------------------------------------------
+
+    def showIt(self):
+        print("This button works...")
+
+    def newProject(self):
+        print("New Project...")
+
+    def saveProject(self):
+        print("Saving...")
+
+    def exitApp(self):
+        print("Exiting...")
+
+    def redoAction(self):
+        print("Redoing...")
+
+    def undoAction(self):
+        print("Undoing...")
+
+    def documentation(self):
+        print("Getting documentation...")
+
+    def kjv(self):
+        print("Getting King James Version...")
+
+    def kjvs(self):
+        print("Getting King James Version with Strong's...")
+
+    def sept(self):
+        print("Getting Septuagint...")
+
+    def berean(self):
+        print("Getting Berean...")
+
+    def scriptIndex(self):
+        print("Getting Scripture Index...")
+
+
+    #-----------------------------------------------------------------------
+    # TOOLBAR FUNCTIONS
+    #-----------------------------------------------------------------------
+
+    def outText(self, text):
+        print(text)
+
+    #search button on toolbar
+    def search(self, event=None):
+            searchText = self.searchBox.get()
+            print(searchText)
+            return searchText
+
+
+    #-----------------------------------------------------------------------
+    #HANDLE MOUSE EVENTS (FUNCTIONS)
+    #-----------------------------------------------------------------------
+
+    def leftClick(self, event):
+        print("Left")
+
+    def middleClick(self, event):
+        print("Middle")
+
+    def rightClick(self, event):
+        print("Right")
+
+
+#-----------------------------------------------------------------------
+#RUN THE PROGRAM
+#-----------------------------------------------------------------------
+
+simrGUI = simrGUI()
+
+
+#-----------------------------------------------------------------------
+#MISC NOTES / REFERENCES
+#-----------------------------------------------------------------------
 
 #https://www.delftstack.com/howto/python-tkinter/how-to-pass-arguments-to-tkinter-button-command/
+#LOOK INTO THIS FOR UPDATING TEXT ON THE FRAME AFTER SUBMITTING TEXT IN SEARCH BOX
+#https://www.daniweb.com/programming/software-development/threads/312235/refresh-canvas-in-tkinter
+#https://stackoverflow.com/questions/17125842/changing-the-text-on-a-label
+#LOOK INTO TKINTER'S .trace_variable() to update text on frames
