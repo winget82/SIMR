@@ -95,10 +95,12 @@ with open(fpath + sept) as sept_file2:
 #-----------------------------------------------------------------------
 
 #keep this function in the same file as the toolbar, doesn't work when imported separately
-#for some reason can't pass parameters in command= for the button and searchBox is not defined in other file
-def search():
+#cannot pass parameters in command= for the button and searchBox is not defined in other file
+#event=None and having the function in this file solves the issue
+def search(event=None):
     searchText = searchBox.get()
     print(searchText)
+    return searchText
 
 myRoot = Tk()#THE MAIN ROOT WINDOW
 myRoot.minsize(640,480)#set minimum size of window
@@ -172,7 +174,8 @@ searchBox = Entry(myToolbar, textvariable=entryText)
 searchBox.pack(side=LEFT, padx=2, pady=2)
 searchButton = Button(myToolbar, text="Search", command=search)#this command is being run automatically when program is ran and doesn't work correctly
 searchButton.pack(side=LEFT,padx=2, pady=2)
-#searchBox.bind('<Return>', s.search(searchBox))
+#https://stackoverflow.com/questions/16996432/how-do-i-bind-the-enter-key-to-a-function-in-tkinter
+searchBox.bind('<Return>', search)
 myToolbar.pack(side=TOP, fill=X)#display the toolbar, fill=X makes the toolbar fill the x axis
 
 
@@ -192,7 +195,7 @@ myFrame.pack(fill=BOTH, expand=True)#fill frame to window and make it expandable
 
 
 #LABEL FOR TEXT OUTPUT
-textOut = Label(myFrame, text=s.outText())
+textOut = Label(myFrame, text=returnedText)
 textOut.pack(side=TOP, anchor=W)
 #LOOK INTO THIS FOR UPDATING TEXT ON THE FRAME AFTER SUBMITTING TEXT IN SEARCH BOX
 #https://www.daniweb.com/programming/software-development/threads/312235/refresh-canvas-in-tkinter
@@ -201,6 +204,9 @@ textOut.pack(side=TOP, anchor=W)
 #SAVE THIS FOR LAST
 myRoot.mainloop()
 
+#LOOK INTO TKINTER'S .trace_variable() to update text on frames
 
 # if you save this as .pyw then you can double click the icon and the
 # python console window will be hidden
+
+#https://www.delftstack.com/howto/python-tkinter/how-to-pass-arguments-to-tkinter-button-command/
