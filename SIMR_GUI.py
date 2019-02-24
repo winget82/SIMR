@@ -14,14 +14,14 @@ import json
 
 #-----------------------------------------------------------------------
 #Make a temp blank icon on the fly (Windows) to get rid of tkinter feather
-ICON = (b'\x00\x00\x01\x00\x01\x00\x10\x10\x00\x00\x01\x00\x08\x00h\x05\x00\x00'
-        b'\x16\x00\x00\x00(\x00\x00\x00\x10\x00\x00\x00 \x00\x00\x00\x01\x00'
-        b'\x08\x00\x00\x00\x00\x00@\x05\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
-        b'\x00\x01\x00\x00\x00\x01') + b'\x00'*1282 + b'\xff'*64
-
-_, ICON_PATH = tempfile.mkstemp()
-with open(ICON_PATH, 'wb') as icon_file:
-    icon_file.write(ICON)
+#ICON = (b'\x00\x00\x01\x00\x01\x00\x10\x10\x00\x00\x01\x00\x08\x00h\x05\x00\x00'
+#        b'\x16\x00\x00\x00(\x00\x00\x00\x10\x00\x00\x00 \x00\x00\x00\x01\x00'
+#        b'\x08\x00\x00\x00\x00\x00@\x05\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+#        b'\x00\x01\x00\x00\x00\x01') + b'\x00'*1282 + b'\xff'*64
+#
+#_, ICON_PATH = tempfile.mkstemp()
+#with open(ICON_PATH, 'wb') as icon_file:
+#    icon_file.write(ICON)
 
 
 # ---------------------------------------------------------------------
@@ -93,11 +93,18 @@ with open(fpath + sept) as sept_file2:
 #-----------------------------------------------------------------------
 # WINDOW / APP
 #-----------------------------------------------------------------------
+
+#keep this function in the same file as the toolbar, doesn't work when imported separately
+#for some reason can't pass parameters in command= for the button and searchBox is not defined in other file
+def search():
+    searchText = searchBox.get()
+    print(searchText)
+
 myRoot = Tk()#THE MAIN ROOT WINDOW
 myRoot.minsize(640,480)#set minimum size of window
 myRootHeight = myRoot.winfo_height()#get window height
 myRootWidth = myRoot.winfo_width()#get window width
-myRoot.iconbitmap(default=ICON_PATH)#utilize blank icon to cover feather
+#myRoot.iconbitmap(default=ICON_PATH)#utilize blank icon to cover feather
 
 #MAIN MENU
 myMenu = Menu(myRoot)
@@ -163,8 +170,9 @@ entryText = StringVar(myToolbar)
 entryText.set("Search...")
 searchBox = Entry(myToolbar, textvariable=entryText)
 searchBox.pack(side=LEFT, padx=2, pady=2)
-inputText = searchBox.get()
-
+searchButton = Button(myToolbar, text="Search", command=search)#this command is being run automatically when program is ran and doesn't work correctly
+searchButton.pack(side=LEFT,padx=2, pady=2)
+#searchBox.bind('<Return>', s.search(searchBox))
 myToolbar.pack(side=TOP, fill=X)#display the toolbar, fill=X makes the toolbar fill the x axis
 
 

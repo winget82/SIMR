@@ -4,7 +4,7 @@
 # IMPORTS - PACKAGES & MODULES UTILIZED
 # ---------------------------------------------------------------------
 import re
-from openpyxl import load_workbook
+#from openpyxl import load_workbook
 import codecs
 import json
 
@@ -18,34 +18,34 @@ import json
 #-----------------------------------------------------------------------
 
 # Search KJV verse function
-def kjv_search():
+def kjv_search(verse):
     #found = next(i for i in scriptures_lst if kjv_inp in i)
     found = next(i for i in scriptures_lst if verse in i)
     return found
 
 # Search KJV w/ Strong's verse functions
-def kjvstrnumOT_search():
+def kjvstrnumOT_search(searchOT_ks):
     found_snOT = next(i for i in OT_sn if searchOT_ks in i)
     return found_snOT
 
-def kjvstrnumNT_search():
+def kjvstrnumNT_search(searchNT_ks):
     found_snNT = next(i for i in NT_sn if searchNT_ks in i)
     return found_snNT
 
 # Search for Berean verses function
-def berean_search():
+def berean_search(berean_inp):
     if berean_inp in berean:
         bi = berean.index(berean_inp)  # This is based on verse seached for.
         # Sets bi to the index of verse searched for
         return bi
 
 # Search through TWI scripture index function
-def twi_scripture_index():
+def twi_scripture_index(twi_inp):
     found2 = next(i for i in twi_index if twi_inp in i)
     return found2
 
 # Search through septuagint function
-def septuagint_search():
+def septuagint_search(sept_inp):
     found3 = next(i for i in septuagint_lst3 if sept_inp in i)
     return found3
 
