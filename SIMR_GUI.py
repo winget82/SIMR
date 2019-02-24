@@ -176,22 +176,23 @@ class simrGUI:
         self.status.pack(side=BOTTOM, fill=X)#displays this at the bottom and at the width of the window
 
 
-        #HANDLE MOUSE EVENTS
+        #FRAME & HANDLE MOUSE EVENTS WITHIN FRAME
         #Make a frame / invisible widget to bind events to
         self.myFrame = Frame(self.myRoot)
+        self.myFrameText = ''
         self.myFrame.bind("<Button-1>", self.leftClick)
         self.myFrame.bind("<Button-2>", self.middleClick)
         self.myFrame.bind("<Button-3>", self.rightClick)
-        self.myFrame.pack(fill=BOTH, expand=True)
+        self.myFrame.pack(fill=BOTH, expand=True)            
         
-        self.returnedText = 'Display returned text on frame'
-        
-        #LABEL FOR TEXT OUTPUT
-        self.textOut = Label(self.myFrame, text=self.returnedText)
+        #FRAME LABEL FOR TEXT OUTPUT
+        self.textOut = Label(self.myFrame, text=self.myFrameText)
         self.textOut.pack(side=TOP, anchor=W)
         
+
         #MAIN LOOP FOR TKINTER
         self.myRoot.mainloop()
+
 
         # if you save this as .pyw then you can double click the icon and the
         # python console window will be hidden
@@ -315,7 +316,7 @@ class simrGUI:
 
 
     #-----------------------------------------------------------------------
-    # MENU FUNCTIONS
+    # MENU METHODS
     #-----------------------------------------------------------------------
 
     def showIt(self):
@@ -356,7 +357,7 @@ class simrGUI:
 
 
     #-----------------------------------------------------------------------
-    # TOOLBAR FUNCTIONS
+    # TOOLBAR METHODS
     #-----------------------------------------------------------------------
 
     def outText(self, text):
@@ -365,12 +366,13 @@ class simrGUI:
     #search button on toolbar
     def search(self, event=None):
             searchText = self.searchBox.get()
+            self.update_myFrameLabel(searchText)
             print(searchText)
             return searchText
 
 
     #-----------------------------------------------------------------------
-    #HANDLE MOUSE EVENTS (FUNCTIONS)
+    #HANDLE MOUSE EVENTS METHODS
     #-----------------------------------------------------------------------
 
     def leftClick(self, event):
@@ -382,6 +384,13 @@ class simrGUI:
     def rightClick(self, event):
         print("Right")
 
+
+    #-----------------------------------------------------------------------
+    #FRAME METHODS
+    #-----------------------------------------------------------------------
+
+    def update_myFrameLabel(self, text):
+        self.textOut['text'] = text
 
 #-----------------------------------------------------------------------
 #RUN THE PROGRAM
@@ -395,7 +404,4 @@ simrGUI = simrGUI()
 #-----------------------------------------------------------------------
 
 #https://www.delftstack.com/howto/python-tkinter/how-to-pass-arguments-to-tkinter-button-command/
-#LOOK INTO THIS FOR UPDATING TEXT ON THE FRAME AFTER SUBMITTING TEXT IN SEARCH BOX
-#https://www.daniweb.com/programming/software-development/threads/312235/refresh-canvas-in-tkinter
 #https://stackoverflow.com/questions/17125842/changing-the-text-on-a-label
-#LOOK INTO TKINTER'S .trace_variable() to update text on frames
