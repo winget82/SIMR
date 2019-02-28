@@ -183,9 +183,10 @@ class simrGUI:
         self.myFrame.bind("<Button-2>", self.middleClick)
         self.myFrame.bind("<Button-3>", self.rightClick)
         self.myFrame.pack(fill=BOTH, expand=True)            
-        
+        self.myFrame.update()
+
         #FRAME LABEL FOR TEXT OUTPUT
-        self.textOut = Label(self.myFrame, text=self.myFrameText)
+        self.textOut = Label(self.myFrame, text=self.myFrameText, wraplength=self.myFrame.winfo_width(), justify=LEFT, anchor=W)
         self.textOut.pack(side=TOP, anchor=W)
         
 
@@ -376,6 +377,7 @@ class simrGUI:
         #bereanLabel = 
         #twi = self.
         #twiLabel = 
+        self.myFrame.update()
         self.update_myFrameLabel()
         print()
 
@@ -384,6 +386,7 @@ class simrGUI:
         searchText = self.searchBox.get()
         self.searchBox.delete(0, END)
         txt = self.kjv_search(searchText)
+        self.myFrame.update()
         self.update_myFrameLabel("KJV - " + ' - '.join(txt))
         print(txt)
         return "KJV - " + ' - '.join(txt)
@@ -395,12 +398,14 @@ class simrGUI:
         
         try:
             ot = self.kjvstrnumOT_search(searchText)
+            self.myFrame.update()
             self.update_myFrameLabel("KJV w/ Strong's - " + ' - '.join(ot))
             print(ot)
             return "KJV w/ Strong's - " + ' - '.join(ot)
             
         except:
             nt = self.kjvstrnumNT_search(searchText)
+            self.myFrame.update()
             self.update_myFrameLabel("KJV w/ Strong's - " + ' - '.join(nt))
             print(nt)
             return "KJV w/ Strong's - " + ' - '.join(nt)
@@ -410,6 +415,7 @@ class simrGUI:
         searchText = self.searchBox.get()
         self.searchBox.delete(0, END)
         #txt = 
+        self.myFrame.update()
         self.update_myFrameLabel(searchText)
         print("Septuagint - " + searchText)
 
@@ -418,6 +424,7 @@ class simrGUI:
         searchText = self.searchBox.get()
         self.searchBox.delete(0, END)
         #txt = 
+        self.myFrame.update()
         self.update_myFrameLabel(searchText)
         print("Berean - " + searchText)
 
@@ -426,6 +433,7 @@ class simrGUI:
         searchText = self.searchBox.get()
         self.searchBox.delete(0, END)
         #txt = 
+        self.myFrame.update()
         self.update_myFrameLabel(searchText)
         print("Scripture Index - " + searchText)
 
