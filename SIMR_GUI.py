@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # ---------------------------------------------------------------------
 # IMPORTS - PACKAGES & MODULES UTILIZED
 # ---------------------------------------------------------------------
@@ -191,6 +193,12 @@ class simrGUI:
         self.textOut.pack(side=TOP, anchor=W)
         
 
+        #SCROLLBAR
+        self.scrollbar = Scrollbar(self.myFrame)
+        self.scrollbar.pack(side=RIGHT, fill=Y)
+        #NEED TO GET SCROLLBAR TO UPDATE ALSO
+
+
         #MAIN LOOP FOR TKINTER
         self.myRoot.mainloop()
 
@@ -366,7 +374,7 @@ class simrGUI:
 
     #search button on toolbar
     def searchAll(self, event=None):
-        searchText = self.searchBox.get()
+        searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
         
         kjv = self.kjv_search(searchText)
@@ -376,25 +384,32 @@ class simrGUI:
             kjvs = self.kjvstrnumOT_search(searchText)
         except:
             kjvs = self.kjvstrnumNT_search(searchText)
-
         kjvsLabel = "KJV w/Strong's - " + ' - '.join(kjvs)
         
-        #sept = self.
-        #septLabel = 
+        try:
+            sept = self.septuagint_search(searchText)    
+            septLabel = "Septuagint - " + ' - '.join(sept)
+        except:
+            sept = "No verse found in Septuagint for your search..."
+            septLabel = "Septuagint - " + sept
+        #ISSUES WITH SEPTUAGINT TRY GENESIS 1:1 ALSO SOME JEREMIAH VERSES FOR EXAMPLE - LOOK INTO JSON FILE
 
         #berean = self.
         #bereanLabel = 
-        
-        twi = self.twi_scripture_index(searchText)
-        twiLabel = "Scripture Index : \n" + ' '.join(twi)
+
+        try:
+            twi = self.twi_scripture_index(searchText)
+            twiLabel = "Scripture Index : \n" + ' '.join(twi)
+        except:
+            twiLabel = "Nothing found in Scripture Index for your search..."
         
         self.myFrame.update()
-        self.update_myFrameLabel(kjvLabel + '\n\n' + kjvsLabel + '\n\n' + twiLabel)
-        print()
+        self.update_myFrameLabel(kjvLabel + '\n\n' + kjvsLabel + '\n\n' + septLabel + '\n\n' + twiLabel)
+
 
     def kjvButtonT(self, event=None):
         print("Getting King James Version...")
-        searchText = self.searchBox.get()
+        searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
         txt = self.kjv_search(searchText)
         self.myFrame.update()
@@ -404,7 +419,7 @@ class simrGUI:
 
     def kjvsButtonT(self, event=None):
         print("Getting King James Version with Strong's...")
-        searchText = self.searchBox.get()
+        searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
         
         try:
@@ -421,19 +436,27 @@ class simrGUI:
             print(nt)
             return "KJV w/ Strong's - " + ' - '.join(nt)
 
-    def septButtonT(self, event=None):#the septuagint is not working - does it have to do with ANSI etc.
+    def septButtonT(self, event=None):
         print("Getting Septuagint...")
-        searchText = self.searchBox.get()
+        searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
-        txt = self.septuagint_search(searchText)
-        self.myFrame.update()
-        self.update_myFrameLabel("Septuagint - " + ' - '.join(txt))
-        print(txt)
-        return "Septuagint - " + ' - '.join(txt)
+        try:
+            txt = self.septuagint_search(searchText)
+            self.myFrame.update()
+            self.update_myFrameLabel("Septuagint - " + ' - '.join(txt))
+            print(txt)
+            return "Septuagint - " + ' - '.join(txt)
+        except:
+            txt = "No verse found in Septuagint for your search."
+            self.myFrame.update()
+            self.update_myFrameLabel("Septuagint - " + txt)
+            print(txt)
+            return "Septuagint - " + txt
+        
 
     def bereanButtonT(self, event=None):
         print("Getting Berean...")
-        searchText = self.searchBox.get()
+        searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
         #txt = 
         self.myFrame.update()
@@ -442,7 +465,7 @@ class simrGUI:
 
     def scriptIndexButtonT(self, event=None):
         print("Getting Scripture Index...")
-        searchText = self.searchBox.get()
+        searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
         txt = self.twi_scripture_index(searchText)
         self.myFrame.update()
