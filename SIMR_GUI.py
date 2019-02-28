@@ -372,9 +372,12 @@ class simrGUI:
         kjv = self.kjv_search(searchText)
         kjvLabel = "KJV - " + ' - '.join(kjv)
         
-        #kjvs = self.
-        #NEED TRY/EXCEPT FOR THE KJV STRONGS
-        #kjvsLabel = 
+        try:
+            kjvs = self.kjvstrnumOT_search(searchText)
+        except:
+            kjvs = self.kjvstrnumNT_search(searchText)
+
+        kjvsLabel = "KJV w/Strong's - " + ' - '.join(kjvs)
         
         #sept = self.
         #septLabel = 
@@ -386,7 +389,7 @@ class simrGUI:
         twiLabel = "Scripture Index : \n" + ' '.join(twi)
         
         self.myFrame.update()
-        self.update_myFrameLabel(kjvLabel + '\n\n' + twiLabel)
+        self.update_myFrameLabel(kjvLabel + '\n\n' + kjvsLabel + '\n\n' + twiLabel)
         print()
 
     def kjvButtonT(self, event=None):
@@ -418,7 +421,7 @@ class simrGUI:
             print(nt)
             return "KJV w/ Strong's - " + ' - '.join(nt)
 
-    def septButtonT(self, event=None):#this one not working - does it have to do with ANSI etc.
+    def septButtonT(self, event=None):#the septuagint is not working - does it have to do with ANSI etc.
         print("Getting Septuagint...")
         searchText = self.searchBox.get()
         self.searchBox.delete(0, END)
