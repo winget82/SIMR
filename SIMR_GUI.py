@@ -183,7 +183,8 @@ class simrGUI:
         self.myFrame.bind("<Button-2>", self.middleClick)
         self.myFrame.bind("<Button-3>", self.rightClick)
         self.myFrame.pack(fill=BOTH, expand=True)            
-        self.myFrame.update()
+        self.myFrame.update()#THIS AND LINE 189 IS NOT UPDATING AS INTENDED, IT UPDATES THE FIRST TIME
+        #AND THEN DOES NOT UPDATE WITH EACH FUNCTION
 
         #FRAME LABEL FOR TEXT OUTPUT
         self.textOut = Label(self.myFrame, text=self.myFrameText, wraplength=self.myFrame.winfo_width(), justify=LEFT, anchor=W)
@@ -367,18 +368,25 @@ class simrGUI:
     def searchAll(self, event=None):
         searchText = self.searchBox.get()
         self.searchBox.delete(0, END)
-        #kjv = self.
-        #kjvLabel = 
+        
+        kjv = self.kjv_search(searchText)
+        kjvLabel = "KJV - " + ' - '.join(kjv)
+        
         #kjvs = self.
+        #NEED TRY/EXCEPT FOR THE KJV STRONGS
         #kjvsLabel = 
+        
         #sept = self.
         #septLabel = 
+
         #berean = self.
         #bereanLabel = 
-        #twi = self.
-        #twiLabel = 
+        
+        twi = self.twi_scripture_index(searchText)
+        twiLabel = "Scripture Index : \n" + ' '.join(twi)
+        
         self.myFrame.update()
-        self.update_myFrameLabel()
+        self.update_myFrameLabel(kjvLabel + '\n\n' + twiLabel)
         print()
 
     def kjvButtonT(self, event=None):
@@ -410,14 +418,15 @@ class simrGUI:
             print(nt)
             return "KJV w/ Strong's - " + ' - '.join(nt)
 
-    def septButtonT(self, event=None):
+    def septButtonT(self, event=None):#this one not working - does it have to do with ANSI etc.
         print("Getting Septuagint...")
         searchText = self.searchBox.get()
         self.searchBox.delete(0, END)
-        #txt = 
+        txt = self.septuagint_search(searchText)
         self.myFrame.update()
-        self.update_myFrameLabel(searchText)
-        print("Septuagint - " + searchText)
+        self.update_myFrameLabel("Septuagint - " + ' - '.join(txt))
+        print(txt)
+        return "Septuagint - " + ' - '.join(txt)
 
     def bereanButtonT(self, event=None):
         print("Getting Berean...")
@@ -432,10 +441,10 @@ class simrGUI:
         print("Getting Scripture Index...")
         searchText = self.searchBox.get()
         self.searchBox.delete(0, END)
-        #txt = 
+        txt = self.twi_scripture_index(searchText)
         self.myFrame.update()
-        self.update_myFrameLabel(searchText)
-        print("Scripture Index - " + searchText)
+        self.update_myFrameLabel("Scripture Index : \n" + ' '.join(txt))
+        print(txt)
 
 
     #-----------------------------------------------------------------------
@@ -474,3 +483,6 @@ simrGUI = simrGUI()
 
 #https://www.delftstack.com/howto/python-tkinter/how-to-pass-arguments-to-tkinter-button-command/
 #https://stackoverflow.com/questions/17125842/changing-the-text-on-a-label
+
+
+#NEED TO ADD A SCROLLBAR TO THIS
