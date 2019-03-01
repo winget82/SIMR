@@ -13,6 +13,7 @@ import re
 import codecs
 import json
 from tkinter import *
+import ctypes
 
 
 #-----------------------------------------------------------------------
@@ -92,6 +93,8 @@ sept = 'septuagint_json.json'
 with open(fpath + sept) as sept_file2:
     septuagint_lst3 = json.load(sept_file2)
 
+def Mbox(title, text, style):
+    return ctypes.windll.user32.MessageBoxW(0, text, title, style)
 
 #-----------------------------------------------------------------------
 # WINDOW / APP
@@ -142,13 +145,15 @@ class simrGUI:
         # TWI Menu
         self.twiMenu = Menu(self.myMenu, tearoff=0)
         self.myMenu.add_cascade(label="TWI", menu=self.twiMenu)
-        self.twiMenu.add_command(label="Scripture Index")
+        self.twiMenu.add_command(label="Scripture Index Abbreviations")
         self.twiMenu.add_command(label="STS List")
 
         # Help Menu
         self.helpMenu = Menu(self.myMenu, tearoff=0)
         self.myMenu.add_cascade(label="Help", menu=self.helpMenu)
         self.helpMenu.add_command(label="Documentation", command=self.documentation)
+        self.helpMenu.add_command(label="Credits", command=self.getCredits)
+        self.helpMenu.add_command(label="About", command=self.getAbout)
 
         #TOOLBAR
         self.myToolbar = Frame(self.myRoot)
@@ -216,18 +221,20 @@ class simrGUI:
         # *** http://effbot.org/tkinterbook/text.htm *** THIS IS DETAILED DO NOT DELETE
         
 
-        self.about = """\n\nAbout this program:
+        self.about = """\n\n
+        About this program:
+        --------------------------\n
         This program is called SIMR, which is an abbreviation
-        for "Scripture Indices & Ministry Resources."
-        \nThis program was put together with the python programming
+        for "Scripture Indices & Ministry Resources."\n
+        This program was put together with the python programming
         language, and is a compilation of the works of many, many
         others.  Others who have spent countless hours studying &
         teaching the Word of God.  My thanks to them for making
-        researching God's Word so much easier for us!
-        \nThe goal of this program, is to provide a tool to easily
+        researching God's Word so much easier for us!\n
+        The goal of this program, is to provide a tool to easily
         compile resources for researching God's Word.  A tool to
         help redeem the time as we diligently study God's Word.
-        \nTo 'simmer' is to be at a temperature just below the
+        To 'simmer' is to be at a temperature just below the
         boiling point.  It's to be in a state of the initial
         stages of development...\n
         I thought this fitting, as when we're researching a topic,
@@ -238,15 +245,16 @@ class simrGUI:
         need to steep in it.  My believing is that this tool will
         help you in your endeavours as you stand for God in this
         day, time, and hour.\n
-        Love in Christ,\n
+        Love in Christ,
         N. A. Flesher - 06/03/2018\n"""
 
-        self.credits = """\n\nCredits, URL Links, & Resources Used:
-        -------------------------------------
+        self.credits = """\n\n
+        Credits, URL Links, & Resources Used:
+        ------------------------------------------------\n
         Strong's Numbers & Definitions - viz.bible\n
-        The Holy Bible, Berean Study Bible, BSB\n
-              Copyright ©2016 by Bible Hub\n
-              Used by Permission. All Rights Reserved Worldwide.\n
+        The Holy Bible, Berean Study Bible, BSB
+              Copyright ©2016 by Bible Hub
+              Used by Permission. All Rights Reserved Worldwide.
               http://berean.bible - Berean Bible Homepage\n
         The King James Version, Septuagint, and Strong's
         Concordance, as well Ethelbert W. Bullinger's
@@ -403,6 +411,7 @@ class simrGUI:
 
     def exitApp(self):
         print("Exiting...")
+        exit()
 
     def redoAction(self):
         print("Redoing...")
@@ -427,6 +436,12 @@ class simrGUI:
 
     def scriptIndex(self):
         print("Getting Scripture Index...")
+
+    def getAbout(self):
+        Mbox('About', self.about, 0)
+
+    def getCredits(self):
+        Mbox('Credits', self.credits, 0)
 
 
     #-----------------------------------------------------------------------
@@ -654,3 +669,4 @@ simrGUI = simrGUI()
 
 #https://www.delftstack.com/howto/python-tkinter/how-to-pass-arguments-to-tkinter-button-command/
 #https://stackoverflow.com/questions/17125842/changing-the-text-on-a-label
+#https://stackoverflow.com/questions/2963263/how-can-i-create-a-simple-message-box-in-python
