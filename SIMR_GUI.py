@@ -9,7 +9,6 @@
 # ---------------------------------------------------------------------
 
 import re
-#from openpyxl import load_workbook
 import codecs
 import json
 from tkinter import *
@@ -222,6 +221,15 @@ class simrGUI:
         # *** http://effbot.org/tkinterbook/text.htm *** THIS IS DETAILED DO NOT DELETE
         
 
+        #RIGHT CLICK MENU
+        self.rClickMenu = Menu(self.myFrame, tearoff=0)
+        self.rClickMenu.add_command(label="Copy")
+        self.rClickMenu.add_command(label="Paste")
+        self.rClickMenu.add_command(label="Search")
+        self.rClickMenu.add_command(label="Clear", command=self.clearTxt)
+
+
+        #POPUPS
         self.about = """\n\n
         About this program:
         --------------------------\n
@@ -406,7 +414,7 @@ class simrGUI:
         self.statusBar['text'] = "Starting new project..."
 
     def saveProject(self):
-        with open("NewProject.txt", "w") as txtFile:
+        with open("NewProject.txt", "w", encoding='utf-8') as txtFile:
             txtFile.write(self.getAllText())
         print("Saving...")
         self.statusBar['text'] = "Saving..."
@@ -416,8 +424,6 @@ class simrGUI:
     def exitApp(self):
         print("Exiting...")
         self.statusBar['text'] = "Exiting..."
-        #could make a function do a time.sleep and then change the status bar to a default text at bottom of screen
-        #try this, call it on each function and see if it affects how the program runs
         exit()
 
     def redoAction(self):
@@ -660,7 +666,7 @@ class simrGUI:
         
     def rightClick(self, event):
         print("Right")
-        #make right-click menu here
+        self.rClickMenu.post(event.x_root, event.y_root)
 
 
     #-----------------------------------------------------------------------
@@ -696,3 +702,10 @@ simrGUI = simrGUI()
 #https://www.delftstack.com/howto/python-tkinter/how-to-pass-arguments-to-tkinter-button-command/
 #https://stackoverflow.com/questions/17125842/changing-the-text-on-a-label
 #https://stackoverflow.com/questions/2963263/how-can-i-create-a-simple-message-box-in-python
+
+#MAKE GIS MAP BIBLE ATLAS - if you use leaflet see the faq about crediting them
+#SEE - https://programminghistorian.org/en/lessons/mapping-with-python-leaflet
+#SEE - https://leafletjs.com/
+#see also Folium and if it is opensource and no fee - https://www.youtube.com/watch?v=xN2N-p33V1k
+
+#ATTACH POEMS, SONGS, TEACHINGS / MP3s, REFERENCE MATERIALS IN THE PUBLIC DOMAIN
