@@ -160,10 +160,10 @@ class simrGUI:
         self.bereanButton = Button(self.myToolbar, text="Berean", command=self.bereanButtonT)
         self.bereanButton.pack(side=LEFT,padx=2, pady=2)
 
-        self.hebrewButton = Button(self.myToolbar, text="Hebrew")
+        self.hebrewButton = Button(self.myToolbar, text="Hebrew", command=self.hebrewButtonT)
         self.hebrewButton.pack(side=LEFT,padx=2, pady=2)
 
-        self.greekButton = Button(self.myToolbar, text="Greek")
+        self.greekButton = Button(self.myToolbar, text="Greek", command=self.greekButtonT)
         self.greekButton.pack(side=LEFT,padx=2, pady=2)
 
         self.scriptIndexButton = Button(self.myToolbar, text="Scripture Index", command=self.scriptIndexButtonT)
@@ -274,16 +274,16 @@ class simrGUI:
         OTstring = ''.join(OTsearch)
         sn_listOT = re.findall('\<(\d+)\>', OTstring)
         # print(sn_listOT)
-        SNH = []
+        strongsNumberHebrew = []
         for items in sn_listOT:
             hebrew = 'H' + items
-            SNH.append(hebrew)
+            strongsNumberHebrew.append(hebrew)
         # print(hebrew)
-        return SNH
+        return strongsNumberHebrew
 
-    def get_strhebdefs(self, SNH):
+    def get_strongsHebrewDefs(self, strongsNumberHebrew):#THIS DEFINITION IS FOR PULLING ALL THE HEBREW DEFINITIONS FOR A VERSE
         scH_lst = []
-        for item in SNH:
+        for item in strongsNumberHebrew:
             if item in strongscsvlst:
                 sc = strongscsvlst.index(item)  # This is based on verse seached for.
                 # Sets sc to the strongs number searched for
@@ -308,16 +308,16 @@ class simrGUI:
         NTstring = ''.join(NTsearch)
         sn_listNT = re.findall('\<(\d+)\>', NTstring)
         # print(sn_listNT)
-        SNG = []
+        strongsNumberGreek = []
         for items in sn_listNT:
             greek = 'G' + items
-            SNG.append(greek)
+            strongsNumberGreek.append(greek)
         # print(greek)
-        return SNG
+        return strongsNumberGreek
 
-    def get_strgredefs(self, SNG):
+    def get_strongsGreekDefs(self, strongsNumberGreek):#THIS DEFINITION IS FOR PULLING ALL THE GREEK DEFINITIONS FOR A VERSE
         scG_lst = []
-        for item in SNG:
+        for item in strongsNumberGreek:
             if item in strongscsvlst:
                 sc = strongscsvlst.index(item)  # This is based on verse seached for.
                 # Sets sc to the strongs number searched for
@@ -486,6 +486,50 @@ class simrGUI:
             print(txt)
         except:
             self.update_textOut("No verse found in Scripture index for your search.")
+
+    def hebrewButtonT(self, event=None):
+        print("Getting Hebrew definitions...")
+        searchText = self.searchBox.get().title()
+        self.searchBox.delete(0, END)
+
+        try:
+            sc = self.strongs_search(searchText)
+            sc_index0 = strongscsvlst[sc]
+            sc_index1 = strongscsvlst[sc + 1]
+            sc_index2 = strongscsvlst[sc + 2]
+            sc_index3 = strongscsvlst[sc + 3]
+            sc_index4 = strongscsvlst[sc + 4]
+            sc_index5 = strongscsvlst[sc + 5]
+            sc_index6 = strongscsvlst[sc + 6]
+            txt = ('\n' + sc_index0 + ' - ' + sc_index1 + ' - '
+                  + sc_index2 + ' (' + sc_index3 + ') ' + sc_index4 +
+                  ' ' + sc_index5 + ', ' + sc_index6)
+            self.update_textOut(txt)
+            print(txt)
+        except:
+            self.update_textOut("No Hebrew definitions found for your search.")
+
+    def greekButtonT(self, event=None):
+        print("Getting Greek definitions...")
+        searchText = self.searchBox.get().title()
+        self.searchBox.delete(0, END)
+
+        try:
+            sc = self.strongs_search(searchText)
+            sc_index0 = strongscsvlst[sc]
+            sc_index1 = strongscsvlst[sc + 1]
+            sc_index2 = strongscsvlst[sc + 2]
+            sc_index3 = strongscsvlst[sc + 3]
+            sc_index4 = strongscsvlst[sc + 4]
+            sc_index5 = strongscsvlst[sc + 5]
+            sc_index6 = strongscsvlst[sc + 6]
+            txt = ('\n' + sc_index0 + ' - ' + sc_index1 + ' - '
+                  + sc_index2 + ' (' + sc_index3 + ') ' + sc_index4 +
+                  ' ' + sc_index5 + ', ' + sc_index6)
+            self.update_textOut(txt)
+            print(txt)
+        except:
+            self.update_textOut("No Greek defintions found for your search.")
 
 
     #-----------------------------------------------------------------------
