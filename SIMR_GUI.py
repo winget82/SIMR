@@ -159,7 +159,13 @@ class simrGUI:
         
         self.bereanButton = Button(self.myToolbar, text="Berean", command=self.bereanButtonT)
         self.bereanButton.pack(side=LEFT,padx=2, pady=2)
-        
+
+        self.hebrewButton = Button(self.myToolbar, text="Hebrew")
+        self.hebrewButton.pack(side=LEFT,padx=2, pady=2)
+
+        self.greekButton = Button(self.myToolbar, text="Greek")
+        self.greekButton.pack(side=LEFT,padx=2, pady=2)
+
         self.scriptIndexButton = Button(self.myToolbar, text="Scripture Index", command=self.scriptIndexButtonT)
         self.scriptIndexButton.pack(side=LEFT,padx=2, pady=2)
         
@@ -255,10 +261,9 @@ class simrGUI:
         return found3
 
     # Search for Strong's defintion
-    def strongs_search(self):
-        inp = input("Enter Strong's Number proceeded by CAPITAL G or H: ")
-        if inp in strongscsvlst:
-            sc = strongscsvlst.index(inp)  # This is based on verse seached for.
+    def strongs_search(self, strongsNumber):
+        if strongsNumber in strongscsvlst:
+            sc = strongscsvlst.index(strongsNumber)  # This is based on verse seached for.
             # Sets sc to the strongs number searched for
             return sc
 
@@ -342,7 +347,10 @@ class simrGUI:
         print("New Project...")
 
     def saveProject(self):
+        with open("NewProject.txt", "w") as txtFile:
+            txtFile.write(self.getAllText())
         print("Saving...")
+        #NEED TO ADD A POPUP WINDOW THAT ASKS FOR FILE NAME AND FILEPATH LOCATION TO SAVE THE FILE
 
     def exitApp(self):
         print("Exiting...")
@@ -397,7 +405,8 @@ class simrGUI:
         except:
             sept = "No verse found in Septuagint for your search..."
             septLabel = "Septuagint - " + sept
-        #ISSUES WITH SEPTUAGINT TRY GENESIS 1:1 ALSO SOME JEREMIAH VERSES FOR EXAMPLE - LOOK INTO JSON FILE
+        #ISSUES WITH SEPTUAGINT TRY GENESIS 1:1 ALSO SOME JEREMIAH VERSES FOR EXAMPLE - LOOK INTO JSON FILE -
+        # json showing first index as "\ufeffGenesis 1:1" - that's the issue
 
         #berean = self.
         #bereanLabel = 
@@ -407,8 +416,7 @@ class simrGUI:
             twiLabel = "Scripture Index : \n" + ' '.join(twi)
         except:
             twiLabel = "Nothing found in Scripture Index for your search..."
-        
-        #self.myFrame.update()
+
         self.update_textOut(kjvLabel + '\n\n' + kjvsLabel + '\n\n' + septLabel + '\n\n' + twiLabel)
 
 
@@ -432,14 +440,12 @@ class simrGUI:
         
         try:
             ot = self.kjvstrnumOT_search(searchText)
-            #self.myFrame.update()
             self.update_textOut("KJV w/ Strong's - " + ' - '.join(ot))
             print(ot)
             return "KJV w/ Strong's - " + ' - '.join(ot)
             
         except:
             nt = self.kjvstrnumNT_search(searchText)
-            #self.myFrame.update()
             self.update_textOut("KJV w/ Strong's - " + ' - '.join(nt))
             print(nt)
             return "KJV w/ Strong's - " + ' - '.join(nt)
@@ -451,13 +457,11 @@ class simrGUI:
 
         try:
             txt = self.septuagint_search(searchText)
-            #self.myFrame.update()
             self.update_textOut("Septuagint - " + ' - '.join(txt))
             print(txt)
             return "Septuagint - " + ' - '.join(txt)
         except:
             txt = "No verse found in Septuagint for your search."
-            #self.myFrame.update()
             self.update_textOut("Septuagint - " + txt)
             print(txt)
             return "Septuagint - " + txt
@@ -467,9 +471,9 @@ class simrGUI:
         print("Getting Berean...")
         searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
-        #txt = 
-        #self.update_textOut(searchText)
-        print("Berean - " + searchText)
+    #    txt = 
+    #    self.update_textOut(searchText)
+    #    print("Berean - " + searchText)
 
     def scriptIndexButtonT(self, event=None):
         print("Getting Scripture Index...")
@@ -498,7 +502,7 @@ class simrGUI:
     def rightClick(self, event):
         print("Right")
         #make right-click menu here
-
+    #THESE ARE NOT DOING WHAT I WANT, THEY ARE CONFINED TO THE SCROLLBAR, SO THE TEXT WIDGET IS EFFECTING MYFRAME
 
     #-----------------------------------------------------------------------
     #TEXT WIDGET METHODS
@@ -507,11 +511,15 @@ class simrGUI:
     def update_textOut(self, text):
         self.myFrameText = text + '\n\n'
         self.textOut.insert(END, self.myFrameText)
-        #self.myFrame.update()
 
     # NEED A METHOD TO CLEAR ALL TEXT
     def clearTxt(self):
         self.textOut.delete(1.0, END)
+
+    def getAllText(self):
+        contents = self.textOut.get("1.0", "end-1c")
+        print("Getting all text...")
+        return contents
 
 
 #-----------------------------------------------------------------------
@@ -527,6 +535,3 @@ simrGUI = simrGUI()
 
 #https://www.delftstack.com/howto/python-tkinter/how-to-pass-arguments-to-tkinter-button-command/
 #https://stackoverflow.com/questions/17125842/changing-the-text-on-a-label
-
-
-#NEED TO ADD A SCROLLBAR TO THIS
