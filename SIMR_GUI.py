@@ -99,6 +99,8 @@ class simrGUI:
         self.myRoot.minsize(640,480)
         #self.myRoot.iconbitmap(default=ICON_PATH)#utilize blank icon to cover feather
 
+        self.projectName = 'New Project'
+
         #MAIN MENU
         self.myMenu = Menu(self.myRoot)
         self.myRoot.config(menu=self.myMenu)
@@ -170,6 +172,9 @@ class simrGUI:
         self.searchBox.bind('<Return>', self.searchAll)
         self.myToolbar.pack(side=TOP, fill=X)
 
+        self.clearButton = Button(self.myToolbar, text="[X]", command=self.clearTxt)
+        self.clearButton.pack(side=RIGHT, padx=2, pady=2)
+
 
         #STATUS BAR AT BOTTOM
         self.status = Label(self.myRoot, text="Displays your status here...", bd=1, relief=SUNKEN, anchor=E)
@@ -185,19 +190,21 @@ class simrGUI:
         self.myFrame.bind("<Button-2>", self.middleClick)
         self.myFrame.bind("<Button-3>", self.rightClick)
         self.myFrame.pack(fill=BOTH, expand=True)            
-        self.myFrame.update()#THIS AND LINE 189 IS NOT UPDATING AS INTENDED, IT UPDATES THE FIRST TIME
-        #AND THEN DOES NOT UPDATE WITH EACH FUNCTION
+        self.myFrame.update()
 
-        #FRAME LABEL FOR TEXT OUTPUT
-        self.textOut = Label(self.myFrame, text=self.myFrameText, wraplength=self.myFrame.winfo_width(), justify=LEFT, anchor=W)
-        self.textOut.pack(side=TOP, anchor=W)
-        
 
-        #SCROLLBAR
+        #SCROLLBAR & TEXT WIDGET
         self.scrollbar = Scrollbar(self.myFrame)
         self.scrollbar.pack(side=RIGHT, fill=Y)
-        #NEED TO GET SCROLLBAR TO UPDATE ALSO
-
+        self.textOut = Text(self.myFrame, wrap=WORD)
+        self.textOut.pack(side=LEFT, fill=BOTH, expand=1)
+        self.scrollbar.config(command=self.textOut.yview)
+        self.textOut.config(yscrollcommand=self.scrollbar.set)
+        self.textOut.insert(END, self.myFrameText)
+        #https://www.python-course.eu/tkinter_text_widget.php
+        #https://www.tutorialspoint.com/python/tk_text.htm
+        # *** http://effbot.org/tkinterbook/text.htm *** THIS IS DETAILED DO NOT DELETE
+        
 
         #MAIN LOOP FOR TKINTER
         self.myRoot.mainloop()
@@ -369,8 +376,6 @@ class simrGUI:
     # TOOLBAR METHODS
     #-----------------------------------------------------------------------
 
-#    def outText(self, text):
-#        print(text)
 
     #search button on toolbar
     def searchAll(self, event=None):
@@ -403,19 +408,22 @@ class simrGUI:
         except:
             twiLabel = "Nothing found in Scripture Index for your search..."
         
-        self.myFrame.update()
-        self.update_myFrameLabel(kjvLabel + '\n\n' + kjvsLabel + '\n\n' + septLabel + '\n\n' + twiLabel)
+        #self.myFrame.update()
+        self.update_textOut(kjvLabel + '\n\n' + kjvsLabel + '\n\n' + septLabel + '\n\n' + twiLabel)
 
 
     def kjvButtonT(self, event=None):
         print("Getting King James Version...")
         searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
-        txt = self.kjv_search(searchText)
-        self.myFrame.update()
-        self.update_myFrameLabel("KJV - " + ' - '.join(txt))
-        print(txt)
-        return "KJV - " + ' - '.join(txt)
+
+        try:
+            txt = self.kjv_search(searchText)
+            self.update_textOut("KJV - " + ' - '.join(txt))
+            print(txt)
+            return "KJV - " + ' - '.join(txt)
+        except:
+            self.update_textOut("No verse found in the King James Version for your search.")
 
     def kjvsButtonT(self, event=None):
         print("Getting King James Version with Strong's...")
@@ -424,15 +432,15 @@ class simrGUI:
         
         try:
             ot = self.kjvstrnumOT_search(searchText)
-            self.myFrame.update()
-            self.update_myFrameLabel("KJV w/ Strong's - " + ' - '.join(ot))
+            #self.myFrame.update()
+            self.update_textOut("KJV w/ Strong's - " + ' - '.join(ot))
             print(ot)
             return "KJV w/ Strong's - " + ' - '.join(ot)
             
         except:
             nt = self.kjvstrnumNT_search(searchText)
-            self.myFrame.update()
-            self.update_myFrameLabel("KJV w/ Strong's - " + ' - '.join(nt))
+            #self.myFrame.update()
+            self.update_textOut("KJV w/ Strong's - " + ' - '.join(nt))
             print(nt)
             return "KJV w/ Strong's - " + ' - '.join(nt)
 
@@ -440,16 +448,17 @@ class simrGUI:
         print("Getting Septuagint...")
         searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
+
         try:
             txt = self.septuagint_search(searchText)
-            self.myFrame.update()
-            self.update_myFrameLabel("Septuagint - " + ' - '.join(txt))
+            #self.myFrame.update()
+            self.update_textOut("Septuagint - " + ' - '.join(txt))
             print(txt)
             return "Septuagint - " + ' - '.join(txt)
         except:
             txt = "No verse found in Septuagint for your search."
-            self.myFrame.update()
-            self.update_myFrameLabel("Septuagint - " + txt)
+            #self.myFrame.update()
+            self.update_textOut("Septuagint - " + txt)
             print(txt)
             return "Septuagint - " + txt
         
@@ -459,18 +468,20 @@ class simrGUI:
         searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
         #txt = 
-        self.myFrame.update()
-        self.update_myFrameLabel(searchText)
+        #self.update_textOut(searchText)
         print("Berean - " + searchText)
 
     def scriptIndexButtonT(self, event=None):
         print("Getting Scripture Index...")
         searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
-        txt = self.twi_scripture_index(searchText)
-        self.myFrame.update()
-        self.update_myFrameLabel("Scripture Index : \n" + ' '.join(txt))
-        print(txt)
+
+        try:
+            txt = self.twi_scripture_index(searchText)
+            self.update_textOut("Scripture Index : \n" + ' '.join(txt))
+            print(txt)
+        except:
+            self.update_textOut("No verse found in Scripture index for your search.")
 
 
     #-----------------------------------------------------------------------
@@ -487,14 +498,21 @@ class simrGUI:
     def rightClick(self, event):
         print("Right")
         #make right-click menu here
-        
+
 
     #-----------------------------------------------------------------------
-    #FRAME METHODS
+    #TEXT WIDGET METHODS
     #-----------------------------------------------------------------------
 
-    def update_myFrameLabel(self, text):
-        self.textOut['text'] = text
+    def update_textOut(self, text):
+        self.myFrameText = text + '\n\n'
+        self.textOut.insert(END, self.myFrameText)
+        #self.myFrame.update()
+
+    # NEED A METHOD TO CLEAR ALL TEXT
+    def clearTxt(self):
+        self.textOut.delete(1.0, END)
+
 
 #-----------------------------------------------------------------------
 #RUN THE PROGRAM
