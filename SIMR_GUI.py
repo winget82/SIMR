@@ -390,15 +390,18 @@ class simrGUI:
         searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
         
+        #GET KJV
         kjv = self.kjv_search(searchText)
         kjvLabel = "KJV - " + ' - '.join(kjv)
         
+        #GET KJV W/STRONGS
         try:
             kjvs = self.kjvstrnumOT_search(searchText)
         except:
             kjvs = self.kjvstrnumNT_search(searchText)
         kjvsLabel = "KJV w/Strong's - " + ' - '.join(kjvs)
         
+        #GET SEPTUAGINT
         try:
             sept = self.septuagint_search(searchText)    
             septLabel = "Septuagint - " + ' - '.join(sept)
@@ -411,15 +414,29 @@ class simrGUI:
         #berean = self.
         #bereanLabel = 
 
+        #GET TWI SCRIPTURE INDEX
         try:
             twi = self.twi_scripture_index(searchText)
             twiLabel = "Scripture Index : \n" + ' '.join(twi)
         except:
             twiLabel = "Nothing found in Scripture Index for your search..."
 
-        self.update_textOut(kjvLabel + '\n\n' + kjvsLabel + '\n\n' + septLabel + '\n\n' + twiLabel)
 
+        #GET ALL GREEK AND HEBREW DEFINITIONS HERE...
+        try:
+            ots = self.kjvstrnumOT_search(searchText)
+            ots1 = self.strnumOT(ots)
+            ots2 = self.get_strongsHebrewDefs(ots1)
+            strongsDefinitions = ''.join(ots2)
+        except:
+            nts = self.kjvstrnumNT_search(searchText)
+            nts1 = self.strnumNT(nts)
+            nts2 = self.get_strongsGreekDefs(nts1)
+            strongsDefinitions = ''.join(nts2)
 
+        self.update_textOut(kjvLabel + '\n\n' + kjvsLabel + '\n\n' + strongsDefinitions + '\n\n' + septLabel + '\n\n' + twiLabel)
+
+    #FOR KJV BUTTON
     def kjvButtonT(self, event=None):
         print("Getting King James Version...")
         searchText = self.searchBox.get().title()
@@ -433,6 +450,7 @@ class simrGUI:
         except:
             self.update_textOut("No verse found in the King James Version for your search.")
 
+    #FOR KJV W/STRONGS BUTTON
     def kjvsButtonT(self, event=None):
         print("Getting King James Version with Strong's...")
         searchText = self.searchBox.get().title()
@@ -450,6 +468,7 @@ class simrGUI:
             print(nt)
             return "KJV w/ Strong's - " + ' - '.join(nt)
 
+    #FOR SEPTUAGINT BUTTON
     def septButtonT(self, event=None):
         print("Getting Septuagint...")
         searchText = self.searchBox.get().title()
@@ -530,6 +549,13 @@ class simrGUI:
             print(txt)
         except:
             self.update_textOut("No Greek defintions found for your search.")
+
+
+    #NEED TO MAKE A FUNCTION TO SEARCH FOR GREEK WORDS BY GREEK CHARACTERS YOU CAN COPY AND PASTE FROM STRONGS
+    #ALSO ONE FOR HEBREW
+
+    #NEED TO ADD A SEARCH FUNCTION TO PULL ALL GREEK DEFINITIONS IN WHEN YOU HIT GREEK BUTTON WITH A VERSE TYPED IN
+    #NEED TO ADD A SEARCH FUNCTION TO PULL ALL HEBREW DEFINITIONS IN WHEN YOU HIT GREEK BUTTON WITH A VERSE TYPED IN
 
 
     #-----------------------------------------------------------------------
