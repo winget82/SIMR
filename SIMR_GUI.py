@@ -14,6 +14,7 @@ import codecs
 import json
 from tkinter import *
 import ctypes
+import time
 
 
 #-----------------------------------------------------------------------
@@ -192,18 +193,15 @@ class simrGUI:
 
 
         #STATUS BAR AT BOTTOM
-        self.status = Label(self.myRoot, text="Displays your status here...", bd=1, relief=SUNKEN, anchor=E)
+        self.statusBar = Label(self.myRoot, text="Displays your status here...", bd=1, relief=SUNKEN, anchor=E)
         #try putting a function in the text part to see if you can get text to be dynamic
-        self.status.pack(side=BOTTOM, fill=X)#displays this at the bottom and at the width of the window
+        #SEE - https://www.youtube.com/watch?v=Mhwiy8Tr6Wo&index=13&list=PLhTjy8cBISEp6lNKUO3iwbB1DKAkRwutl&t=0s
+        self.statusBar.pack(side=BOTTOM, fill=X)#displays this at the bottom and at the width of the window
 
 
-        #FRAME & HANDLE MOUSE EVENTS WITHIN FRAME
-        #Make a frame / invisible widget to bind events to
+        #FRAME
         self.myFrame = Frame(self.myRoot)
         self.myFrameText = ''
-        self.myFrame.bind("<Button-1>", self.leftClick)
-        self.myFrame.bind("<Button-2>", self.middleClick)
-        self.myFrame.bind("<Button-3>", self.rightClick)
         self.myFrame.pack(fill=BOTH, expand=True)            
         self.myFrame.update()
 
@@ -216,6 +214,9 @@ class simrGUI:
         self.scrollbar.config(command=self.textOut.yview)
         self.textOut.config(yscrollcommand=self.scrollbar.set)
         self.textOut.insert(END, self.myFrameText)
+        self.textOut.bind("<Button-1>", self.leftClick)
+        self.textOut.bind("<Button-2>", self.middleClick)
+        self.textOut.bind("<Button-3>", self.rightClick)
         #https://www.python-course.eu/tkinter_text_widget.php
         #https://www.tutorialspoint.com/python/tk_text.htm
         # *** http://effbot.org/tkinterbook/text.htm *** THIS IS DETAILED DO NOT DELETE
@@ -402,47 +403,62 @@ class simrGUI:
 
     def newProject(self):
         print("New Project...")
+        self.statusBar['text'] = "Starting new project..."
 
     def saveProject(self):
         with open("NewProject.txt", "w") as txtFile:
             txtFile.write(self.getAllText())
         print("Saving...")
+        self.statusBar['text'] = "Saving..."
         #NEED TO ADD A POPUP WINDOW THAT ASKS FOR FILE NAME AND FILEPATH LOCATION TO SAVE THE FILE
         #FIX ENCODING - SEE OLD SIMR PROGRAM FOR ENCODINGS TO COPY OVER FOR WRITING TO TEXT FILE
 
     def exitApp(self):
         print("Exiting...")
+        self.statusBar['text'] = "Exiting..."
+        #could make a function do a time.sleep and then change the status bar to a default text at bottom of screen
+        #try this, call it on each function and see if it affects how the program runs
         exit()
 
     def redoAction(self):
         print("Redoing...")
+        self.statusBar['text'] = "Redoing previous action..."
 
     def undoAction(self):
         print("Undoing...")
+        self.statusBar['text'] = "Undoing last action..."
 
     def documentation(self):
         print("Getting documentation...")
+        self.statusBar['text'] = "Getting documentation..."
 
     def kjv(self):
         print("Getting King James Version...")
+        self.statusBar['text'] = "Getting the King James Version text..."
         
     def kjvs(self):
         print("Getting King James Version with Strong's...")
+        self.statusBar['text'] = "Getting the King James Version text with Strong's Numbers..."
 
     def sept(self):
         print("Getting Septuagint...")
+        self.statusBar['text'] = "Getting the Septuagint text..."
 
     def berean(self):
         print("Getting Berean...")
+        self.statusBar['text'] = "Getting the Berean texts..."
 
     def scriptIndex(self):
         print("Getting Scripture Index...")
+        self.statusBar['text'] = "Getting The Way International resources scripture index..."
 
     def getAbout(self):
         Mbox('About', self.about, 0)
+        self.statusBar['text'] = "Getting about information..."
 
     def getCredits(self):
         Mbox('Credits', self.credits, 0)
+        self.statusBar['text'] = "Getting credits..."
 
 
     #-----------------------------------------------------------------------
@@ -454,6 +470,7 @@ class simrGUI:
     def searchAll(self, event=None):
         searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
+        self.statusBar['text'] = "Gathering all resources for you..."
         
         #GET KJV
         kjv = self.kjv_search(searchText)
@@ -506,6 +523,7 @@ class simrGUI:
         print("Getting King James Version...")
         searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
+        self.statusBar['text'] = "Getting KJV..."
 
         try:
             txt = self.kjv_search(searchText)
@@ -520,6 +538,7 @@ class simrGUI:
         print("Getting King James Version with Strong's...")
         searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
+        self.statusBar['text'] = "Getting KJV w/Strong's Numbers..."
         
         try:
             ot = self.kjvstrnumOT_search(searchText)
@@ -538,6 +557,7 @@ class simrGUI:
         print("Getting Septuagint...")
         searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
+        self.statusBar['text'] = "Getting Septuagint..."
 
         try:
             txt = self.septuagint_search(searchText)
@@ -555,6 +575,7 @@ class simrGUI:
         print("Getting Berean...")
         searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
+        self.statusBar['text'] = "Getting Berean Bible..."
     #    txt = 
     #    self.update_textOut(searchText)
     #    print("Berean - " + searchText)
@@ -563,6 +584,7 @@ class simrGUI:
         print("Getting Scripture Index...")
         searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
+        self.statusBar['text'] = "Getting The Way International resources scripture index..."
 
         try:
             txt = self.twi_scripture_index(searchText)
@@ -575,6 +597,7 @@ class simrGUI:
         print("Getting Hebrew definitions...")
         searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
+        self.statusBar['text'] = "Getting Strong's Hebrew definition..."
 
         try:
             sc = self.strongs_search(searchText)
@@ -597,6 +620,7 @@ class simrGUI:
         print("Getting Greek definitions...")
         searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
+        self.statusBar['text'] = "Getting Strong's Greek definition..."
 
         try:
             sc = self.strongs_search(searchText)
@@ -637,7 +661,7 @@ class simrGUI:
     def rightClick(self, event):
         print("Right")
         #make right-click menu here
-    #THESE ARE NOT DOING WHAT I WANT, THEY ARE CONFINED TO THE SCROLLBAR, SO THE TEXT WIDGET IS EFFECTING MYFRAME
+
 
     #-----------------------------------------------------------------------
     #TEXT WIDGET METHODS
@@ -650,6 +674,7 @@ class simrGUI:
     # NEED A METHOD TO CLEAR ALL TEXT
     def clearTxt(self):
         self.textOut.delete(1.0, END)
+        self.statusBar['text'] = "Clearing all text..."
 
     def getAllText(self):
         contents = self.textOut.get("1.0", "end-1c")
