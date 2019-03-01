@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+#Program written by N. Flesher
+
+"""Program for study of the scriptures"""
+
 # ---------------------------------------------------------------------
 # IMPORTS - PACKAGES & MODULES UTILIZED
 # ---------------------------------------------------------------------
@@ -211,6 +215,51 @@ class simrGUI:
         #https://www.tutorialspoint.com/python/tk_text.htm
         # *** http://effbot.org/tkinterbook/text.htm *** THIS IS DETAILED DO NOT DELETE
         
+
+        self.about = """\n\nAbout this program:
+        This program is called SIMR, which is an abbreviation
+        for "Scripture Indices & Ministry Resources."
+        \nThis program was put together with the python programming
+        language, and is a compilation of the works of many, many
+        others.  Others who have spent countless hours studying &
+        teaching the Word of God.  My thanks to them for making
+        researching God's Word so much easier for us!
+        \nThe goal of this program, is to provide a tool to easily
+        compile resources for researching God's Word.  A tool to
+        help redeem the time as we diligently study God's Word.
+        \nTo 'simmer' is to be at a temperature just below the
+        boiling point.  It's to be in a state of the initial
+        stages of development...\n
+        I thought this fitting, as when we're researching a topic,
+        the research we are doing is developing into something more.
+        Such as a teaching or a research work.  Not only that, but
+        if you desire to boil over with God's Word, to heat to that
+        point, you've got to let the Word burn within you.  You
+        need to steep in it.  My believing is that this tool will
+        help you in your endeavours as you stand for God in this
+        day, time, and hour.\n
+        Love in Christ,\n
+        N. A. Flesher - 06/03/2018\n"""
+
+        self.credits = """\n\nCredits, URL Links, & Resources Used:
+        -------------------------------------
+        Strong's Numbers & Definitions - viz.bible\n
+        The Holy Bible, Berean Study Bible, BSB\n
+              Copyright ©2016 by Bible Hub\n
+              Used by Permission. All Rights Reserved Worldwide.\n
+              http://berean.bible - Berean Bible Homepage\n
+        The King James Version, Septuagint, and Strong's
+        Concordance, as well Ethelbert W. Bullinger's
+        books utilized in this program: The Witness of the Stars,
+        Number in Scripture, and How to Enjoy the Bible,
+        are all in the public domain.\n
+        Thanks to various Christian believers from different
+        walks of life, for their typing of the various works,
+        for their help in gathering resources, and their advice.\n
+        And thanks to YOU, for studying and speaking God's Word!
+        YOU ARE GOD'S BEST!!!
+        \n\n"""
+
 
         #MAIN LOOP FOR TKINTER
         self.myRoot.mainloop()
