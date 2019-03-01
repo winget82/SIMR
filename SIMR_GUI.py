@@ -408,6 +408,7 @@ class simrGUI:
             txtFile.write(self.getAllText())
         print("Saving...")
         #NEED TO ADD A POPUP WINDOW THAT ASKS FOR FILE NAME AND FILEPATH LOCATION TO SAVE THE FILE
+        #FIX ENCODING - SEE OLD SIMR PROGRAM FOR ENCODINGS TO COPY OVER FOR WRITING TO TEXT FILE
 
     def exitApp(self):
         print("Exiting...")
