@@ -96,6 +96,7 @@ with open(fpath + sept) as sept_file2:
 def Mbox(title, text, style):
     return ctypes.windll.user32.MessageBoxW(0, text, title, style)
 
+
 #-----------------------------------------------------------------------
 # WINDOW / APP
 #-----------------------------------------------------------------------
@@ -187,7 +188,7 @@ class simrGUI:
         self.searchBox.bind('<Return>', self.searchAll)
         self.myToolbar.pack(side=TOP, fill=X)
 
-        self.clearButton = Button(self.myToolbar, text="[X]", command=self.clearTxt)
+        self.clearButton = Button(self.myToolbar, text="[X]", command=self.clearTxt, fg="red")
         self.clearButton.pack(side=RIGHT, padx=2, pady=2)
 
 
@@ -223,8 +224,8 @@ class simrGUI:
 
         #RIGHT CLICK MENU
         self.rClickMenu = Menu(self.myFrame, tearoff=0)
-        self.rClickMenu.add_command(label="Copy")
-        self.rClickMenu.add_command(label="Paste")
+        self.rClickMenu.add_command(label="Copy", accelerator="Ctrl+C", command=lambda: self.textOut.focus_get().event_generate('<<Copy>>'))
+        self.rClickMenu.add_command(label="Paste", accelerator="Ctrl+V", command=lambda: self.textOut.focus_get().event_generate('<<Paste>>'))
         self.rClickMenu.add_command(label="Search")
         self.rClickMenu.add_command(label="Clear", command=self.clearTxt)
 
@@ -656,6 +657,9 @@ class simrGUI:
     #-----------------------------------------------------------------------
     #HANDLE MOUSE EVENTS METHODS
     #-----------------------------------------------------------------------
+
+    #def copyTxt():
+
 
     def leftClick(self, event):
         print("Left")
