@@ -96,6 +96,14 @@ with open(fpath + sept) as sept_file2:
 def Mbox(title, text, style):
     return ctypes.windll.user32.MessageBoxW(0, text, title, style)
 
+#THIS SWEET FUNCTION ALLOWS YOU TO PASS TWO FUNCTIONS INTO ONE FUNCTION, ALLOWING YOU TO CALL MORE THAN ONE FUNCTION IN A TKINTER COMMAND ASSIGNMENT
+def sequenceOfFunctions(*functions):
+    def func(*args, **kwargs):
+        return_value = None
+        for function in functions:
+            return_value = function(*args, **kwargs)
+        return return_value
+    return func
 
 #-----------------------------------------------------------------------
 # WINDOW / APP
@@ -226,7 +234,7 @@ class simrGUI:
         self.rClickMenu = Menu(self.myFrame, tearoff=0)
         self.rClickMenu.add_command(label="Copy", accelerator="Ctrl+C", command=lambda: self.textOut.focus_get().event_generate('<<Copy>>'))
         self.rClickMenu.add_command(label="Paste", accelerator="Ctrl+V", command=lambda: self.textOut.focus_get().event_generate('<<Paste>>'))
-        self.rClickMenu.add_command(label="Search")
+        self.rClickMenu.add_command(label="Search All", command=sequenceOfFunctions(lambda: self.textOut.focus_get().event_generate('<<Copy>>'),lambda: self.textOut.focus_get().event_generate('<<Paste>>')))
         self.rClickMenu.add_command(label="Clear", command=self.clearTxt)
 
 
