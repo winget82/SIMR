@@ -93,10 +93,12 @@ sept = 'septuagint_json.json'
 with open(fpath + sept) as sept_file2:
     septuagint_lst3 = json.load(sept_file2)
 
+#MessageBox Function
 def Mbox(title, text, style):
     return ctypes.windll.user32.MessageBoxW(0, text, title, style)
 
-#THIS SWEET FUNCTION ALLOWS YOU TO PASS TWO FUNCTIONS INTO ONE FUNCTION, ALLOWING YOU TO CALL MORE THAN ONE FUNCTION IN A TKINTER COMMAND ASSIGNMENT
+#THIS SWEET FUNCTION ALLOWS YOU TO PASS TWO FUNCTIONS INTO ONE FUNCTION,
+#ALLOWING YOU TO CALL MORE THAN ONE FUNCTION IN A TKINTER COMMAND ASSIGNMENT
 def sequenceOfFunctions(*functions):
     def func(*args, **kwargs):
         return_value = None
@@ -234,7 +236,7 @@ class simrGUI:
         self.rClickMenu = Menu(self.myFrame, tearoff=0)
         self.rClickMenu.add_command(label="Copy", accelerator="Ctrl+C", command=lambda: self.textOut.focus_get().event_generate('<<Copy>>'))
         self.rClickMenu.add_command(label="Paste", accelerator="Ctrl+V", command=lambda: self.textOut.focus_get().event_generate('<<Paste>>'))
-        self.rClickMenu.add_command(label="Search All", command=sequenceOfFunctions(lambda: self.textOut.focus_get().event_generate('<<Copy>>'),lambda: self.textOut.focus_get().event_generate('<<Paste>>')))
+        self.rClickMenu.add_command(label="Search All", command=sequenceOfFunctions(lambda: self.textOut.focus_get().event_generate('<<Copy>>'), self.rightClickSearch))
         self.rClickMenu.add_command(label="Clear", command=self.clearTxt)
 
 
@@ -666,7 +668,55 @@ class simrGUI:
     #HANDLE MOUSE EVENTS METHODS
     #-----------------------------------------------------------------------
 
-    #def copyTxt():
+    def rightClickSearch(self, event=None):
+        searchText = self.textOut.clipboard_get()
+        self.statusBar['text'] = "Gathering all resources for you..."
+        
+        #GET KJV
+        kjv = self.kjv_search(searchText)
+        kjvLabel = "KJV - " + ' - '.join(kjv)
+        
+        #GET KJV W/STRONGS
+        try:
+            kjvs = self.kjvstrnumOT_search(searchText)
+        except:
+            kjvs = self.kjvstrnumNT_search(searchText)
+        kjvsLabel = "KJV w/Strong's - " + ' - '.join(kjvs)
+        
+        #GET SEPTUAGINT
+        try:
+            sept = self.septuagint_search(searchText)    
+            septLabel = "Septuagint - " + ' - '.join(sept)
+        except:
+            sept = "No verse found in Septuagint for your search..."
+            septLabel = "Septuagint - " + sept
+        #ISSUES WITH SEPTUAGINT TRY GENESIS 1:1 ALSO SOME JEREMIAH VERSES FOR EXAMPLE - LOOK INTO JSON FILE -
+        # json showing first index as "\ufeffGenesis 1:1" - that's the issue
+
+        #berean = self.
+        #bereanLabel = 
+
+        #GET TWI SCRIPTURE INDEX
+        try:
+            twi = self.twi_scripture_index(searchText)
+            twiLabel = "Scripture Index : \n" + ' '.join(twi)
+        except:
+            twiLabel = "Nothing found in Scripture Index for your search..."
+
+
+        #GET ALL GREEK AND HEBREW DEFINITIONS HERE...
+        try:
+            ots = self.kjvstrnumOT_search(searchText)
+            ots1 = self.strnumOT(ots)
+            ots2 = self.get_strongsHebrewDefs(ots1)
+            strongsDefinitions = ''.join(ots2)
+        except:
+            nts = self.kjvstrnumNT_search(searchText)
+            nts1 = self.strnumNT(nts)
+            nts2 = self.get_strongsGreekDefs(nts1)
+            strongsDefinitions = ''.join(nts2)
+
+        self.update_textOut(kjvLabel + '\n\n' + kjvsLabel + '\n\n' + strongsDefinitions + '\n\n' + septLabel + '\n\n' + twiLabel)
 
 
     def leftClick(self, event):
