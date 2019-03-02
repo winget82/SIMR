@@ -11,7 +11,8 @@
 import re
 import codecs
 import json
-from tkinter import *
+from tkinter import Tk, Menu, Frame, Button, LEFT, StringVar, Entry, TOP, X, RIGHT, Label, SUNKEN, E, BOTTOM, BOTH, Scrollbar, Text, Y, WORD, END
+#import tkinter
 import ctypes
 import time
 
@@ -96,6 +97,7 @@ with open(fpath + sept) as sept_file2:
 #MessageBox Function
 def Mbox(title, text, style):
     return ctypes.windll.user32.MessageBoxW(0, text, title, style)
+#MAY NEED TO USE TKINTER MESSAGE BOX / POP UP WINDOW INSTEAD - THIS DOESN'T APPEAR TO WORK ON LINUX
 
 #THIS SWEET FUNCTION ALLOWS YOU TO PASS TWO FUNCTIONS INTO ONE FUNCTION,
 #ALLOWING YOU TO CALL MORE THAN ONE FUNCTION IN A TKINTER COMMAND ASSIGNMENT
@@ -500,6 +502,7 @@ class simrGUI:
             kjvs = self.kjvstrnumNT_search(searchText)
         kjvsLabel = "KJV w/Strong's - " + ' - '.join(kjvs)
         
+        
         #GET SEPTUAGINT
         try:
             sept = self.septuagint_search(searchText)    
@@ -590,7 +593,7 @@ class simrGUI:
 
     def bereanButtonT(self, event=None):
         print("Getting Berean...")
-        searchText = self.searchBox.get().title()
+    #    searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
         self.statusBar['text'] = "Getting Berean Bible..."
     #    txt = 
@@ -669,55 +672,111 @@ class simrGUI:
     #-----------------------------------------------------------------------
 
     def rightClickSearch(self, event=None):
-        searchText = self.textOut.clipboard_get()
+        searchText = self.textOut.clipboard_get().title()
         self.statusBar['text'] = "Gathering all resources for you..."
         
         #GET KJV
-        kjv = self.kjv_search(searchText)
-        kjvLabel = "KJV - " + ' - '.join(kjv)
+        try:
+            kjv = self.kjv_search(searchText)
+            kjvLabel = "KJV - " + ' - '.join(kjv)
+        except:
+            pass
         
         #GET KJV W/STRONGS
         try:
-            kjvs = self.kjvstrnumOT_search(searchText)
+            try:
+                kjvs = self.kjvstrnumOT_search(searchText)
+            except:
+                kjvs = self.kjvstrnumNT_search(searchText)
+            kjvsLabel = "KJV w/Strong's - " + ' - '.join(kjvs)
         except:
-            kjvs = self.kjvstrnumNT_search(searchText)
-        kjvsLabel = "KJV w/Strong's - " + ' - '.join(kjvs)
+            pass
         
         #GET SEPTUAGINT
         try:
-            sept = self.septuagint_search(searchText)    
-            septLabel = "Septuagint - " + ' - '.join(sept)
+            try:
+                sept = self.septuagint_search(searchText)    
+                septLabel = "Septuagint - " + ' - '.join(sept)
+            except:
+                sept = "No verse found in Septuagint for your search..."
+                septLabel = "Septuagint - " + sept
+            #ISSUES WITH SEPTUAGINT TRY GENESIS 1:1 ALSO SOME JEREMIAH VERSES FOR EXAMPLE - LOOK INTO JSON FILE -
+            # json showing first index as "\ufeffGenesis 1:1" - that's the issue
         except:
-            sept = "No verse found in Septuagint for your search..."
-            septLabel = "Septuagint - " + sept
-        #ISSUES WITH SEPTUAGINT TRY GENESIS 1:1 ALSO SOME JEREMIAH VERSES FOR EXAMPLE - LOOK INTO JSON FILE -
-        # json showing first index as "\ufeffGenesis 1:1" - that's the issue
+            pass
 
         #berean = self.
         #bereanLabel = 
 
         #GET TWI SCRIPTURE INDEX
         try:
-            twi = self.twi_scripture_index(searchText)
-            twiLabel = "Scripture Index : \n" + ' '.join(twi)
+            try:
+                twi = self.twi_scripture_index(searchText)
+                twiLabel = "Scripture Index : \n" + ' '.join(twi)
+            except:
+                twiLabel = "Nothing found in Scripture Index for your search..."
         except:
-            twiLabel = "Nothing found in Scripture Index for your search..."
+            pass
 
+        #GET GREEK or HEBREW DEFINITION HERE...
+        try:#THIS PART NEEDS THOUGHT THROUGH BETTER BECAUSE IT WILL ALWAYS ADD AN H ON THE NUMBER
+            try:#HEBREW
+                sc = self.strongs_search('H' + searchText)
+                sc_index0 = strongscsvlst[sc]
+                sc_index1 = strongscsvlst[sc + 1]
+                sc_index2 = strongscsvlst[sc + 2]
+                sc_index3 = strongscsvlst[sc + 3]
+                sc_index4 = strongscsvlst[sc + 4]
+                sc_index5 = strongscsvlst[sc + 5]
+                sc_index6 = strongscsvlst[sc + 6]
+                hTxt = ('\n' + sc_index0 + ' - ' + sc_index1 + ' - '
+                      + sc_index2 + ' (' + sc_index3 + ') ' + sc_index4 +
+                      ' ' + sc_index5 + ', ' + sc_index6)
+                print(hTxt)
+            except:#GREEK
+                sc = self.strongs_search('G' + searchText)
+                sc_index0 = strongscsvlst[sc]
+                sc_index1 = strongscsvlst[sc + 1]
+                sc_index2 = strongscsvlst[sc + 2]
+                sc_index3 = strongscsvlst[sc + 3]
+                sc_index4 = strongscsvlst[sc + 4]
+                sc_index5 = strongscsvlst[sc + 5]
+                sc_index6 = strongscsvlst[sc + 6]
+                gTxt = ('\n' + sc_index0 + ' - ' + sc_index1 + ' - '
+                      + sc_index2 + ' (' + sc_index3 + ') ' + sc_index4 +
+                      ' ' + sc_index5 + ', ' + sc_index6)
+                print(gTxt)       
+        except:
+            pass
 
-        #GET ALL GREEK AND HEBREW DEFINITIONS HERE...
         try:
-            ots = self.kjvstrnumOT_search(searchText)
-            ots1 = self.strnumOT(ots)
-            ots2 = self.get_strongsHebrewDefs(ots1)
-            strongsDefinitions = ''.join(ots2)
+            #GET ALL GREEK AND HEBREW DEFINITIONS HERE...
+            try:
+                ots = self.kjvstrnumOT_search(searchText)
+                ots1 = self.strnumOT(ots)
+                ots2 = self.get_strongsHebrewDefs(ots1)
+                strongsDefinitions = ''.join(ots2)
+            except:
+                nts = self.kjvstrnumNT_search(searchText)
+                nts1 = self.strnumNT(nts)
+                nts2 = self.get_strongsGreekDefs(nts1)
+                strongsDefinitions = ''.join(nts2)
         except:
-            nts = self.kjvstrnumNT_search(searchText)
-            nts1 = self.strnumNT(nts)
-            nts2 = self.get_strongsGreekDefs(nts1)
-            strongsDefinitions = ''.join(nts2)
+            pass
 
-        self.update_textOut(kjvLabel + '\n\n' + kjvsLabel + '\n\n' + strongsDefinitions + '\n\n' + septLabel + '\n\n' + twiLabel)
-
+        #NEED TO THINK THIS THROUGH BETTER (BELOW TRY/EXCEPT NESTED TRY/EXCEPT) - MAY NEED TO USE IF ELIF ELSE STATEMENT TO DETERMINE WHICH
+        #self.update_textOut() HAPPENS.  BECAUSE THIS IS PULLING HEBREW, WHICH SHOULD PULL GREEK FIRST...???
+        #That is because of (see lines 721 to 733 above) H# being generated skipping the except statement to generate a G#
+        try:
+            try:
+                try:#Greek
+                    self.update_textOut(gTxt)
+                except:#Hebrew
+                    self.update_textOut(hTxt)
+            except:#All
+                self.update_textOut(kjvLabel + '\n\n' + kjvsLabel + '\n\n' + strongsDefinitions + '\n\n' + septLabel + '\n\n' + twiLabel)
+        except:
+            pass
 
     def leftClick(self, event):
         print("Left")
