@@ -62,23 +62,23 @@ with open(folderpath + NT_file) as f_obj_NT:
     NT_sn = json.load(f_obj_NT)
 
 # HowToEnjoyReadingTheBible Bullinger
-with open('./reference_files/how_to_enjoy_the_bible_bullinger.txt', 'r', encoding='ISO-8859-1') as fileenjoy:
+with open('./ref_files/how_to_enjoy_the_bible_bullinger.txt', 'r', encoding='ISO-8859-1') as fileenjoy:
     enjoy = fileenjoy.read()
 
 # NumbersInScripture Bullinger
-with open('./reference_files/number_in_scripture_bullinger.txt', 'r', encoding='ISO-8859-1') as filenumberscript:
+with open('./ref_files/number_in_scripture_bullinger.txt', 'r', encoding='ISO-8859-1') as filenumberscript:
     numberscript = filenumberscript.read()
 
 # WitnessOfTheStars Bullinger
-with open('./reference_files/thewitnessofthestars.txt', 'r', encoding='ISO-8859-1') as witnessstars:
+with open('./ref_files/thewitnessofthestars.txt', 'r', encoding='ISO-8859-1') as witnessstars:
     stars = witnessstars.read()
 
 # TWI scripture index
-with open('./reference_files/modified_for_python_SCRIPTURE_INDEX.txt', 'r', encoding='ISO-8859-1') as filetwi:
+with open('./ref_files/modified_for_python_SCRIPTURE_INDEX.txt', 'r', encoding='ISO-8859-1') as filetwi:
     twi = filetwi.read()
 
 # TWI scripture index abbreviations
-with open('./reference_files/modified_for_python_SCRIPTURE_INDEX_abbreviations.txt', 'r', encoding='ISO-8859-1') as filetwiabb:
+with open('./ref_files/modified_for_python_SCRIPTURE_INDEX_abbreviations.txt', 'r', encoding='ISO-8859-1') as filetwiabb:
     twiabb = filetwiabb.read()
 
 # Strongs Concordance Dictionary

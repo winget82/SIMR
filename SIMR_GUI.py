@@ -329,10 +329,14 @@ class simrGUI:
     #-----------------------------------------------------------------------
 
     # Search KJV verse
-    def kjv_search(self, verse):
-        #found = next(i for i in scriptures_lst if kjv_inp in i)
-        found = next(i for i in scriptures_lst if verse in i)
-        return found
+    def kjv_search(self, verse):#CAN SEARCH FOR A LIST OF VERSES TYPED LIKE JOHN 1:1, aCTS 2:4, james 1:1
+        returnedVerses = []
+        verses = verse.split(',')
+        for v in verses:
+            v = v.strip()
+            found = next(i for i in scriptures_lst if v in i)
+            returnedVerses.append(' '.join(found))
+        return returnedVerses
 
     # Search KJV w/ Strong's verse
     #Old Testament
@@ -522,14 +526,14 @@ class simrGUI:
 
 
     #search button on toolbar
-    def searchAll(self, event=None):
+    def searchAll(self, event=None):#ONLY WORKS WHEN SEARCHING FOR ONE VERSE AT A TIME BECAUSE ONLY KJV IS SET UP TO SEARCH FOR LIST OF VERSES SEPARATED BY A COMMA
         searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
         self.statusBar['text'] = "Gathering all resources for you..."
         
         #GET KJV
         kjv = self.kjv_search(searchText)
-        kjvLabel = "KJV - " + ' - '.join(kjv)
+        kjvLabel = "KJV:\n" + '\n\n'.join(kjv)
         
         #GET KJV W/STRONGS
         try:
@@ -575,7 +579,7 @@ class simrGUI:
         self.update_textOut(kjvLabel + '\n\n' + kjvsLabel + '\n\n' + strongsDefinitions + '\n\n' + septLabel + '\n\n' + twiLabel)
 
     #FOR KJV BUTTON
-    def kjvButtonT(self, event=None):
+    def kjvButtonT(self, event=None):#CAN NOW SEARCH FOR MORE THAN ONE VERSE WHEN VERSES ARE SEPARATED BY A COMMA
         print("Getting King James Version...")
         searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
@@ -583,9 +587,9 @@ class simrGUI:
 
         try:
             txt = self.kjv_search(searchText)
-            self.update_textOut("KJV - " + ' - '.join(txt))
+            self.update_textOut("KJV:\n" + '\n\n'.join(txt))
             print(txt)
-            return "KJV - " + ' - '.join(txt)
+            return "KJV:\n" + '\n\n'.join(txt)
         except:
             self.update_textOut("No verse found in the King James Version for your search.")
 
@@ -718,7 +722,7 @@ class simrGUI:
         #GET KJV
         try:
             kjv = self.kjv_search(searchText)
-            kjvLabel = "KJV - " + ' - '.join(kjv)
+            kjvLabel = "KJV:\n" + '\n\n'.join(kjv)
         except:
             pass
         
