@@ -97,7 +97,7 @@ with open(fpath + sept) as sept_file2:
 #MessageBox Function
 def Mbox(title, text, style):
     return ctypes.windll.user32.MessageBoxW(0, text, title, style)
-#MAY NEED TO USE TKINTER MESSAGE BOX / POP UP WINDOW INSTEAD - THIS DOESN'T APPEAR TO WORK ON LINUX
+#WILL NEED TO USE TKINTER MESSAGE BOX / POP UP WINDOW INSTEAD - THIS DOESN'T WORK ON LINUX
 
 #THIS SWEET FUNCTION ALLOWS YOU TO PASS TWO FUNCTIONS INTO ONE FUNCTION,
 #ALLOWING YOU TO CALL MORE THAN ONE FUNCTION IN A TKINTER COMMAND ASSIGNMENT
@@ -237,9 +237,14 @@ class simrGUI:
         #RIGHT CLICK MENU
         self.rClickMenu = Menu(self.myFrame, tearoff=0)
         self.rClickMenu.add_command(label="Copy", accelerator="Ctrl+C", command=lambda: self.textOut.focus_get().event_generate('<<Copy>>'))
+        self.rClickMenu.add_command(label="Cut", accelerator="Ctrl+X", command=lambda: self.textOut.focus_get().event_generate('<<Cut>>'))
         self.rClickMenu.add_command(label="Paste", accelerator="Ctrl+V", command=lambda: self.textOut.focus_get().event_generate('<<Paste>>'))
+        self.rClickMenu.add_command(label="Greek", command=sequenceOfFunctions(lambda: self.textOut.focus_get().event_generate('<<Copy>>'), self.rightClickGreekSearch))
+        self.rClickMenu.add_command(label="Hebrew", command=sequenceOfFunctions(lambda: self.textOut.focus_get().event_generate('<<Copy>>'), self.rightClickHebrewSearch))
         self.rClickMenu.add_command(label="Search All", command=sequenceOfFunctions(lambda: self.textOut.focus_get().event_generate('<<Copy>>'), self.rightClickSearch))
+        self.rClickMenu.add_command(label="Bible Dict.", command=sequenceOfFunctions(lambda: self.textOut.focus_get().event_generate('<<Copy>>'), self.rightClickSearch))
         self.rClickMenu.add_command(label="Clear", command=self.clearTxt)
+        self.rClickMenu.add_command(label="Close Menu")
 
 
         #POPUPS
@@ -718,37 +723,6 @@ class simrGUI:
         except:
             pass
 
-        #GET GREEK or HEBREW DEFINITION HERE...
-        try:#THIS PART NEEDS THOUGHT THROUGH BETTER BECAUSE IT WILL ALWAYS ADD AN H ON THE NUMBER
-            try:#HEBREW
-                sc = self.strongs_search('H' + searchText)
-                sc_index0 = strongscsvlst[sc]
-                sc_index1 = strongscsvlst[sc + 1]
-                sc_index2 = strongscsvlst[sc + 2]
-                sc_index3 = strongscsvlst[sc + 3]
-                sc_index4 = strongscsvlst[sc + 4]
-                sc_index5 = strongscsvlst[sc + 5]
-                sc_index6 = strongscsvlst[sc + 6]
-                hTxt = ('\n' + sc_index0 + ' - ' + sc_index1 + ' - '
-                      + sc_index2 + ' (' + sc_index3 + ') ' + sc_index4 +
-                      ' ' + sc_index5 + ', ' + sc_index6)
-                print(hTxt)
-            except:#GREEK
-                sc = self.strongs_search('G' + searchText)
-                sc_index0 = strongscsvlst[sc]
-                sc_index1 = strongscsvlst[sc + 1]
-                sc_index2 = strongscsvlst[sc + 2]
-                sc_index3 = strongscsvlst[sc + 3]
-                sc_index4 = strongscsvlst[sc + 4]
-                sc_index5 = strongscsvlst[sc + 5]
-                sc_index6 = strongscsvlst[sc + 6]
-                gTxt = ('\n' + sc_index0 + ' - ' + sc_index1 + ' - '
-                      + sc_index2 + ' (' + sc_index3 + ') ' + sc_index4 +
-                      ' ' + sc_index5 + ', ' + sc_index6)
-                print(gTxt)       
-        except:
-            pass
-
         try:
             #GET ALL GREEK AND HEBREW DEFINITIONS HERE...
             try:
@@ -768,13 +742,49 @@ class simrGUI:
         #self.update_textOut() HAPPENS.  BECAUSE THIS IS PULLING HEBREW, WHICH SHOULD PULL GREEK FIRST...???
         #That is because of (see lines 721 to 733 above) H# being generated skipping the except statement to generate a G#
         try:
-            try:
-                try:#Greek
-                    self.update_textOut(gTxt)
-                except:#Hebrew
-                    self.update_textOut(hTxt)
-            except:#All
-                self.update_textOut(kjvLabel + '\n\n' + kjvsLabel + '\n\n' + strongsDefinitions + '\n\n' + septLabel + '\n\n' + twiLabel)
+            self.update_textOut(kjvLabel + '\n\n' + kjvsLabel + '\n\n' + strongsDefinitions + '\n\n' + septLabel + '\n\n' + twiLabel)
+        except:
+            pass
+
+    def rightClickGreekSearch(self, event=None):
+        searchText = self.textOut.clipboard_get().title()
+        self.statusBar['text'] = "Getting Greek word and definition for you..."
+        
+        try:
+            sc = self.strongs_search('G' + searchText)
+            sc_index0 = strongscsvlst[sc]
+            sc_index1 = strongscsvlst[sc + 1]
+            sc_index2 = strongscsvlst[sc + 2]
+            sc_index3 = strongscsvlst[sc + 3]
+            sc_index4 = strongscsvlst[sc + 4]
+            sc_index5 = strongscsvlst[sc + 5]
+            sc_index6 = strongscsvlst[sc + 6]
+            gTxt = ('\n' + sc_index0 + ' - ' + sc_index1 + ' - '
+                  + sc_index2 + ' (' + sc_index3 + ') ' + sc_index4 +
+                  ' ' + sc_index5 + ', ' + sc_index6)
+            print(gTxt)
+            self.update_textOut(gTxt)    
+        except:
+            pass     
+
+    def rightClickHebrewSearch(self, event=None):
+        searchText = self.textOut.clipboard_get().title()
+        self.statusBar['text'] = "Getting Hebrew word and definition for you..."
+        
+        try:
+            sc = self.strongs_search('H' + searchText)
+            sc_index0 = strongscsvlst[sc]
+            sc_index1 = strongscsvlst[sc + 1]
+            sc_index2 = strongscsvlst[sc + 2]
+            sc_index3 = strongscsvlst[sc + 3]
+            sc_index4 = strongscsvlst[sc + 4]
+            sc_index5 = strongscsvlst[sc + 5]
+            sc_index6 = strongscsvlst[sc + 6]
+            hTxt = ('\n' + sc_index0 + ' - ' + sc_index1 + ' - '
+                  + sc_index2 + ' (' + sc_index3 + ') ' + sc_index4 +
+                  ' ' + sc_index5 + ', ' + sc_index6)
+            print(hTxt)
+            self.update_textOut(hTxt)
         except:
             pass
 
