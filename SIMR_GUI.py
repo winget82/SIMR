@@ -115,6 +115,8 @@ def sequenceOfFunctions(*functions):
 
 class simrGUI:
     def __init__(self):
+        
+        #ROOT WINDOW
         self.myRoot = Tk()
         self.myRoot.minsize(640,480)
         #self.myRoot.iconbitmap(default=ICON_PATH)#utilize blank icon to cover feather
@@ -137,8 +139,9 @@ class simrGUI:
         # Edit Menu
         self.editMenu = Menu(self.myMenu, tearoff=0)
         self.myMenu.add_cascade(label="Edit", menu=self.editMenu)
-        self.editMenu.add_command(label="Undo", command=self.undoAction)
-        self.editMenu.add_command(label="Redo", command=self.redoAction)
+        self.editMenu.add_command(label="Undo", accelerator="Ctrl+Z", command=sequenceOfFunctions(lambda: self.textOut.focus_get().event_generate('<<Undo>>'), self.undoAction))
+        self.editMenu.add_command(label="Redo", accelerator="Ctrl+Y", command=sequenceOfFunctions(lambda: self.textOut.focus_get().event_generate('<<Redo>>'), self.redoAction))
+        #Control+Y not working for redo, it is pasting in
 
         # Read various bibles
         self.readMenu = Menu(self.myMenu, tearoff=0)
@@ -171,38 +174,51 @@ class simrGUI:
         #TOOLBAR
         self.myToolbar = Frame(self.myRoot)
         
+        #KJV Button
         self.kjvButton = Button(self.myToolbar, text="KJV", command=self.kjvButtonT)
         self.kjvButton.pack(side=LEFT,padx=2, pady=2)
+
+        #KJVS Button
         self.kjvSButton = Button(self.myToolbar, text="KJV w/ Strong's", command=self.kjvsButtonT)
         self.kjvSButton.pack(side=LEFT,padx=2, pady=2)
         
+        #Septuagint Button
         self.septButton = Button(self.myToolbar, text="Septuagint", command=self.septButtonT)
         self.septButton.pack(side=LEFT,padx=2, pady=2)
         
+        #Berean Button
         self.bereanButton = Button(self.myToolbar, text="Berean", command=self.bereanButtonT)
         self.bereanButton.pack(side=LEFT,padx=2, pady=2)
 
+        #Hebrew Button
         self.hebrewButton = Button(self.myToolbar, text="Hebrew", command=self.hebrewButtonT)
         self.hebrewButton.pack(side=LEFT,padx=2, pady=2)
 
+        #Greek Button
         self.greekButton = Button(self.myToolbar, text="Greek", command=self.greekButtonT)
         self.greekButton.pack(side=LEFT,padx=2, pady=2)
 
+        #Scripture Index Button
         self.scriptIndexButton = Button(self.myToolbar, text="Scripture Index", command=self.scriptIndexButtonT)
         self.scriptIndexButton.pack(side=LEFT,padx=2, pady=2)
         
+        #Text Entry Box
         self.entryText = StringVar(self.myToolbar)
         #self.entryText.set("")
         self.searchBox = Entry(self.myToolbar, textvariable=self.entryText)
         self.searchBox.pack(side=LEFT, padx=2, pady=2)
+        
+        #Search Button
         self.searchButton = Button(self.myToolbar, text="Search All", command=self.searchAll)
         self.searchButton.pack(side=LEFT,padx=2, pady=2)
         self.searchBox.bind('<Return>', self.searchAll)
-        self.myToolbar.pack(side=TOP, fill=X)
-
+        
+        #Clear Button
         self.clearButton = Button(self.myToolbar, text="[X]", command=self.clearTxt, fg="red")
         self.clearButton.pack(side=RIGHT, padx=2, pady=2)
 
+        #Pack the Toolbar
+        self.myToolbar.pack(side=TOP, fill=X)
 
         #STATUS BAR AT BOTTOM
         self.statusBar = Label(self.myRoot, text="Displays your status here...", bd=1, relief=SUNKEN, anchor=E)
@@ -221,7 +237,7 @@ class simrGUI:
         #SCROLLBAR & TEXT WIDGET
         self.scrollbar = Scrollbar(self.myFrame)
         self.scrollbar.pack(side=RIGHT, fill=Y)
-        self.textOut = Text(self.myFrame, wrap=WORD)
+        self.textOut = Text(self.myFrame, wrap=WORD, undo=True, autoseparators=True, maxundo=-1)
         self.textOut.pack(side=LEFT, fill=BOTH, expand=1)
         self.scrollbar.config(command=self.textOut.yview)
         self.textOut.config(yscrollcommand=self.scrollbar.set)
@@ -232,7 +248,7 @@ class simrGUI:
         #https://www.python-course.eu/tkinter_text_widget.php
         #https://www.tutorialspoint.com/python/tk_text.htm
         # *** http://effbot.org/tkinterbook/text.htm *** THIS IS DETAILED DO NOT DELETE
-        
+
 
         #RIGHT CLICK MENU
         self.rClickMenu = Menu(self.myFrame, tearoff=0)
@@ -247,7 +263,7 @@ class simrGUI:
         self.rClickMenu.add_command(label="Close Menu")
 
 
-        #POPUPS
+        #Text for Pop Ups
         self.about = """\n\n
         About this program:
         --------------------------\n
@@ -319,10 +335,11 @@ class simrGUI:
         return found
 
     # Search KJV w/ Strong's verse
+    #Old Testament
     def kjvstrnumOT_search(self, searchOT_ks):
         found_snOT = next(i for i in OT_sn if searchOT_ks in i)
         return found_snOT
-
+    #New Testament
     def kjvstrnumNT_search(self, searchNT_ks):
         found_snNT = next(i for i in NT_sn if searchNT_ks in i)
         return found_snNT
@@ -365,7 +382,7 @@ class simrGUI:
         # print(hebrew)
         return strongsNumberHebrew
 
-    def get_strongsHebrewDefs(self, strongsNumberHebrew):#THIS DEFINITION IS FOR PULLING ALL THE HEBREW DEFINITIONS FOR A VERSE
+    def get_strongsHebrewDefs(self, strongsNumberHebrew):#THIS DEFINITION PULLS ALL THE HEBREW DEFINITIONS FOR A VERSE
         scH_lst = []
         for item in strongsNumberHebrew:
             if item in strongscsvlst:
@@ -399,7 +416,7 @@ class simrGUI:
         # print(greek)
         return strongsNumberGreek
 
-    def get_strongsGreekDefs(self, strongsNumberGreek):#THIS DEFINITION IS FOR PULLING ALL THE GREEK DEFINITIONS FOR A VERSE
+    def get_strongsGreekDefs(self, strongsNumberGreek):#THIS DEFINITION PULLS ALL THE GREEK DEFINITIONS FOR A VERSE
         scG_lst = []
         for item in strongsNumberGreek:
             if item in strongscsvlst:
@@ -424,13 +441,16 @@ class simrGUI:
     # MENU METHODS
     #-----------------------------------------------------------------------
 
+    # METHOD FOR TESTING PURPOSES
     def showIt(self):
         print("This button works...")
 
+    # NEW PROJECT
     def newProject(self):
         print("New Project...")
         self.statusBar['text'] = "Starting new project..."
 
+    # SAVE PROJECT
     def saveProject(self):
         with open("NewProject.txt", "w", encoding='utf-8') as txtFile:
             txtFile.write(self.getAllText())
@@ -439,47 +459,58 @@ class simrGUI:
         #NEED TO ADD A POPUP WINDOW THAT ASKS FOR FILE NAME AND FILEPATH LOCATION TO SAVE THE FILE
         #FIX ENCODING - SEE OLD SIMR PROGRAM FOR ENCODINGS TO COPY OVER FOR WRITING TO TEXT FILE
 
+    # EXIT APP
     def exitApp(self):
         print("Exiting...")
         self.statusBar['text'] = "Exiting..."
         exit()
 
+    # REDO - FOR UPDATING STATUS BAR ONLY
     def redoAction(self):
         print("Redoing...")
         self.statusBar['text'] = "Redoing previous action..."
 
+    # UNDO - FOR UPDATING STATUS BAR ONLY
     def undoAction(self):
         print("Undoing...")
         self.statusBar['text'] = "Undoing last action..."
 
+    # GET DOCUMENTATION
     def documentation(self):
         print("Getting documentation...")
         self.statusBar['text'] = "Getting documentation..."
 
+    # GET KJV
     def kjv(self):
         print("Getting King James Version...")
         self.statusBar['text'] = "Getting the King James Version text..."
-        
+
+    # GET KJVS
     def kjvs(self):
         print("Getting King James Version with Strong's...")
         self.statusBar['text'] = "Getting the King James Version text with Strong's Numbers..."
 
+    # GET SEPTUAGINT
     def sept(self):
         print("Getting Septuagint...")
         self.statusBar['text'] = "Getting the Septuagint text..."
 
+    # GET BEREAN
     def berean(self):
         print("Getting Berean...")
         self.statusBar['text'] = "Getting the Berean texts..."
 
+    # GET SCRIPTURE INDEX
     def scriptIndex(self):
         print("Getting Scripture Index...")
         self.statusBar['text'] = "Getting The Way International resources scripture index..."
 
+    # GET ABOUT INFO
     def getAbout(self):
         Mbox('About', self.about, 0)
         self.statusBar['text'] = "Getting about information..."
 
+    # GET CREDITS INFO
     def getCredits(self):
         Mbox('Credits', self.credits, 0)
         self.statusBar['text'] = "Getting credits..."
@@ -595,7 +626,7 @@ class simrGUI:
             print(txt)
             return "Septuagint - " + txt
         
-
+    #FOR BEREAN BUTTON
     def bereanButtonT(self, event=None):
         print("Getting Berean...")
     #    searchText = self.searchBox.get().title()
@@ -605,6 +636,7 @@ class simrGUI:
     #    self.update_textOut(searchText)
     #    print("Berean - " + searchText)
 
+    #FOR SCRIPTURE INDEX BUTTON
     def scriptIndexButtonT(self, event=None):
         print("Getting Scripture Index...")
         searchText = self.searchBox.get().title()
@@ -618,6 +650,7 @@ class simrGUI:
         except:
             self.update_textOut("No verse found in Scripture index for your search.")
 
+    #FOR HEBREW BUTTON
     def hebrewButtonT(self, event=None):
         print("Getting Hebrew definitions...")
         searchText = self.searchBox.get().title()
@@ -641,6 +674,7 @@ class simrGUI:
         except:
             self.update_textOut("No Hebrew definitions found for your search.")
 
+    #FOR GREEK BUTTON
     def greekButtonT(self, event=None):
         print("Getting Greek definitions...")
         searchText = self.searchBox.get().title()
@@ -676,6 +710,7 @@ class simrGUI:
     #HANDLE MOUSE EVENTS METHODS
     #-----------------------------------------------------------------------
 
+    #RIGHT CLICK SEARCH ALL FUNTION - TO SEARCH FOR ALL INFORMATION ABOUT SELECTED VERSE REFERENCE TEXT
     def rightClickSearch(self, event=None):
         searchText = self.textOut.clipboard_get().title()
         self.statusBar['text'] = "Gathering all resources for you..."
@@ -746,6 +781,7 @@ class simrGUI:
         except:
             pass
 
+    # RIGHT CLICK SEARCH FOR GREEK DEFINITION OF SELECTED TEXT NUMBER
     def rightClickGreekSearch(self, event=None):
         searchText = self.textOut.clipboard_get().title()
         self.statusBar['text'] = "Getting Greek word and definition for you..."
@@ -767,6 +803,7 @@ class simrGUI:
         except:
             pass     
 
+    # RIGHT CLICK SEARCH FOR HEBREW DEFINITION OF SELECTED TEXT NUMBER
     def rightClickHebrewSearch(self, event=None):
         searchText = self.textOut.clipboard_get().title()
         self.statusBar['text'] = "Getting Hebrew word and definition for you..."
@@ -804,6 +841,7 @@ class simrGUI:
     #TEXT WIDGET METHODS
     #-----------------------------------------------------------------------
 
+    # UPDATES THE TEXT ON THE TEXT WIDGET - should probably rename myFrameText to myTextOutText or something
     def update_textOut(self, text):
         self.myFrameText = text + '\n\n'
         self.textOut.insert(END, self.myFrameText)
@@ -813,6 +851,7 @@ class simrGUI:
         self.textOut.delete(1.0, END)
         self.statusBar['text'] = "Clearing all text..."
 
+    # COLLECTS ALL TEXT IN THE TEXT WIDGET TO A VARIABLE - USED TO SAVE FILE
     def getAllText(self):
         contents = self.textOut.get("1.0", "end-1c")
         print("Getting all text...")
