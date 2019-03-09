@@ -332,23 +332,9 @@ class simrGUI:
     # WRITE A FUNCTION TO SEARCH FOR WORD OR PHRASE TYPED OR SELECTED (RIGHT CLICK MENU)
     # AND RETURN LIST OF VERSES CONTAINING THE SEARCH STRING
     def find_txt(self,text):
-        #returnedVerses = []
-        #need to change text into a regex - right now I think there is formatting captured in the i[1]
-        #that is preventing from returning the verse.  It'll return the verse if you search by John 1:1
-        #but not by the text of the verse.  This method returns the entire list for the match
-        # when scriptures_lst = [['abc', '123'], ['def', '345'], ['ewr', '345']]
-        # print(find_txt("345"))
-        # ['def', '345'] is returned
-        # will also need to determine how to get it to pull each match throughout the entire bible
-        # not just the first match it finds - figure out how to use a regex to do this
-        # also will want to do this for each bible version
-        # https://stackoverflow.com/questions/18072759/list-comprehension-on-a-nested-list
-
-        found = next(i[1] for i in scriptures_lst if text in i)
-        return found
-        
-        # try https://stackoverflow.com/questions/33938488/finding-the-index-of-an-element-in-nested-lists-in-python
-        #return kjvtxt, kjvstext, septtext, bereantext
+        returnedVerses = [i for i in scriptures_lst if text in i[1]] # THIS IS RETURNING A LIST OF LISTS OF ALL MATCHES (NESTED LIST)
+        return returnedVerses
+        #CURRENTLY ONLY SETUP TO SEARCH THE KJV
 
     # Search KJV verse
     def kjv_search(self, verse):#CAN SEARCH FOR A LIST OF VERSES TYPED LIKE JOHN 1:1, aCTS 2:4, james 1:1
@@ -854,10 +840,15 @@ class simrGUI:
     def rightClickFindTxt(self, event=None):#THIS IS NOT WORKING THE WAY I WANT
         self.statusBar['text'] = "Searching for text phrase..."
         searchText = self.textOut.clipboard_get().title().strip()
-        final = self.find_txt(searchText)
-        print(final)
-        self.update_textOut(' - '.join(final))
-                
+        returnedVerses = self.find_txt(searchText)
+        combinedVerses = [item for sublist in returnedVerses for item in sublist]# combine nested lists into a single list
+        print(combinedVerses)
+        #still not returning every word - do a search on "beggining and you will see the issue"
+        #AT THIS POINT, NEED TO ITERATE OVER THE LIST AND COMBINE EVERY 2 INDICES INTO ONE
+        # STRING (ONE INDEX) SEPERATED WITH " - " BETWEEN THE SCRIPTURE AND IT'S REFERENCE
+        
+
+        self.update_textOut('\n'.join(combinedVerses))                
 
     def leftClick(self, event):
         print("Left")
