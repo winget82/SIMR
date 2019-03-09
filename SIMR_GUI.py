@@ -259,6 +259,7 @@ class simrGUI:
         self.rClickMenu.add_command(label="Hebrew", command=sequenceOfFunctions(lambda: self.textOut.focus_get().event_generate('<<Copy>>'), self.rightClickHebrewSearch))
         self.rClickMenu.add_command(label="Search All", command=sequenceOfFunctions(lambda: self.textOut.focus_get().event_generate('<<Copy>>'), self.rightClickSearch))
         self.rClickMenu.add_command(label="Bible Dict.", command=sequenceOfFunctions(lambda: self.textOut.focus_get().event_generate('<<Copy>>'), self.rightClickSearch))
+        self.rClickMenu.add_command(label="Find Text", command=sequenceOfFunctions(lambda: self.textOut.focus_get().event_generate('<<Copy>>'), self.rightClickFindTxt))
         self.rClickMenu.add_command(label="Clear", command=self.clearTxt)
         self.rClickMenu.add_command(label="Close Menu")
 
@@ -327,6 +328,23 @@ class simrGUI:
     #-----------------------------------------------------------------------
     # Search Methods
     #-----------------------------------------------------------------------
+
+    # WRITE A FUNCTION TO SEARCH FOR WORD OR PHRASE TYPED OR SELECTED (RIGHT CLICK MENU)
+    # AND RETURN LIST OF VERSES CONTAINING THE SEARCH STRING
+    def find_txt(self,text):
+        print(text)
+        kjv = []
+        kjvs = []
+        sept = []
+        berean = []
+        # Need to add regex in here that searches through index[1] of each verse and
+        # returns a list of index[0]'s for matches for each bible type
+        
+        kjvtxt = next(i for i in scriptures_lst if text in i)#NOT WORKING THE WAY I WANT
+        kjv.append(''.join(kjvtxt))
+        print(kjv)
+        return kjv
+        #return kjvtxt, kjvstext, septtext, bereantext
 
     # Search KJV verse
     def kjv_search(self, verse):#CAN SEARCH FOR A LIST OF VERSES TYPED LIKE JOHN 1:1, aCTS 2:4, james 1:1
@@ -828,6 +846,13 @@ class simrGUI:
             self.update_textOut(hTxt)
         except:
             pass
+
+    def rightClickFindTxt(self, event=None):#THIS IS NOT WORKING THE WAY I WANT
+        searchText = self.textOut.clipboard_get().title()
+        final = self.find_txt(searchText)
+        print(final)
+        self.update_textOut(final)
+        self.statusBar['text'] = "Searching for text phrase..."        
 
     def leftClick(self, event):
         print("Left")
