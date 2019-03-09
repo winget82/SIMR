@@ -842,13 +842,24 @@ class simrGUI:
         searchText = self.textOut.clipboard_get().title().strip()
         returnedVerses = self.find_txt(searchText)
         combinedVerses = [item for sublist in returnedVerses for item in sublist]# combine nested lists into a single list
-        print(combinedVerses)
-        #still not returning every word - do a search on "beggining and you will see the issue"
-        #AT THIS POINT, NEED TO ITERATE OVER THE LIST AND COMBINE EVERY 2 INDICES INTO ONE
-        # STRING (ONE INDEX) SEPERATED WITH " - " BETWEEN THE SCRIPTURE AND IT'S REFERENCE
-        
+        #print("combinedVerses")
+        #print(combinedVerses)
 
-        self.update_textOut('\n'.join(combinedVerses))                
+        #still not returning every word - do a search on "beggining and you will see the issue"
+
+        cv = []
+        for count, i in enumerate(combinedVerses):# Add the " - " between the verse reference & scripture
+            if count % 2 == 1:
+                cv.append(i)
+            else:
+                cv.append(i + " - ")
+
+        cVerses = [x+y for x,y in zip(cv[0::2], cv[1::2])]#combines slices
+        #every 2 steps starting with index 0, with every 2 steps starting with index 1
+        #print("cv:\n")
+        #print(cv)
+       
+        self.update_textOut('\n'.join(cVerses))                
 
     def leftClick(self, event):
         print("Left")
