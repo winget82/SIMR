@@ -344,6 +344,7 @@ class simrGUI:
         kjv.append(''.join(kjvtxt))
         print(kjv)
         return kjv
+        # try https://stackoverflow.com/questions/33938488/finding-the-index-of-an-element-in-nested-lists-in-python
         #return kjvtxt, kjvstext, septtext, bereantext
 
     # Search KJV verse
