@@ -332,18 +332,20 @@ class simrGUI:
     # WRITE A FUNCTION TO SEARCH FOR WORD OR PHRASE TYPED OR SELECTED (RIGHT CLICK MENU)
     # AND RETURN LIST OF VERSES CONTAINING THE SEARCH STRING
     def find_txt(self,text):
-        print(text)
-        kjv = []
-        kjvs = []
-        sept = []
-        berean = []
-        # Need to add regex in here that searches through index[1] of each verse and
-        # returns a list of index[0]'s for matches for each bible type
+        #returnedVerses = []
+        #need to change text into a regex - right now I think there is formatting captured in the i[1]
+        #that is preventing from returning the verse.  It'll return the verse if you search by John 1:1
+        #but not by the text of the verse.  This method returns the entire list for the match
+        # when scriptures_lst = [['abc', '123'], ['def', '345'], ['ewr', '345']]
+        # print(find_txt("345"))
+        # ['def', '345'] is returned
+        # will also need to determine how to get it to pull each match throughout the entire bible
+        # not just the first match it finds - figure out how to use a regex to do this
+        # also will want to do this for each bible version
+
+        found = next(i for i in scriptures_lst if text in i)
+        return found
         
-        kjvtxt = next(i for i in scriptures_lst if text in i)#NOT WORKING THE WAY I WANT
-        kjv.append(''.join(kjvtxt))
-        print(kjv)
-        return kjv
         # try https://stackoverflow.com/questions/33938488/finding-the-index-of-an-element-in-nested-lists-in-python
         #return kjvtxt, kjvstext, septtext, bereantext
 
@@ -735,7 +737,7 @@ class simrGUI:
 
     #RIGHT CLICK SEARCH ALL FUNTION - TO SEARCH FOR ALL INFORMATION ABOUT SELECTED VERSE REFERENCE TEXT
     def rightClickSearch(self, event=None):
-        searchText = self.textOut.clipboard_get().title()
+        searchText = self.textOut.clipboard_get().title().strip()
         self.statusBar['text'] = "Gathering all resources for you..."
         
         #GET KJV
@@ -849,11 +851,12 @@ class simrGUI:
             pass
 
     def rightClickFindTxt(self, event=None):#THIS IS NOT WORKING THE WAY I WANT
-        searchText = self.textOut.clipboard_get().title()
+        self.statusBar['text'] = "Searching for text phrase..."
+        searchText = self.textOut.clipboard_get().title().strip()
         final = self.find_txt(searchText)
         print(final)
-        self.update_textOut(final)
-        self.statusBar['text'] = "Searching for text phrase..."        
+        self.update_textOut(' - '.join(final))
+                
 
     def leftClick(self, event):
         print("Left")
