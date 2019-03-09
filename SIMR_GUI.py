@@ -342,8 +342,9 @@ class simrGUI:
         # will also need to determine how to get it to pull each match throughout the entire bible
         # not just the first match it finds - figure out how to use a regex to do this
         # also will want to do this for each bible version
+        # https://stackoverflow.com/questions/18072759/list-comprehension-on-a-nested-list
 
-        found = next(i for i in scriptures_lst if text in i)
+        found = next(i[1] for i in scriptures_lst if text in i)
         return found
         
         # try https://stackoverflow.com/questions/33938488/finding-the-index-of-an-element-in-nested-lists-in-python
