@@ -332,7 +332,7 @@ class simrGUI:
     # WRITE A FUNCTION TO SEARCH FOR WORD OR PHRASE TYPED OR SELECTED (RIGHT CLICK MENU)
     # AND RETURN LIST OF VERSES CONTAINING THE SEARCH STRING
     def find_txt(self,text):
-        returnedVerses = [i for i in scriptures_lst if text in i[1]] # THIS IS RETURNING A LIST OF LISTS OF ALL MATCHES (NESTED LIST)
+        returnedVerses = [i for i in scriptures_lst if text.upper() in i[1].upper()] # THIS IS RETURNING A LIST OF LISTS OF ALL MATCHES (NESTED LIST)
         return returnedVerses
         #CURRENTLY ONLY SETUP TO SEARCH THE KJV
 
@@ -844,8 +844,6 @@ class simrGUI:
         combinedVerses = [item for sublist in returnedVerses for item in sublist]# combine nested lists into a single list
         #print("combinedVerses")
         #print(combinedVerses)
-
-        #still not returning every word - do a search on "beggining and you will see the issue"
 
         cv = []
         for count, i in enumerate(combinedVerses):# Add the " - " between the verse reference & scripture
