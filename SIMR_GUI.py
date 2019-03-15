@@ -585,6 +585,7 @@ class simrGUI:
             strongsDefinitions = ''.join(nts2)
 
         self.update_textOut(kjvLabel + '\n\n' + kjvsLabel + '\n\n' + strongsDefinitions + '\n\n' + septLabel + '\n\n' + twiLabel)
+        #self.statusBar['text'] = "Ready..."
 
     #FOR KJV BUTTON
     def kjvButtonT(self, event=None):#CAN NOW SEARCH FOR MORE THAN ONE VERSE WHEN VERSES ARE SEPARATED BY A COMMA
@@ -600,6 +601,7 @@ class simrGUI:
             return "KJV:\n" + '\n\n'.join(txt)
         except:
             self.update_textOut("No verse found in the King James Version for your search.")
+        #self.statusBar['text'] = "Ready..."
 
     #FOR KJV W/STRONGS BUTTON
     def kjvsButtonT(self, event=None):
@@ -619,6 +621,7 @@ class simrGUI:
             self.update_textOut("KJV w/ Strong's - " + ' - '.join(nt))
             print(nt)
             return "KJV w/ Strong's - " + ' - '.join(nt)
+        #self.statusBar['text'] = "Ready..."
 
     #FOR SEPTUAGINT BUTTON
     def septButtonT(self, event=None):
@@ -637,16 +640,19 @@ class simrGUI:
             self.update_textOut("Septuagint - " + txt)
             print(txt)
             return "Septuagint - " + txt
+        #self.statusBar['text'] = "Ready..."
         
     #FOR BEREAN BUTTON
     def bereanButtonT(self, event=None):
         print("Getting Berean...")
+        self.statusBar['text'] = "Getting Berean Bible..."
     #    searchText = self.searchBox.get().title()
         self.searchBox.delete(0, END)
         self.statusBar['text'] = "Getting Berean Bible..."
     #    txt = 
     #    self.update_textOut(searchText)
     #    print("Berean - " + searchText)
+        #self.statusBar['text'] = "Ready..."
 
     #FOR SCRIPTURE INDEX BUTTON
     def scriptIndexButtonT(self, event=None):
@@ -661,6 +667,7 @@ class simrGUI:
             print(txt)
         except:
             self.update_textOut("No verse found in Scripture index for your search.")
+        #self.statusBar['text'] = "Ready..."
 
     #FOR HEBREW BUTTON
     def hebrewButtonT(self, event=None):
@@ -685,6 +692,7 @@ class simrGUI:
             print(txt)
         except:
             self.update_textOut("No Hebrew definitions found for your search.")
+        #self.statusBar['text'] = "Ready..."
 
     #FOR GREEK BUTTON
     def greekButtonT(self, event=None):
@@ -709,6 +717,7 @@ class simrGUI:
             print(txt)
         except:
             self.update_textOut("No Greek defintions found for your search.")
+        #self.statusBar['text'] = "Ready..."
 
 
     #NEED TO MAKE A FUNCTION TO SEARCH FOR GREEK WORDS BY GREEK CHARACTERS YOU CAN COPY AND PASTE FROM STRONGS
@@ -792,6 +801,7 @@ class simrGUI:
             self.update_textOut(kjvLabel + '\n\n' + kjvsLabel + '\n\n' + strongsDefinitions + '\n\n' + septLabel + '\n\n' + twiLabel)
         except:
             pass
+        #self.statusBar['text'] = "Ready..."
 
     # RIGHT CLICK SEARCH FOR GREEK DEFINITION OF SELECTED TEXT NUMBER
     def rightClickGreekSearch(self, event=None):
@@ -813,7 +823,8 @@ class simrGUI:
             print(gTxt)
             self.update_textOut(gTxt)    
         except:
-            pass     
+            pass
+        #self.statusBar['text'] = "Ready..."
 
     # RIGHT CLICK SEARCH FOR HEBREW DEFINITION OF SELECTED TEXT NUMBER
     def rightClickHebrewSearch(self, event=None):
@@ -836,11 +847,17 @@ class simrGUI:
             self.update_textOut(hTxt)
         except:
             pass
+        #self.statusBar['text'] = "Ready..."
 
     def rightClickFindTxt(self, event=None):#THIS IS NOT WORKING THE WAY I WANT
         self.statusBar['text'] = "Searching for text phrase..."
         searchText = self.textOut.clipboard_get().title().strip()
         returnedVerses = self.find_txt(searchText)
+        
+        tCount = 0
+        for r in returnedVerses:
+            tCount += 1
+
         combinedVerses = [item for sublist in returnedVerses for item in sublist]# combine nested lists into a single list
         #print("combinedVerses")
         #print(combinedVerses)
@@ -857,7 +874,8 @@ class simrGUI:
         #print("cv:\n")
         #print(cv)
        
-        self.update_textOut('\n'.join(cVerses))                
+        self.update_textOut('Total KJV verses with translated usages of "*' + searchText.lower() + '*": ' + str(tCount) + '\n' + '\n'.join(cVerses))
+        #self.statusBar['text'] = "Ready..."
 
     def leftClick(self, event):
         print("Left")
@@ -882,8 +900,9 @@ class simrGUI:
 
     # NEED A METHOD TO CLEAR ALL TEXT
     def clearTxt(self):
-        self.textOut.delete(1.0, END)
         self.statusBar['text'] = "Clearing all text..."
+        self.textOut.delete(1.0, END)
+        #self.statusBar['text'] = "Ready..."
 
     # COLLECTS ALL TEXT IN THE TEXT WIDGET TO A VARIABLE - USED TO SAVE FILE
     def getAllText(self):
