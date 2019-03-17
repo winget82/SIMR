@@ -300,6 +300,9 @@ class simrGUI:
               Copyright ©2016 by Bible Hub
               Used by Permission. All Rights Reserved Worldwide.
               http://berean.bible - Berean Bible Homepage\n
+        Data for maps and coordinate locations
+        are from OpenBible.info licensed under a
+        Creative Commons Attribution license.
         The King James Version, Septuagint, and Strong's
         Concordance, as well Ethelbert W. Bullinger's
         books utilized in this program: The Witness of the Stars,
