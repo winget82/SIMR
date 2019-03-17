@@ -11,7 +11,9 @@
 import re
 import codecs
 import json
-from tkinter import Tk, Menu, Frame, Button, LEFT, StringVar, Entry, TOP, X, RIGHT, Label, SUNKEN, E, BOTTOM, BOTH, Scrollbar, Text, Y, WORD, END
+from tkinter import Tk, Menu, Frame, Button, LEFT, StringVar, Entry,\
+TOP, X, RIGHT, Label, SUNKEN, E, BOTTOM, BOTH, Scrollbar, Text, Y, WORD, END,\
+messagebox, Toplevel, Message
 #import tkinter
 import ctypes
 import time
@@ -94,10 +96,12 @@ sept = 'septuagint_json.json'
 with open(fpath + sept) as sept_file2:
     septuagint_lst3 = json.load(sept_file2)
 
+
 #MessageBox Function
-def Mbox(title, text, style):
-    return ctypes.windll.user32.MessageBoxW(0, text, title, style)
-#WILL NEED TO USE TKINTER MESSAGE BOX / POP UP WINDOW INSTEAD - THIS DOESN'T WORK ON LINUX
+#def Mbox(title, text, style):
+#    return ctypes.windll.user32.MessageBoxW(0, text, title, style)
+#THIS DOESN'T WORK ON LINUX
+
 
 #THIS SWEET FUNCTION ALLOWS YOU TO PASS TWO FUNCTIONS INTO ONE FUNCTION,
 #ALLOWING YOU TO CALL MORE THAN ONE FUNCTION IN A TKINTER COMMAND ASSIGNMENT
@@ -302,7 +306,7 @@ class simrGUI:
               http://berean.bible - Berean Bible Homepage\n
         Data for maps and coordinate locations
         are from OpenBible.info licensed under a
-        Creative Commons Attribution license.
+        Creative Commons Attribution license.\n
         The King James Version, Septuagint, and Strong's
         Concordance, as well Ethelbert W. Bullinger's
         books utilized in this program: The Witness of the Stars,
@@ -522,14 +526,26 @@ class simrGUI:
 
     # GET ABOUT INFO
     def getAbout(self):
-        Mbox('About', self.about, 0)
+        #Mbox('About', self.about, 0)# only works in windows
+        self.messBox('About',self.about)
         self.statusBar['text'] = "Getting about information..."
 
     # GET CREDITS INFO
     def getCredits(self):
-        Mbox('Credits', self.credits, 0)
+        #Mbox('Credits', self.credits, 0)# only works in windows
+        self.messBox('Credits',self.credits)
         self.statusBar['text'] = "Getting credits..."
 
+    #Message box
+    def messBox(self,title, message):
+        top = Toplevel()
+        top.title(title)
+        
+        msg = Message(top, text=message)
+        msg.pack()
+
+        button = Button(top, text="OK", command=top.destroy)
+        button.pack()
 
     #-----------------------------------------------------------------------
     # TOOLBAR METHODS
