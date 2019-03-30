@@ -18,7 +18,11 @@ crs = {'init': 'epsg:4326'}#set crs to wgs84
 gdf = gpd.GeoDataFrame(cities, crs=crs, geometry=geometry)
 
 #plot cities to map
-gdf.plot(ax=base, marker='o', color='r', markersize=5)
+pl = gdf.plot(ax=base, marker='o', color='r', markersize=5)
+
+#label cities (very slow)
+#for x, y, label in zip(gdf.geometry.x, gdf.geometry.y, gdf.ESV):
+#    pl.annotate(label, xy=(x, y), xytext=(3, 3), textcoords="offset points")
 
 #add wgs84 bounding box
 #wgs84.plot(ax=base, facecolor='none', edgecolor = 'cyan')
