@@ -40,3 +40,7 @@ countries = countries.to_crs(gdf.crs)
 oceans = oceans.to_crs(gdf.crs)
 
 plt.show()
+
+# check into this pyqt embed matplotlib
+# https://stackoverflow.com/questions/12459811/how-to-embed-matplotlib-in-pyqt-for-dummies
+# check into pyqt5 for making GUI
