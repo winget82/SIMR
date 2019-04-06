@@ -8,9 +8,9 @@
 # IMPORTS - PACKAGES & MODULES UTILIZED
 # ---------------------------------------------------------------------
 import sys
-from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox, QLineEdit, QTextEdit, QSplitter, QFrame
+from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox, QLineEdit, QTextEdit, QSplitter, QFrame, QHBoxLayout, QStyleFactory
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import *
+from PyQt5.QtCore import Qt
 import re
 import codecs
 import json
@@ -160,9 +160,34 @@ class SIMR(QMainWindow):
         
     def program(self):
 
+
+        #hbox = QHBoxLayout(self)
+		
+        #topleft = QFrame()
+        #topleft.setFrameShape(QFrame.StyledPanel)
+        #bottom = QFrame()
+        #bottom.setFrameShape(QFrame.StyledPanel)
+    
+        #splitter1 = QSplitter(Qt.Horizontal)
+        #textedit = QTextEdit()
+        #splitter1.addWidget(topleft)
+        #splitter1.addWidget(textedit)
+        #splitter1.setSizes([100,200])
+    
+        #splitter2 = QSplitter(Qt.Vertical)
+        #splitter2.addWidget(splitter1)
+        #splitter2.addWidget(bottom)
+    
+        #hbox.addWidget(splitter2)
+    
+        #self.setLayout(hbox)
+        #QApplication.setStyle(QStyleFactory.create('Cleanlooks'))
+
+
         self.textEditor = QTextEdit(self)
         self.setCentralWidget(self.textEditor)
-
+        
+        # SEE THIS FIRST - http://zetcode.com/gui/pyqt5/widgets2/
         # SEE - https://www.tutorialspoint.com/pyqt/pyqt_qsplitter_widget.htm
         # SEE - https://www.binpress.com/building-text-editor-pyqt-1/
 
@@ -322,7 +347,6 @@ class SIMR(QMainWindow):
         self.searchBox = QLineEdit(self.searchToolbar)
         self.searchBox.move(50, 7)
         self.searchBox.resize(150, 25)
-
 
         # SEE - http://zetcode.com/gui/pyqt5/menustoolbars/
 
