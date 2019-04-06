@@ -8,8 +8,9 @@
 # IMPORTS - PACKAGES & MODULES UTILIZED
 # ---------------------------------------------------------------------
 import sys
-from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox, QLineEdit, QTextEdit, QSplitter, QFrame
 from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import *
 import re
 import codecs
 import json
@@ -159,11 +160,17 @@ class SIMR(QMainWindow):
         
     def program(self):
 
+        self.textEditor = QTextEdit(self)
+        self.setCentralWidget(self.textEditor)
+
+        # SEE - https://www.tutorialspoint.com/pyqt/pyqt_qsplitter_widget.htm
+        # SEE - https://www.binpress.com/building-text-editor-pyqt-1/
+
         # File Menu Options
         newProject = QAction(QIcon('./toolbar_icons/iconfinder_document_basic_blue_69485.png'), '&New Project', self)
         newProject.setStatusTip('Start a new project')
         
-        openProject = QAction(QIcon('./toolbar_icons/iconfinder_folder_basic_blue_69500.png'), '&New Project', self)
+        openProject = QAction(QIcon('./toolbar_icons/iconfinder_folder_basic_blue_69500.png'), '&Open Project', self)
         openProject.setStatusTip('Open an existing project')
 
         saveProject = QAction(QIcon('./toolbar_icons/iconfinder_floppy-disk_basic_yellow_70075.png'), '&Save Project', self)        
@@ -293,7 +300,7 @@ class SIMR(QMainWindow):
         helpMenu.addAction(appDocumentation)
         helpMenu.addAction(creditsThanks)
         helpMenu.addAction(aboutApp)
-        
+                
         # Toolbars
         # Main Toolbar
         self.mainToolbar = self.addToolBar('Main Toolbar')
@@ -312,6 +319,9 @@ class SIMR(QMainWindow):
         # Search Toolbar
         self.searchToolbar = self.addToolBar('Search Toolbar')
         self.searchToolbar.addAction(searchAll)
+        self.searchBox = QLineEdit(self.searchToolbar)
+        self.searchBox.move(50, 7)
+        self.searchBox.resize(150, 25)
 
 
         # SEE - http://zetcode.com/gui/pyqt5/menustoolbars/
