@@ -100,6 +100,7 @@ class SIMR(QMainWindow):
     def __init__(self):
         super().__init__()
         self.program()
+
         #Text for Pop Ups
         self.about = """\n\n
         About this program:
@@ -159,15 +160,15 @@ class SIMR(QMainWindow):
     def program(self):
 
         # File Menu Options
-        newProject = QAction('&New Project', self)
+        newProject = QAction(QIcon('./toolbar_icons/iconfinder_document_basic_blue_69485.png'), '&New Project', self)
         newProject.setStatusTip('Start a new project')
         #saveApp.triggered.connect()
 
-        saveProject = QAction('&Save Project', self)        
+        saveProject = QAction(QIcon('./toolbar_icons/iconfinder_floppy-disk_basic_yellow_70075.png'), '&Save Project', self)        
         saveProject.setStatusTip('Save your current project')
         #saveApp.triggered.connect()
 
-        closeApp = QAction('&Exit', self)        
+        closeApp = QAction(QIcon('./toolbar_icons/iconfinder_archive_basic_blue_69430.png'), '&Exit', self)        
         closeApp.setStatusTip('Close and exit SIMR')
         closeApp.triggered.connect(qApp.quit)
 
@@ -205,21 +206,31 @@ class SIMR(QMainWindow):
         scriptureIndex = QAction('&Scripture Index', self)
         scriptureIndex.setStatusTip('Get scripture index for The Way International resources')
 
+        # Scripture Bank Menu Options
+        visitScriptureBank = QAction('', self)
+        visitScriptureBank.setStatusTip('')
+        depositVerse = QAction('', self)
+        depositVerse.setStatusTip('')
+        checkBalance = QAction('', self)
+        checkBalance.setStatusTip('')
+        withdrawVerse = QAction('', self)
+        withdrawVerse.setStatusTip('')
+
         # Mapping Menu Options
-        drawMap = QAction('Draw Map', self)
+        drawMap = QAction(QIcon('./toolbar_icons/iconfinder_compass_basic_blue_69477.png'), 'Draw Map', self)
         drawMap.setStatusTip('Draw Bible map')
 
         # Help Menu Options
         aboutApp = QAction('About', self)
         aboutApp.setStatusTip('See information about this application')
 
-        appDocumentation = QAction('Documentation', self)
+        appDocumentation = QAction(QIcon('./toolbar_icons/iconfinder_question_basic_green_69755.png'), 'Documentation', self)
         appDocumentation.setStatusTip('See documentation about using this application')
 
         creditsThanks = QAction('Credits / Thanks', self)
         creditsThanks.setStatusTip('See credits and special thanks')
 
-        self.statusBar()
+        statusbar = self.statusBar()
 
         menubar = self.menuBar()
 
@@ -251,6 +262,13 @@ class SIMR(QMainWindow):
         twiMenu = menubar.addMenu('&TWI')
         twiMenu.addAction(scriptureIndex)
 
+        # Scripture Bank
+        scriptureBankMenu = menubar.addMenu('&Scripture Bank')
+        scriptureBankMenu.addAction(visitScriptureBank)
+        scriptureBankMenu.addAction(depositVerse)
+        scriptureBankMenu.addAction(checkBalance)
+        scriptureBankMenu.addAction(withdrawVerse)
+
         # Mapping Menu
         mappingMenu = menubar.addMenu('&Mapping')
         mappingMenu.addAction(drawMap)
@@ -262,8 +280,14 @@ class SIMR(QMainWindow):
         helpMenu.addAction(aboutApp)
         
         # Toolbar
-        #self.toolbar = self.addToolBar()
-        #self.toolbar.addAction()
+        self.mainToolbar = self.addToolBar('Main Toolbar')
+        self.mainToolbar.addAction(newProject)
+        self.mainToolbar.addAction(saveProject)
+        self.mainToolbar.addAction(closeApp)
+        self.mainToolbar.addAction(drawMap)
+        self.mainToolbar.addAction(appDocumentation)
+
+
         # SEE - http://zetcode.com/gui/pyqt5/menustoolbars/
 
         self.setGeometry(600, 600, 600, 400)
@@ -287,3 +311,6 @@ if __name__ == '__main__':
     app.setStyle('Fusion')
     simr = SIMR()
     sys.exit(app.exec_())
+
+
+# ADD A SCRIPTURE BANK WHERE YOU CAN DEPOSIT AND WITHDRAW SCRIPTURES
