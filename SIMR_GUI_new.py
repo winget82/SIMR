@@ -8,7 +8,7 @@
 # IMPORTS - PACKAGES & MODULES UTILIZED
 # ---------------------------------------------------------------------
 import sys
-from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication
+from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox
 from PyQt5.QtGui import QIcon
 import re
 import codecs
@@ -162,7 +162,9 @@ class SIMR(QMainWindow):
         # File Menu Options
         newProject = QAction(QIcon('./toolbar_icons/iconfinder_document_basic_blue_69485.png'), '&New Project', self)
         newProject.setStatusTip('Start a new project')
-        #saveApp.triggered.connect()
+        
+        openProject = QAction(QIcon('./toolbar_icons/iconfinder_folder_basic_blue_69500.png'), '&New Project', self)
+        openProject.setStatusTip('Open an existing project')
 
         saveProject = QAction(QIcon('./toolbar_icons/iconfinder_floppy-disk_basic_yellow_70075.png'), '&Save Project', self)        
         saveProject.setStatusTip('Save your current project')
@@ -173,11 +175,18 @@ class SIMR(QMainWindow):
         closeApp.triggered.connect(qApp.quit)
 
         # Edit Menu Options
-        undoAction = QAction('&Undo', self)
+        undoAction = QAction(QIcon('./toolbar_icons/iconfinder_arrow-left_basic_red_69816.png'), '&Undo', self)
         undoAction.setStatusTip('Undo your last action')
 
-        redoAction = QAction('&Redo', self)
+        redoAction = QAction(QIcon('./toolbar_icons/iconfinder_arrow-right_basic_yellow_70009.png'), '&Redo', self)
         redoAction.setStatusTip('Redo your last action')
+
+        appSettings = QAction(QIcon('./toolbar_icons/iconfinder_gears_basic_green_69695.png'), '&Settings', self)
+        appSettings.setStatusTip('View and adjust your settings')
+
+        # Search Menu Options
+        searchAll = QAction(QIcon('./toolbar_icons/iconfinder_search_basic_blue_69571.png'), '&Search All', self)
+        searchAll.setStatusTip('Search through all resources')
 
         # Read Menu Options
         readKJV = QAction('&King James Version', self)
@@ -207,21 +216,21 @@ class SIMR(QMainWindow):
         scriptureIndex.setStatusTip('Get scripture index for The Way International resources')
 
         # Scripture Bank Menu Options
-        visitScriptureBank = QAction('', self)
-        visitScriptureBank.setStatusTip('')
-        depositVerse = QAction('', self)
-        depositVerse.setStatusTip('')
-        checkBalance = QAction('', self)
-        checkBalance.setStatusTip('')
-        withdrawVerse = QAction('', self)
-        withdrawVerse.setStatusTip('')
+        visitScriptureBank = QAction(QIcon('./toolbar_icons/iconfinder_bank_basic_red_69821.png'), '&Visit Scripture Bank', self)
+        visitScriptureBank.setStatusTip('Visit your Scripture Bank')
+        depositVerse = QAction('&Deposit Verse', self)
+        depositVerse.setStatusTip('Deposit a verse into your Scripture Bank')
+        checkBalance = QAction('&Check Balance', self)
+        checkBalance.setStatusTip('Check you Scripture Bank account balance')
+        withdrawVerse = QAction('&Withdraw Verse', self)
+        withdrawVerse.setStatusTip('Withdraw a verse from your Scripture Bank')
 
         # Mapping Menu Options
         drawMap = QAction(QIcon('./toolbar_icons/iconfinder_compass_basic_blue_69477.png'), 'Draw Map', self)
         drawMap.setStatusTip('Draw Bible map')
 
         # Help Menu Options
-        aboutApp = QAction('About', self)
+        aboutApp = QAction(QIcon('./toolbar_icons/iconfinder_information_basic_green_69706.png'), 'About', self)
         aboutApp.setStatusTip('See information about this application')
 
         appDocumentation = QAction(QIcon('./toolbar_icons/iconfinder_question_basic_green_69755.png'), 'Documentation', self)
@@ -237,6 +246,7 @@ class SIMR(QMainWindow):
         # File Menu
         fileMenu = menubar.addMenu('&File')
         fileMenu.addAction(newProject)
+        fileMenu.addAction(openProject)
         fileMenu.addAction(saveProject)
         fileMenu.addAction(closeApp)
         
@@ -244,6 +254,11 @@ class SIMR(QMainWindow):
         editMenu = menubar.addMenu('&Edit')
         editMenu.addAction(undoAction)
         editMenu.addAction(redoAction)
+        editMenu.addAction(appSettings)
+
+        # Search Menu
+        searchMenu = menubar.addMenu('&Search')
+        searchMenu.addAction(searchAll)
 
         # Read Menu
         readMenu = menubar.addMenu('&Read')
@@ -279,13 +294,24 @@ class SIMR(QMainWindow):
         helpMenu.addAction(creditsThanks)
         helpMenu.addAction(aboutApp)
         
-        # Toolbar
+        # Toolbars
+        # Main Toolbar
         self.mainToolbar = self.addToolBar('Main Toolbar')
         self.mainToolbar.addAction(newProject)
+        self.mainToolbar.addAction(openProject)
         self.mainToolbar.addAction(saveProject)
         self.mainToolbar.addAction(closeApp)
+        self.mainToolbar.addAction(undoAction)
+        self.mainToolbar.addAction(redoAction)
+        self.mainToolbar.addAction(appSettings)
+        self.mainToolbar.addAction(visitScriptureBank)
         self.mainToolbar.addAction(drawMap)
         self.mainToolbar.addAction(appDocumentation)
+        self.mainToolbar.addAction(aboutApp)
+
+        # Search Toolbar
+        self.searchToolbar = self.addToolBar('Search Toolbar')
+        self.searchToolbar.addAction(searchAll)
 
 
         # SEE - http://zetcode.com/gui/pyqt5/menustoolbars/
