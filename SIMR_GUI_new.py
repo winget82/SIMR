@@ -139,6 +139,11 @@ class SIMR(QMainWindow):
         Data for maps and coordinate locations
         are from OpenBible.info licensed under a
         Creative Commons Attribution license.\n
+        Toolbar icons are used under the
+        Free License (Creative Common 3.0 Attribution)
+        The icons were designed by:
+        Double-J Design WEB: http://www.doublejdesign.co.uk
+        Email: info@doublejdesign.co.uk\n
         The King James Version, Septuagint, and Strong's
         Concordance, as well Ethelbert W. Bullinger's
         books utilized in this program: The Witness of the Stars,
