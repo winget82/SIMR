@@ -160,33 +160,12 @@ class SIMR(QMainWindow):
         
     def program(self):
 
-
-        #hbox = QHBoxLayout(self)
-		
-        #topleft = QFrame()
-        #topleft.setFrameShape(QFrame.StyledPanel)
-        #bottom = QFrame()
-        #bottom.setFrameShape(QFrame.StyledPanel)
-    
-        #splitter1 = QSplitter(Qt.Horizontal)
-        #textedit = QTextEdit()
-        #splitter1.addWidget(topleft)
-        #splitter1.addWidget(textedit)
-        #splitter1.setSizes([100,200])
-    
-        #splitter2 = QSplitter(Qt.Vertical)
-        #splitter2.addWidget(splitter1)
-        #splitter2.addWidget(bottom)
-    
-        #hbox.addWidget(splitter2)
-    
-        #self.setLayout(hbox)
-        #QApplication.setStyle(QStyleFactory.create('Cleanlooks'))
-
-
         self.textEditor = QTextEdit(self)
         self.setCentralWidget(self.textEditor)
         
+        #how to append text to text edit area
+        self.textEditor.append('type text here')
+
         # SEE THIS FIRST - http://zetcode.com/gui/pyqt5/widgets2/
         # SEE - https://www.tutorialspoint.com/pyqt/pyqt_qsplitter_widget.htm
         # SEE - https://www.binpress.com/building-text-editor-pyqt-1/
@@ -200,7 +179,7 @@ class SIMR(QMainWindow):
 
         saveProject = QAction(QIcon('./toolbar_icons/iconfinder_floppy-disk_basic_yellow_70075.png'), '&Save Project', self)        
         saveProject.setStatusTip('Save your current project')
-        #saveApp.triggered.connect()
+        saveProject.triggered.connect(self.textUpdate)
 
         closeApp = QAction(QIcon('./toolbar_icons/iconfinder_archive_basic_blue_69430.png'), '&Exit', self)        
         closeApp.setStatusTip('Close and exit SIMR')
@@ -347,20 +326,146 @@ class SIMR(QMainWindow):
         self.searchBox = QLineEdit(self.searchToolbar)
         self.searchBox.move(50, 7)
         self.searchBox.resize(150, 25)
+        #https://stackoverflow.com/questions/42288320/python-how-to-get-qlineedit-text?rq=1
 
         # SEE - http://zetcode.com/gui/pyqt5/menustoolbars/
 
         self.setGeometry(600, 600, 600, 400)
         self.setWindowTitle('SIMR - Scripture Indices and Ministry Resources')    
         self.show()
-    
+
+
+# /////////////////////////////////////////////////////////////////////
+# METHODS OF THE SIMRGUI CLASS
+# \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    def textUpdate(self, text):
+        self.textEditor.append(text)
+
+    # WRITE A FUNCTION TO SEARCH FOR WORD OR PHRASE TYPED OR SELECTED (RIGHT CLICK MENU)
+    # AND RETURN LIST OF VERSES CONTAINING THE SEARCH STRING
+    def find_txt(self,text):
+        returnedVerses = [i for i in scriptures_lst if text.upper() in i[1].upper()] # THIS IS RETURNING A LIST OF LISTS OF ALL MATCHES (NESTED LIST)
+        return returnedVerses
+        #CURRENTLY ONLY SETUP TO SEARCH THE KJV
+
+    # Search KJV verse
+    def kjv_search(self, verse):#CAN SEARCH FOR A LIST OF VERSES TYPED LIKE JOHN 1:1, aCTS 2:4, james 1:1
+        returnedVerses = []
+        verses = verse.split(',')
+        for v in verses:
+            v = v.strip()
+            found = next(i for i in scriptures_lst if v in i)
+            returnedVerses.append(' '.join(found))
+        return returnedVerses
+
+    # Search KJV w/ Strong's verse
+    #Old Testament
+    def kjvstrnumOT_search(self, searchOT_ks):
+        found_snOT = next(i for i in OT_sn if searchOT_ks in i)
+        return found_snOT
+    #New Testament
+    def kjvstrnumNT_search(self, searchNT_ks):
+        found_snNT = next(i for i in NT_sn if searchNT_ks in i)
+        return found_snNT
+
+    # Search for Berean verses
+    def berean_search(self, berean_inp):
+        if berean_inp in berean:
+            bi = berean.index(berean_inp)  # This is based on verse seached for.
+            # Sets bi to the index of verse searched for
+            return bi
+
+    # Search through TWI scripture index
+    def twi_scripture_index(self, twi_inp):
+        found2 = next(i for i in twi_index if twi_inp in i)
+        return found2
+
+    # Search through septuagint
+    def septuagint_search(self, sept_inp):
+        found3 = next(i for i in septuagint_lst3 if sept_inp in i)
+        return found3
+
+    # Search for Strong's defintion
+    def strongs_search(self, strongsNumber):
+        if strongsNumber in strongscsvlst:
+            sc = strongscsvlst.index(strongsNumber)  # This is based on verse seached for.
+            # Sets sc to the strongs number searched for
+            return sc
+
+    # OT Hebrew Strong's Definitions Search
+    def strnumOT(self, OTsearch):
+        # OT Strongs Search
+        # This finds all <strongs numbers> on all lines printing result without <>
+        OTstring = ''.join(OTsearch)
+        sn_listOT = re.findall('\<(\d+)\>', OTstring)
+        # print(sn_listOT)
+        strongsNumberHebrew = []
+        for items in sn_listOT:
+            hebrew = 'H' + items
+            strongsNumberHebrew.append(hebrew)
+        # print(hebrew)
+        return strongsNumberHebrew
+
+    def get_strongsHebrewDefs(self, strongsNumberHebrew):#THIS DEFINITION PULLS ALL THE HEBREW DEFINITIONS FOR A VERSE
+        scH_lst = []
+        for item in strongsNumberHebrew:
+            if item in strongscsvlst:
+                sc = strongscsvlst.index(item)  # This is based on verse seached for.
+                # Sets sc to the strongs number searched for
+                sc_index0 = strongscsvlst[sc]
+                sc_index1 = strongscsvlst[sc + 1]
+                sc_index2 = strongscsvlst[sc + 2]
+                sc_index3 = strongscsvlst[sc + 3]
+                sc_index4 = strongscsvlst[sc + 4]
+                sc_index5 = strongscsvlst[sc + 5]
+                sc_index6 = strongscsvlst[sc + 6]
+                scH = ('\n' + sc_index0 + ' - ' + sc_index1 + ' - '
+                       + sc_index2 + ' (' + sc_index3 + ') ' + sc_index4 +
+                       ' ' + sc_index5 + ', ' + sc_index6 + '\n')
+                if scH not in scH_lst:
+                    scH_lst.append(scH)
+        return scH_lst
+
+    # NT Greek Strong's Definitions Search
+    def strnumNT(self, NTsearch):
+        # NT Strongs Search
+        # This finds all <strongs numbers> on all lines printing result without <>
+        NTstring = ''.join(NTsearch)
+        sn_listNT = re.findall('\<(\d+)\>', NTstring)
+        # print(sn_listNT)
+        strongsNumberGreek = []
+        for items in sn_listNT:
+            greek = 'G' + items
+            strongsNumberGreek.append(greek)
+        # print(greek)
+        return strongsNumberGreek
+
+    def get_strongsGreekDefs(self, strongsNumberGreek):#THIS DEFINITION PULLS ALL THE GREEK DEFINITIONS FOR A VERSE
+        scG_lst = []
+        for item in strongsNumberGreek:
+            if item in strongscsvlst:
+                sc = strongscsvlst.index(item)  # This is based on verse seached for.
+                # Sets sc to the strongs number searched for
+                sc_index0 = strongscsvlst[sc]
+                sc_index1 = strongscsvlst[sc + 1]
+                sc_index2 = strongscsvlst[sc + 2]
+                sc_index3 = strongscsvlst[sc + 3]
+                sc_index4 = strongscsvlst[sc + 4]
+                sc_index5 = strongscsvlst[sc + 5]
+                sc_index6 = strongscsvlst[sc + 6]
+                scG = ('\n' + sc_index0 + ' - ' + sc_index1 + ' - '
+                       + sc_index2 + ' (' + sc_index3 + ') ' + sc_index4 +
+                       ' ' + sc_index5 + ', ' + sc_index6 + '\n')
+                if scG not in scG_lst:
+                    scG_lst.append(scG)
+        return scG_lst
 
     def buttonClick(self):
         alert = QMessageBox()
         alert.setText('Button has been clicked')
         alert.exec_()
 
-    
 # ---------------------------------------------------------------------
 # Run App
 # ---------------------------------------------------------------------
@@ -374,3 +479,5 @@ if __name__ == '__main__':
 
 
 # ADD A SCRIPTURE BANK WHERE YOU CAN DEPOSIT AND WITHDRAW SCRIPTURES
+# https://stackoverflow.com/questions/12602179/pyqt-dynamically-append-to-qtextedit-from-function
+
