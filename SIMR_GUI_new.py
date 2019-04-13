@@ -284,7 +284,7 @@ class SIMR(QMainWindow):
         # Help Menu Options
         aboutApp = QAction(QIcon('./toolbar_icons/iconfinder_information_basic_green_69706.png'), 'About', self)
         aboutApp.setStatusTip('See information about this application')
-        #aboutApp.triggered.connect(self.)
+        aboutApp.triggered.connect(lambda: self.messBox(self.about, 'About SIMR'))
 
         appDocumentation = QAction(QIcon('./toolbar_icons/iconfinder_question_basic_green_69755.png'), 'Documentation', self)
         appDocumentation.setStatusTip('See documentation about using this application')
@@ -292,7 +292,7 @@ class SIMR(QMainWindow):
 
         creditsThanks = QAction('Credits / Thanks', self)
         creditsThanks.setStatusTip('See credits and special thanks')
-        #creditsThanks.triggered.connect(self.)
+        creditsThanks.triggered.connect(lambda: self.messBox(self.credits, 'SIMR Credits'))
 
         statusbar = self.statusBar()
 
@@ -388,7 +388,7 @@ class SIMR(QMainWindow):
 
         # SEE - http://zetcode.com/gui/pyqt5/menustoolbars/
 
-        self.setGeometry(600, 600, 600, 400)
+        self.setGeometry(840, 840, 840, 400)
         self.setWindowTitle('SIMR - Scripture Indices and Ministry Resources')    
         self.show()
 
@@ -519,9 +519,10 @@ class SIMR(QMainWindow):
                     scG_lst.append(scG)
         return scG_lst
 
-    def buttonClick(self):
+    def messBox(self, message, title):
         alert = QMessageBox()
-        alert.setText('Button has been clicked')
+        alert.setText(message)
+        alert.setWindowTitle(title)
         alert.exec_()
 
     def searchAll(self, searchText):
