@@ -164,7 +164,7 @@ class SIMR(QMainWindow):
         self.setCentralWidget(self.textEditor)
         
         #how to append text to text edit area
-        self.textEditor.append('type text here')
+        #self.textEditor.append('type text here')
 
         # SEE THIS FIRST - http://zetcode.com/gui/pyqt5/widgets2/
         # SEE - https://www.tutorialspoint.com/pyqt/pyqt_qsplitter_widget.htm
@@ -195,6 +195,8 @@ class SIMR(QMainWindow):
         redoAction = QAction(QIcon('./toolbar_icons/iconfinder_arrow-right_basic_yellow_70009.png'), '&Redo', self)
         redoAction.setStatusTip('Redo your last action')
         #redoAction.triggered.connect(self.)
+        # UNDO / REDO IN PYQT
+        # http://www.informit.com/articles/article.aspx?p=1187104&seqNum=3
 
         appSettings = QAction(QIcon('./toolbar_icons/iconfinder_gears_basic_green_69695.png'), '&Settings', self)
         appSettings.setStatusTip('View and adjust your settings')
@@ -203,7 +205,7 @@ class SIMR(QMainWindow):
         # Search Menu Options
         searchAll = QAction(QIcon('./toolbar_icons/iconfinder_search_basic_blue_69571.png'), '&Search All', self)
         searchAll.setStatusTip('Search through all resources')
-        #searchAll.triggered.connect(self.)
+        searchAll.triggered.connect(self.getSearchBox)
 
         # Read Menu Options
         readKJV = QAction('&King James Version', self)
@@ -351,6 +353,7 @@ class SIMR(QMainWindow):
         self.searchBox = QLineEdit(self.searchToolbar)
         self.searchBox.move(50, 7)
         self.searchBox.resize(150, 25)
+        
         #https://stackoverflow.com/questions/42288320/python-how-to-get-qlineedit-text?rq=1
 
         # SEE - http://zetcode.com/gui/pyqt5/menustoolbars/
@@ -381,7 +384,7 @@ class SIMR(QMainWindow):
         for v in verses:
             v = v.strip()
             found = next(i for i in scriptures_lst if v in i)
-            returnedVerses.append(' '.join(found))
+            returnedVerses.append(' - '.join(found))
         return returnedVerses
 
     # Search KJV w/ Strong's verse
@@ -490,6 +493,62 @@ class SIMR(QMainWindow):
         alert = QMessageBox()
         alert.setText('Button has been clicked')
         alert.exec_()
+
+    def searchAll(self, searchText):
+                
+        #GET KJV
+        kjv = self.kjv_search(searchText)
+        kjvLabel = "KJV:\n" + '\n\n'.join(kjv)
+        
+        #GET KJV W/STRONGS
+        try:
+            kjvs = self.kjvstrnumOT_search(searchText)
+        except:
+            kjvs = self.kjvstrnumNT_search(searchText)
+        kjvsLabel = "KJV w/Strong's - " + ' - '.join(kjvs)
+        
+        
+        #GET SEPTUAGINT
+        try:
+            sept = self.septuagint_search(searchText)    
+            septLabel = "Septuagint - " + ' - '.join(sept)
+        except:
+            sept = "No verse found in Septuagint for your search..."
+            septLabel = "Septuagint - " + sept
+        #ISSUES WITH SEPTUAGINT TRY GENESIS 1:1 ALSO SOME JEREMIAH VERSES FOR EXAMPLE - LOOK INTO JSON FILE -
+        # json showing first index as "\ufeffGenesis 1:1" - that's the issue
+
+        #berean = self.
+        #bereanLabel = 
+
+        #GET TWI SCRIPTURE INDEX
+        try:
+            twi = self.twi_scripture_index(searchText)
+            twiLabel = "Scripture Index : \n" + ' '.join(twi)
+        except:
+            twiLabel = "Nothing found in Scripture Index for your search..."
+
+
+        #GET ALL GREEK AND HEBREW DEFINITIONS HERE...
+        try:
+            ots = self.kjvstrnumOT_search(searchText)
+            ots1 = self.strnumOT(ots)
+            ots2 = self.get_strongsHebrewDefs(ots1)
+            strongsDefinitions = ''.join(ots2)
+        except:
+            nts = self.kjvstrnumNT_search(searchText)
+            nts1 = self.strnumNT(nts)
+            nts2 = self.get_strongsGreekDefs(nts1)
+            strongsDefinitions = ''.join(nts2)
+
+        return kjvLabel + '\n\n' + kjvsLabel + '\n\n' + strongsDefinitions + '\n\n' + septLabel + '\n\n' + twiLabel
+
+    def getSearchBox(self):
+        retrieved = self.searchBox.text()
+        # Search all function here
+        text = self.searchAll(retrieved)
+        # Return the text to the text editor portion
+        self.textUpdate(text)
 
 # ---------------------------------------------------------------------
 # Run App
