@@ -188,15 +188,32 @@ class SIMR(QMainWindow):
         closeApp.triggered.connect(qApp.quit)
 
         # Edit Menu Options
+        copyAction = QAction(QIcon('./toolbar_icons/iconfinder_documents_basic_blue_69488'), '&Copy', self)
+        copyAction.setStatusTip('Undo your last action')
+        copyAction.setShortcut('Ctrl+X')
+        copyAction.triggered.connect(self.textEditor.copy)
+        
+        cutAction = QAction(QIcon('./toolbar_icons/iconfinder_scissors_basic_blue_69570'), '&Cut', self)
+        cutAction.setStatusTip('Undo your last action')
+        cutAction.setShortcut('Ctrl+C')
+        cutAction.triggered.connect(self.textEditor.cut)
+
+        pasteAction = QAction(QIcon('./toolbar_icons/iconfinder_clipboard_basic_green_69665'), '&Paste', self)
+        pasteAction.setStatusTip('Undo your last action')
+        pasteAction.setShortcut('Ctrl+C')
+        pasteAction.triggered.connect(self.textEditor.paste)
+        
         undoAction = QAction(QIcon('./toolbar_icons/iconfinder_arrow-left_basic_red_69816.png'), '&Undo', self)
         undoAction.setStatusTip('Undo your last action')
-        #undoAction.triggered.connect(self.)
+        undoAction.setShortcut('Ctrl+Z')
+        undoAction.triggered.connect(self.textEditor.undo)
 
         redoAction = QAction(QIcon('./toolbar_icons/iconfinder_arrow-right_basic_yellow_70009.png'), '&Redo', self)
         redoAction.setStatusTip('Redo your last action')
-        #redoAction.triggered.connect(self.)
-        # UNDO / REDO IN PYQT
-        # http://www.informit.com/articles/article.aspx?p=1187104&seqNum=3
+        redoAction.setShortcut('Ctrl+Y')
+        redoAction.triggered.connect(self.textEditor.redo)
+        
+        # https://www.binpress.com/building-text-editor-pyqt-1/
 
         appSettings = QAction(QIcon('./toolbar_icons/iconfinder_gears_basic_green_69695.png'), '&Settings', self)
         appSettings.setStatusTip('View and adjust your settings')
@@ -208,19 +225,19 @@ class SIMR(QMainWindow):
         searchAll.triggered.connect(self.getSearchBox)
 
         # Read Menu Options
-        readKJV = QAction('&King James Version', self)
+        readKJV = QAction(QIcon('./toolbar_icons/iconfinder_book-open-bookmark_basic_blue_69442'), '&King James Version', self)
         readKJV.setStatusTip('Read from the King James Version')
         #readKJV.triggered.connect(self.)
 
-        readKJVwStrongs = QAction("&KJV w/ Strong's", self)
+        readKJVwStrongs = QAction(QIcon('./toolbar_icons/iconfinder_book-bookmark_basic_blue_69441'), "&KJV w/ Strong's", self)
         readKJVwStrongs.setStatusTip("Read from the KJV with Strong's numbers")
         #readKJVwStrongs.triggered.connect(self.)
 
-        readSept = QAction('&Septuagint', self)
+        readSept = QAction(QIcon('./toolbar_icons/iconfinder_book-open-bookmark_basic_yellow_70018'), '&Septuagint', self)
         readSept.setStatusTip('Read from the Septuagint')
         #readSept.triggered.connect(self.)
 
-        readBerean = QAction('&Berean', self)
+        readBerean = QAction(QIcon('./toolbar_icons/iconfinder_book-open-bookmark_basic_green_69634'), '&Berean', self)
         readBerean.setStatusTip('Read from the Berean Bible')
         #readBerean.triggered.connect(self.)
 
@@ -290,6 +307,9 @@ class SIMR(QMainWindow):
         
         # Edit Menu
         editMenu = menubar.addMenu('&Edit')
+        editMenu.addAction(copyAction)
+        editMenu.addAction(cutAction)
+        editMenu.addAction(pasteAction)
         editMenu.addAction(undoAction)
         editMenu.addAction(redoAction)
         editMenu.addAction(appSettings)
@@ -339,6 +359,9 @@ class SIMR(QMainWindow):
         self.mainToolbar.addAction(openProject)
         self.mainToolbar.addAction(saveProject)
         self.mainToolbar.addAction(closeApp)
+        self.mainToolbar.addAction(copyAction)
+        self.mainToolbar.addAction(cutAction)
+        self.mainToolbar.addAction(pasteAction)
         self.mainToolbar.addAction(undoAction)
         self.mainToolbar.addAction(redoAction)
         self.mainToolbar.addAction(appSettings)
@@ -347,13 +370,20 @@ class SIMR(QMainWindow):
         self.mainToolbar.addAction(appDocumentation)
         self.mainToolbar.addAction(aboutApp)
 
+        # Reading Toolbar
+        self.readingToolbar = self.addToolBar('Reading Toolbar')
+        self.readingToolbar.addAction(readKJV)
+        self.readingToolbar.addAction(readKJVwStrongs)
+        self.readingToolbar.addAction(readSept)
+        self.readingToolbar.addAction(readBerean)
+
         # Search Toolbar
         self.searchToolbar = self.addToolBar('Search Toolbar')
         self.searchToolbar.addAction(searchAll)
         self.searchBox = QLineEdit(self.searchToolbar)
         self.searchBox.move(50, 7)
         self.searchBox.resize(150, 25)
-        
+
         #https://stackoverflow.com/questions/42288320/python-how-to-get-qlineedit-text?rq=1
 
         # SEE - http://zetcode.com/gui/pyqt5/menustoolbars/
@@ -545,6 +575,7 @@ class SIMR(QMainWindow):
 
     def getSearchBox(self):
         retrieved = self.searchBox.text()
+        self.searchBox.setText('')
         # Search all function here
         text = self.searchAll(retrieved)
         # Return the text to the text editor portion
