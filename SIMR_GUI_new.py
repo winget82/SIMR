@@ -173,13 +173,15 @@ class SIMR(QMainWindow):
         # File Menu Options
         newProject = QAction(QIcon('./toolbar_icons/iconfinder_document_basic_blue_69485.png'), '&New Project', self)
         newProject.setStatusTip('Start a new project')
+        #newProject.triggered.connect(self.)
         
         openProject = QAction(QIcon('./toolbar_icons/iconfinder_folder_basic_blue_69500.png'), '&Open Project', self)
         openProject.setStatusTip('Open an existing project')
+        #openProject.triggered.connect(self.)
 
         saveProject = QAction(QIcon('./toolbar_icons/iconfinder_floppy-disk_basic_yellow_70075.png'), '&Save Project', self)        
         saveProject.setStatusTip('Save your current project')
-        saveProject.triggered.connect(self.textUpdate)
+        #saveProject.triggered.connect(self.)
 
         closeApp = QAction(QIcon('./toolbar_icons/iconfinder_archive_basic_blue_69430.png'), '&Exit', self)        
         closeApp.setStatusTip('Close and exit SIMR')
@@ -188,67 +190,90 @@ class SIMR(QMainWindow):
         # Edit Menu Options
         undoAction = QAction(QIcon('./toolbar_icons/iconfinder_arrow-left_basic_red_69816.png'), '&Undo', self)
         undoAction.setStatusTip('Undo your last action')
+        #undoAction.triggered.connect(self.)
 
         redoAction = QAction(QIcon('./toolbar_icons/iconfinder_arrow-right_basic_yellow_70009.png'), '&Redo', self)
         redoAction.setStatusTip('Redo your last action')
+        #redoAction.triggered.connect(self.)
 
         appSettings = QAction(QIcon('./toolbar_icons/iconfinder_gears_basic_green_69695.png'), '&Settings', self)
         appSettings.setStatusTip('View and adjust your settings')
+        #appSettings.triggered.connect(self.)
 
         # Search Menu Options
         searchAll = QAction(QIcon('./toolbar_icons/iconfinder_search_basic_blue_69571.png'), '&Search All', self)
         searchAll.setStatusTip('Search through all resources')
+        #searchAll.triggered.connect(self.)
 
         # Read Menu Options
         readKJV = QAction('&King James Version', self)
         readKJV.setStatusTip('Read from the King James Version')
+        #readKJV.triggered.connect(self.)
 
         readKJVwStrongs = QAction("&KJV w/ Strong's", self)
         readKJVwStrongs.setStatusTip("Read from the KJV with Strong's numbers")
+        #readKJVwStrongs.triggered.connect(self.)
 
         readSept = QAction('&Septuagint', self)
         readSept.setStatusTip('Read from the Septuagint')
+        #readSept.triggered.connect(self.)
 
         readBerean = QAction('&Berean', self)
         readBerean.setStatusTip('Read from the Berean Bible')
+        #readBerean.triggered.connect(self.)
 
         # Books Menu Options
         numberInScripture = QAction('&Number In Scripture', self)
         numberInScripture.setStatusTip('Read from "Number in Scripture" by E. W. Bullinger')
+        #numberInScripture.triggered.connect(self.)
 
         howToEnjoyTheBible = QAction('&How To Enjoy The Bible', self)
         howToEnjoyTheBible.setStatusTip('Read from "How to Enjoy the Bible" by E. W. Bullinger')
+        #howToEnjoyTheBible.triggered.connect(self.)
 
         witnessOfTheStars = QAction('&Witness Of The Stars', self)
         witnessOfTheStars.setStatusTip('Read from "Witness of the Stars" by E. W. Bullinger')
+        #witnessOfTheStars.triggered.connect(self.)
 
         # TWI Menu Options
         scriptureIndex = QAction('&Scripture Index', self)
         scriptureIndex.setStatusTip('Get scripture index for The Way International resources')
+        #scriptureIndex.triggered.connect(self.)
 
         # Scripture Bank Menu Options
         visitScriptureBank = QAction(QIcon('./toolbar_icons/iconfinder_bank_basic_red_69821.png'), '&Visit Scripture Bank', self)
         visitScriptureBank.setStatusTip('Visit your Scripture Bank')
+        #visitScriptureBank.triggered.connect(self.)
+
         depositVerse = QAction('&Deposit Verse', self)
         depositVerse.setStatusTip('Deposit a verse into your Scripture Bank')
+        #depositVerse.triggered.connect(self.)
+
         checkBalance = QAction('&Check Balance', self)
         checkBalance.setStatusTip('Check you Scripture Bank account balance')
+        #checkBalance.triggered.connect(self.)
+
         withdrawVerse = QAction('&Withdraw Verse', self)
         withdrawVerse.setStatusTip('Withdraw a verse from your Scripture Bank')
+        #withdrawVerse.triggered.connect(self.)
 
         # Mapping Menu Options
         drawMap = QAction(QIcon('./toolbar_icons/iconfinder_compass_basic_blue_69477.png'), 'Draw Map', self)
         drawMap.setStatusTip('Draw Bible map')
+        #drawMap.triggered.connect(self.)
 
         # Help Menu Options
         aboutApp = QAction(QIcon('./toolbar_icons/iconfinder_information_basic_green_69706.png'), 'About', self)
         aboutApp.setStatusTip('See information about this application')
+        #aboutApp.triggered.connect(self.)
 
         appDocumentation = QAction(QIcon('./toolbar_icons/iconfinder_question_basic_green_69755.png'), 'Documentation', self)
         appDocumentation.setStatusTip('See documentation about using this application')
+        #appDocumentation.triggered.connect(self.)
 
         creditsThanks = QAction('Credits / Thanks', self)
         creditsThanks.setStatusTip('See credits and special thanks')
+        #creditsThanks.triggered.connect(self.)
 
         statusbar = self.statusBar()
 
