@@ -8,7 +8,7 @@
 # IMPORTS - PACKAGES & MODULES UTILIZED
 # ---------------------------------------------------------------------
 import sys
-from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox, QLineEdit, QTextEdit, QSplitter, QFrame, QHBoxLayout, QStyleFactory
+from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox, QLineEdit, QTextEdit, QSplitter, QFrame, QHBoxLayout, QStyleFactory, QFileDialog, QInputDialog
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 import re
@@ -219,7 +219,7 @@ class SIMR(QMainWindow):
         selectAll = QAction('&Select All Text', self)
         selectAll.setStatusTip('Select all text in the window')
         selectAll.setShortcut('Ctrl+A')
-        selectAll.triggered.connect(self.getAllText)
+        selectAll.triggered.connect(self.textEditor.selectAll)
 
         clearAll = QAction('&Clear All Text', self)
         clearAll.setStatusTip('Clear all text from the window - CANNOT UNDO')
@@ -293,6 +293,9 @@ class SIMR(QMainWindow):
         drawMap = QAction(QIcon('./toolbar_icons/iconfinder_compass_basic_blue_69477.png'), 'Draw Map', self)
         drawMap.setStatusTip('Draw Bible map')
         #drawMap.triggered.connect(self.)
+
+        # https://stackoverflow.com/questions/46415572/python-embedding-matplolib-basemap-in-pyqt-application
+        
 
         # Help Menu Options
         aboutApp = QAction(QIcon('./toolbar_icons/iconfinder_information_basic_green_69706.png'), 'About', self)
@@ -602,14 +605,31 @@ class SIMR(QMainWindow):
         self.textEditor.clear()
         #self.statusBar['text'] = "Ready..."
 
+#---------------------------------------------------------------------------------------------
+
+    # Make a popup window asking where to save the file and what to name it
+    # SEE THIS - https://pythonspot.com/pyqt5-file-dialog/
+    # AND THIS - https://pythonprogramming.net/file-saving-pyqt-tutorial/
+    # ** https://www.tutorialspoint.com/pyqt/pyqt_qfiledialog_widget.htm **
+
+
+    # NEW PROJECT
+    #def newProject(self):
+
+
+    # OPEN PROJECT
+    #def openProject(self):
+
+
     # SAVE PROJECT
     def saveProject(self):
 
-        # Make a popup window asking where to save the file and what to name it
+        
 
-        # Write all text from QTextEdit (textEditor) to the text file
+        # TEMPORARY Write all text from QTextEdit (textEditor) to the text file
         with open("NewProject.txt", "w", encoding='utf-8') as txtFile:
             txtFile.write(self.textEditor.toPlainText())
+
 
 # ---------------------------------------------------------------------
 # Run App
@@ -625,4 +645,3 @@ if __name__ == '__main__':
 
 # ADD A SCRIPTURE BANK WHERE YOU CAN DEPOSIT AND WITHDRAW SCRIPTURES
 # https://stackoverflow.com/questions/12602179/pyqt-dynamically-append-to-qtextedit-from-function
-
