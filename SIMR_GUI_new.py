@@ -173,14 +173,17 @@ class SIMR(QMainWindow):
         # File Menu Options
         newProject = QAction(QIcon('./toolbar_icons/iconfinder_document_basic_blue_69485.png'), '&New Project', self)
         newProject.setStatusTip('Start a new project')
+        newProject.setShortcut('Ctrl+N')
         #newProject.triggered.connect(self.)
         
         openProject = QAction(QIcon('./toolbar_icons/iconfinder_folder_basic_blue_69500.png'), '&Open Project', self)
         openProject.setStatusTip('Open an existing project')
+        openProject.setShortcut('Ctrl+O')
         #openProject.triggered.connect(self.)
 
         saveProject = QAction(QIcon('./toolbar_icons/iconfinder_floppy-disk_basic_yellow_70075.png'), '&Save Project', self)        
         saveProject.setStatusTip('Save your current project')
+        saveProject.setShortcut('Ctrl+S')
         #saveProject.triggered.connect(self.)
 
         closeApp = QAction(QIcon('./toolbar_icons/iconfinder_archive_basic_blue_69430.png'), '&Exit', self)        
@@ -212,6 +215,16 @@ class SIMR(QMainWindow):
         redoAction.setStatusTip('Redo your last action')
         redoAction.setShortcut('Ctrl+Y')
         redoAction.triggered.connect(self.textEditor.redo)
+
+        selectAll = QAction('&Select All Text', self)
+        selectAll.setStatusTip('Select all text in the window')
+        selectAll.setShortcut('Ctrl+A')
+        selectAll.triggered.connect(self.getAllText)
+
+        clearAll = QAction('&Clear All Text', self)
+        clearAll.setStatusTip('Clear all text from the window - CANNOT UNDO')
+        clearAll.setShortcut('Ctrl+K')
+        clearAll.triggered.connect(self.clearTxt)
         
         # https://www.binpress.com/building-text-editor-pyqt-1/
 
@@ -313,6 +326,8 @@ class SIMR(QMainWindow):
         editMenu.addAction(undoAction)
         editMenu.addAction(redoAction)
         editMenu.addAction(appSettings)
+        editMenu.addAction(selectAll)
+        editMenu.addAction(clearAll)
 
         # Search Menu
         searchMenu = menubar.addMenu('&Search')
@@ -581,6 +596,17 @@ class SIMR(QMainWindow):
         text = self.searchAll(retrieved)
         # Return the text to the text editor portion
         self.textUpdate(text)
+
+    # A METHOD TO CLEAR ALL TEXT
+    def clearTxt(self):
+        self.textEditor.clear()
+        #self.statusBar['text'] = "Ready..."
+
+    # COLLECTS ALL TEXT IN THE TEXT WIDGET TO A VARIABLE - USED TO SAVE FILE
+    def getAllText(self):
+        contents = self.textEditor.selectAll()
+        return contents
+
 
 # ---------------------------------------------------------------------
 # Run App
