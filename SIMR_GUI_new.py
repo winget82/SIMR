@@ -184,7 +184,7 @@ class SIMR(QMainWindow):
         saveProject = QAction(QIcon('./toolbar_icons/iconfinder_floppy-disk_basic_yellow_70075.png'), '&Save Project', self)        
         saveProject.setStatusTip('Save your current project')
         saveProject.setShortcut('Ctrl+S')
-        #saveProject.triggered.connect(self.)
+        saveProject.triggered.connect(self.saveProject)
 
         closeApp = QAction(QIcon('./toolbar_icons/iconfinder_archive_basic_blue_69430.png'), '&Exit', self)        
         closeApp.setStatusTip('Close and exit SIMR')
@@ -602,11 +602,14 @@ class SIMR(QMainWindow):
         self.textEditor.clear()
         #self.statusBar['text'] = "Ready..."
 
-    # COLLECTS ALL TEXT IN THE TEXT WIDGET TO A VARIABLE - USED TO SAVE FILE
-    def getAllText(self):
-        contents = self.textEditor.selectAll()
-        return contents
+    # SAVE PROJECT
+    def saveProject(self):
 
+        # Make a popup window asking where to save the file and what to name it
+
+        # Write all text from QTextEdit (textEditor) to the text file
+        with open("NewProject.txt", "w", encoding='utf-8') as txtFile:
+            txtFile.write(self.textEditor.toPlainText())
 
 # ---------------------------------------------------------------------
 # Run App
