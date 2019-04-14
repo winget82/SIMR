@@ -8,7 +8,7 @@
 # IMPORTS - PACKAGES & MODULES UTILIZED
 # ---------------------------------------------------------------------
 import sys
-from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox, QLineEdit, QTextEdit, QSplitter, QFrame, QHBoxLayout, QStyleFactory, QFileDialog, QInputDialog
+from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox, QLineEdit, QTextEdit, QSplitter, QFrame, QHBoxLayout, QStyleFactory, QFileDialog, QInputDialog, QDialog
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 import re
@@ -203,7 +203,7 @@ class SIMR(QMainWindow):
 
         pasteAction = QAction(QIcon('./toolbar_icons/iconfinder_clipboard_basic_green_69665'), '&Paste', self)
         pasteAction.setStatusTip('Undo your last action')
-        pasteAction.setShortcut('Ctrl+C')
+        pasteAction.setShortcut('Ctrl+V')
         pasteAction.triggered.connect(self.textEditor.paste)
         
         undoAction = QAction(QIcon('./toolbar_icons/iconfinder_arrow-left_basic_red_69816.png'), '&Undo', self)
@@ -292,10 +292,14 @@ class SIMR(QMainWindow):
         # Mapping Menu Options
         drawMap = QAction(QIcon('./toolbar_icons/iconfinder_compass_basic_blue_69477.png'), 'Draw Map', self)
         drawMap.setStatusTip('Draw Bible map')
-        #drawMap.triggered.connect(self.)
+        drawMap.triggered.connect(lambda: self.showMap('title text'))
+        # MAKE THIS A WINDOW INSTEAD OF A DIALOG - SO YOU CAN ADD TOOLBARS, ETC.
+        # https://stackoverflow.com/questions/36768033/pyqt-how-to-open-new-window
 
         # https://stackoverflow.com/questions/46415572/python-embedding-matplolib-basemap-in-pyqt-application
-        
+        # https://www.programcreek.com/python/example/81313/PyQt5.QtWidgets.QDialog
+        # https://programtalk.com/python-examples/PyQt5.Qt.QDialog/
+
 
         # Help Menu Options
         aboutApp = QAction(QIcon('./toolbar_icons/iconfinder_information_basic_green_69706.png'), 'About', self)
@@ -605,6 +609,13 @@ class SIMR(QMainWindow):
         self.textEditor.clear()
         #self.statusBar['text'] = "Ready..."
 
+    def showMap(self, title):
+        map = QDialog()
+        map.setWindowTitle('Map of ' + title)
+        map.show()
+        map.exec_()
+
+        # FOR WINDOW INSTEAD OF DIALOG SEE THIS - https://stackoverflow.com/questions/36768033/pyqt-how-to-open-new-window
 #---------------------------------------------------------------------------------------------
 
     # Make a popup window asking where to save the file and what to name it
@@ -645,3 +656,5 @@ if __name__ == '__main__':
 
 # ADD A SCRIPTURE BANK WHERE YOU CAN DEPOSIT AND WITHDRAW SCRIPTURES
 # https://stackoverflow.com/questions/12602179/pyqt-dynamically-append-to-qtextedit-from-function
+
+# NEED TO BE ABLE TO ZOOM IN ON TEXT (OR CHANGE TEXT SIZE), AND ALSO MAP DIALOG ETC.
