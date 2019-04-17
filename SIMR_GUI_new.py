@@ -93,13 +93,33 @@ def sequenceOfFunctions(*functions):
 
 
 # ---------------------------------------------------------------------
-# SIMR Class
+# Classes
 # ---------------------------------------------------------------------
+
+class MapWindow(QMainWindow):
+
+    def __init__(self, parent=None):
+        super(MapWindow, self).__init__(parent)
+
+        statusbar = self.statusBar()
+
+        self.setGeometry(840, 840, 840, 400)
+
+
+class ScriptureBankWindow(QMainWindow):
+
+    def __init__(self, parent=None):
+        super(ScriptureBankWindow, self).__init__(parent)
+
+        statusbar = self.statusBar()
+
+        self.setGeometry(840, 840, 840, 400)
+
 
 class SIMR(QMainWindow):
     
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super(SIMR, self).__init__(parent)
         self.program()
 
         #Text for Pop Ups
@@ -275,7 +295,10 @@ class SIMR(QMainWindow):
         # Scripture Bank Menu Options
         visitScriptureBank = QAction(QIcon('./toolbar_icons/iconfinder_bank_basic_red_69821.png'), '&Visit Scripture Bank', self)
         visitScriptureBank.setStatusTip('Visit your Scripture Bank')
-        #visitScriptureBank.triggered.connect(self.)
+        self.scriptureBankWindow = MapWindow(self)
+        self.scriptureBankWindow.setWindowTitle('Scripture Bank Window')
+        visitScriptureBank.triggered.connect(self.scriptureBankWindow.show)
+        
 
         depositVerse = QAction('&Deposit Verse', self)
         depositVerse.setStatusTip('Deposit a verse into your Scripture Bank')
@@ -292,13 +315,12 @@ class SIMR(QMainWindow):
         # Mapping Menu Options
         drawMap = QAction(QIcon('./toolbar_icons/iconfinder_compass_basic_blue_69477.png'), 'Draw Map', self)
         drawMap.setStatusTip('Draw Bible map')
-        drawMap.triggered.connect(lambda: self.showMap('title text'))
-        # MAKE THIS A WINDOW INSTEAD OF A DIALOG - SO YOU CAN ADD TOOLBARS, ETC.
+        self.mapWindow = MapWindow(self)
+        self.mapWindow.setWindowTitle('Map Window')
+        drawMap.triggered.connect(self.mapWindow.show)
+        
         # https://stackoverflow.com/questions/36768033/pyqt-how-to-open-new-window
-
         # https://stackoverflow.com/questions/46415572/python-embedding-matplolib-basemap-in-pyqt-application
-        # https://www.programcreek.com/python/example/81313/PyQt5.QtWidgets.QDialog
-        # https://programtalk.com/python-examples/PyQt5.Qt.QDialog/
 
 
         # Help Menu Options
