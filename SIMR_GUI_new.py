@@ -321,7 +321,7 @@ class SIMR(QMainWindow):
         
         # https://stackoverflow.com/questions/36768033/pyqt-how-to-open-new-window
         # https://stackoverflow.com/questions/46415572/python-embedding-matplolib-basemap-in-pyqt-application
-
+        # https://stackoverflow.com/questions/48140576/matplotlib-toolbar-in-a-pyqt5-application
 
         # Help Menu Options
         aboutApp = QAction(QIcon('./toolbar_icons/iconfinder_information_basic_green_69706.png'), 'About', self)
@@ -421,12 +421,12 @@ class SIMR(QMainWindow):
         self.readingToolbar.addAction(readSept)
         self.readingToolbar.addAction(readBerean)
 
+        self.addToolBarBreak()
+
         # Search Toolbar
         self.searchToolbar = self.addToolBar('Search Toolbar')
-        self.searchToolbar.addAction(searchAll)
-        self.searchBox = QLineEdit(self.searchToolbar)
-        self.searchBox.move(50, 7)
-        self.searchBox.resize(150, 25)
+        
+                
         #https://pythonbasics.org/pyqt-radiobutton/
         #https://www.tutorialspoint.com/pyqt/pyqt_qradiobutton_widget.htm
         self.radioButtonSearchAll = QRadioButton("SearchAll")
@@ -438,10 +438,15 @@ class SIMR(QMainWindow):
 
         self.searchToolbar.addWidget(self.radioButtonSearchAll)
         self.searchToolbar.addWidget(self.radioButtonKJV)
+        self.searchToolbar.addWidget(self.radioButtonKJVwStrongs)
         self.searchToolbar.addWidget(self.radioButtonSeptuagint)
         self.searchToolbar.addWidget(self.radioButtonBerean)
         self.searchToolbar.addWidget(self.radioButtonScriptureIndex)
 
+        self.searchBox = QLineEdit()
+        self.searchToolbar.addWidget(self.searchBox)
+        self.searchToolbar.addAction(searchAll)
+        
         #https://stackoverflow.com/questions/42288320/python-how-to-get-qlineedit-text?rq=1
 
         # SEE - http://zetcode.com/gui/pyqt5/menustoolbars/
