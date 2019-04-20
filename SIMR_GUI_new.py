@@ -430,11 +430,19 @@ class SIMR(QMainWindow):
         #https://pythonbasics.org/pyqt-radiobutton/
         #https://www.tutorialspoint.com/pyqt/pyqt_qradiobutton_widget.htm
         self.radioButtonSearchAll = QRadioButton("SearchAll")
+        self.radioButtonSearchAll.setChecked(True)
+        #self.radioButtonSearchAll.toggled.connect()
         self.radioButtonKJV = QRadioButton("KJV")
+        #self.radioButtonKJV.toggled.connect()
         self.radioButtonKJVwStrongs = QRadioButton("KJV w/ Strong's")
+        #self.radioButtonKJVwStrongs.toggled.connect()
         self.radioButtonSeptuagint = QRadioButton("Septuagint")
+        #self.radioButtonSeptuagint.toggled.connect()
         self.radioButtonBerean = QRadioButton("Berean")
+        #self.radioButtonBerean.toggled.connect()
         self.radioButtonScriptureIndex = QRadioButton("Scripture Index")
+        #self.radioButtonScriptureIndex.toggled.connect()
+        
 
         self.searchToolbar.addWidget(self.radioButtonSearchAll)
         self.searchToolbar.addWidget(self.radioButtonKJV)
