@@ -426,22 +426,23 @@ class SIMR(QMainWindow):
         # Search Toolbar
         self.searchToolbar = self.addToolBar('Search Toolbar')
         
+        def colorChange(radioButtonName, color):
+            radioButtonName.setStyleSheet("color: " + color)
                 
         #https://pythonbasics.org/pyqt-radiobutton/
         #https://www.tutorialspoint.com/pyqt/pyqt_qradiobutton_widget.htm
         self.radioButtonSearchAll = QRadioButton("SearchAll")
-        self.radioButtonSearchAll.setChecked(True)
-        #self.radioButtonSearchAll.toggled.connect()
+        self.radioButtonSearchAll.toggled.connect(lambda: colorChange(self.radioButtonSearchAll, "blue"))
         self.radioButtonKJV = QRadioButton("KJV")
-        #self.radioButtonKJV.toggled.connect()
+        self.radioButtonKJV.toggled.connect(lambda: colorChange(self.radioButtonKJV, "red"))
         self.radioButtonKJVwStrongs = QRadioButton("KJV w/ Strong's")
-        #self.radioButtonKJVwStrongs.toggled.connect()
+        self.radioButtonKJVwStrongs.toggled.connect(lambda: colorChange(self.radioButtonKJVwStrongs, "yellow"))
         self.radioButtonSeptuagint = QRadioButton("Septuagint")
-        #self.radioButtonSeptuagint.toggled.connect()
+        self.radioButtonSeptuagint.toggled.connect(lambda: colorChange(self.radioButtonSeptuagint, "green"))
         self.radioButtonBerean = QRadioButton("Berean")
-        #self.radioButtonBerean.toggled.connect()
+        self.radioButtonBerean.toggled.connect(lambda: colorChange(self.radioButtonBerean, "blue"))
         self.radioButtonScriptureIndex = QRadioButton("Scripture Index")
-        #self.radioButtonScriptureIndex.toggled.connect()
+        self.radioButtonScriptureIndex.toggled.connect(lambda: colorChange(self.radioButtonScriptureIndex, "red"))
         
 
         self.searchToolbar.addWidget(self.radioButtonSearchAll)
