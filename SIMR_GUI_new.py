@@ -255,7 +255,7 @@ class SIMR(QMainWindow):
         # Search Menu Options
         searchAll = QAction(QIcon('./toolbar_icons/iconfinder_search_basic_blue_69571.png'), '&Search All', self)
         searchAll.setStatusTip('Search through all resources')
-        searchAll.triggered.connect(self.getSearchBox)
+        searchAll.triggered.connect(self.radioSearch)
 
         # Read Menu Options
         readKJV = QAction(QIcon('./toolbar_icons/iconfinder_book-open-bookmark_basic_blue_69442'), '&King James Version', self)
@@ -431,12 +431,12 @@ class SIMR(QMainWindow):
                 radioButtonName.setStyleSheet("color: red")
             else:
                 radioButtonName.setStyleSheet("color: black")
-                
+
         #https://pythonbasics.org/pyqt-radiobutton/
 
         #https://www.tutorialspoint.com/pyqt/pyqt_qradiobutton_widget.htm
-        
-        self.radioButtonSearchAll = QRadioButton("SearchAll")
+
+        self.radioButtonSearchAll = QRadioButton("Search All")
         self.radioButtonSearchAll.toggled.connect(lambda: radioButtonColorChange(self.radioButtonSearchAll))
         self.radioButtonKJV = QRadioButton("KJV")
         self.radioButtonKJV.toggled.connect(lambda: radioButtonColorChange(self.radioButtonKJV))
@@ -654,10 +654,7 @@ class SIMR(QMainWindow):
     def getSearchBox(self):
         retrieved = self.searchBox.text()
         self.searchBox.setText('')
-        # Search all function here
-        text = self.searchAll(retrieved)
-        # Return the text to the text editor portion
-        self.textUpdate(text)
+        return retrieved     
 
     # A METHOD TO CLEAR ALL TEXT
     def clearTxt(self):
@@ -669,6 +666,24 @@ class SIMR(QMainWindow):
         map.setWindowTitle('Map of ' + title)
         map.show()
         map.exec_()
+    
+    def radioSearch(self):
+        if self.radioButtonBerean.isChecked():
+            self.textUpdate(self.berean_search(self.getSearchBox()))
+        elif self.radioButtonKJV.isChecked():
+            #self.textUpdate(self.kjv_search(self.getSearchBox()))
+            pass
+        elif self.radioButtonKJVwStrongs.isChecked():
+            pass
+        elif self.radioButtonScriptureIndex.isChecked():
+            self.textUpdate(self.twi_scripture_index(self.getSearchBox()))
+        elif self.radioButtonSearchAll.isChecked():
+            self.textUpdate(self.searchAll(self.getSearchBox()))
+        elif self.radioButtonSeptuagint.isChecked():
+            self.textUpdate(self.septuagint_search(self.getSearchBox()))
+        else:
+            self.textUpdate(self.searchAll(self.getSearchBox()))
+    
 
         # FOR WINDOW INSTEAD OF DIALOG SEE THIS - https://stackoverflow.com/questions/36768033/pyqt-how-to-open-new-window
 #---------------------------------------------------------------------------------------------
