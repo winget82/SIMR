@@ -8,7 +8,7 @@
 # IMPORTS - PACKAGES & MODULES UTILIZED
 # ---------------------------------------------------------------------
 import sys
-from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox, QLineEdit, QTextEdit, QSplitter, QFrame, QHBoxLayout, QStyleFactory, QFileDialog, QInputDialog, QDialog
+from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox, QLineEdit, QTextEdit, QSplitter, QFrame, QHBoxLayout, QStyleFactory, QFileDialog, QInputDialog, QDialog, QRadioButton
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 import re
@@ -427,6 +427,20 @@ class SIMR(QMainWindow):
         self.searchBox = QLineEdit(self.searchToolbar)
         self.searchBox.move(50, 7)
         self.searchBox.resize(150, 25)
+        #https://pythonbasics.org/pyqt-radiobutton/
+        #https://www.tutorialspoint.com/pyqt/pyqt_qradiobutton_widget.htm
+        self.radioButtonSearchAll = QRadioButton("SearchAll")
+        self.radioButtonKJV = QRadioButton("KJV")
+        self.radioButtonKJVwStrongs = QRadioButton("KJV w/ Strong's")
+        self.radioButtonSeptuagint = QRadioButton("Septuagint")
+        self.radioButtonBerean = QRadioButton("Berean")
+        self.radioButtonScriptureIndex = QRadioButton("Scripture Index")
+
+        self.searchToolbar.addWidget(self.radioButtonSearchAll)
+        self.searchToolbar.addWidget(self.radioButtonKJV)
+        self.searchToolbar.addWidget(self.radioButtonSeptuagint)
+        self.searchToolbar.addWidget(self.radioButtonBerean)
+        self.searchToolbar.addWidget(self.radioButtonScriptureIndex)
 
         #https://stackoverflow.com/questions/42288320/python-how-to-get-qlineedit-text?rq=1
 
