@@ -253,8 +253,8 @@ class SIMR(QMainWindow):
         #appSettings.triggered.connect(self.)
 
         # Search Menu Options
-        searchAll = QAction(QIcon('./toolbar_icons/iconfinder_search_basic_blue_69571.png'), '&Search All', self)
-        searchAll.setStatusTip('Search through all resources')
+        searchAll = QAction(QIcon('./toolbar_icons/iconfinder_search_basic_blue_69571.png'), '&Search', self)
+        searchAll.setStatusTip('Search resources')
         searchAll.triggered.connect(self.radioSearch)
 
         # Read Menu Options
@@ -420,6 +420,24 @@ class SIMR(QMainWindow):
         self.readingToolbar.addAction(readKJVwStrongs)
         self.readingToolbar.addAction(readSept)
         self.readingToolbar.addAction(readBerean)
+
+        # GreekHebrew Toolbar
+        self.greekHebrewToolbar = self.addToolBar('Greek Hebrew Toolbar')
+        self.radioButtonHebrew = QRadioButton("Hebrew")
+        self.radioButtonHebrew.toggled.connect(lambda: radioButtonColorChange(self.radioButtonHebrew))
+        self.radioButtonGreek = QRadioButton("Greek")
+        self.radioButtonGreek.toggled.connect(lambda: radioButtonColorChange(self.radioButtonGreek))
+        self.greekHebrewToolbar.addWidget(self.radioButtonHebrew)
+        self.greekHebrewToolbar.addWidget(self.radioButtonGreek)
+        self.searchHebrewGreekBox = QLineEdit()
+        self.greekHebrewToolbar.addWidget(self.searchHebrewGreekBox)
+        
+
+        searchGreekHebrew = QAction(QIcon('./toolbar_icons/iconfinder_search_basic_blue_69571.png'), '&Search Hebrew Greek', self)
+        searchGreekHebrew.setStatusTip('Search for Hebrew and Greek definitions')
+        #searchGreekHebrew.triggered.connect(self.)
+
+        self.greekHebrewToolbar.addAction(searchGreekHebrew)
 
         self.addToolBarBreak()
 
@@ -615,7 +633,6 @@ class SIMR(QMainWindow):
             kjvs = self.kjvstrnumNT_search(searchText)
         kjvsLabel = "KJV w/Strong's - " + ' - '.join(kjvs)
         
-        
         #GET SEPTUAGINT
         try:
             sept = self.septuagint_search(searchText)    
@@ -626,8 +643,22 @@ class SIMR(QMainWindow):
         #ISSUES WITH SEPTUAGINT TRY GENESIS 1:1 ALSO SOME JEREMIAH VERSES FOR EXAMPLE - LOOK INTO JSON FILE -
         # json showing first index as "\ufeffGenesis 1:1" - that's the issue
 
-        #berean = self.
-        #bereanLabel = 
+        # BEREAN
+        try:
+            bi = self.berean_search(self.getSearchBox())
+            bi_index0 = berean[bi]
+            bi_index1 = berean[bi + 1]
+            bi_index2 = berean[bi + 2]
+            bi_index3 = berean[bi + 3]
+            bi_index4 = berean[bi + 4]
+            bereanLabel = bi_index0\
+                  + '\nBGB (Berean Greek Bible) - ' + bi_index1\
+                  + '\n\nBIB (Berean Interlinear Bible) - ' + bi_index2\
+                  + '\n\nBLB (Berean Literal Bible) - ' + bi_index3\
+                  + '\n\nBSB (Berean Study Bible) - ' + bi_index4 + '\n\n'
+                      # NOT SURE WHY THIS IS NOT WORKING, SAME THING WORKS IN A SEPERATE FUNCTION
+        except:
+            bereanLabel = "Berean Bible - No verse found in the Berean Bible for your search..."
 
         #GET TWI SCRIPTURE INDEX
         try:
@@ -649,7 +680,8 @@ class SIMR(QMainWindow):
             nts2 = self.get_strongsGreekDefs(nts1)
             strongsDefinitions = ''.join(nts2)
 
-        return kjvLabel + '\n\n' + kjvsLabel + '\n\n' + strongsDefinitions + '\n\n' + septLabel + '\n\n' + twiLabel
+        return kjvLabel + '\n\n' + kjvsLabel + '\n\n' + strongsDefinitions\
+             + '\n\n' + septLabel + '\n\n' + bereanLabel + '\n\n' + twiLabel
 
     def getSearchBox(self):
         retrieved = self.searchBox.text()
@@ -677,12 +709,12 @@ class SIMR(QMainWindow):
             bi_index2 = berean[bi + 2]
             bi_index3 = berean[bi + 3]
             bi_index4 = berean[bi + 4]
-            returnBerean = bi_index0\
+            bereanLabel = bi_index0\
                   + '\nBGB (Berean Greek Bible) - ' + bi_index1\
                   + '\n\nBIB (Berean Interlinear Bible) - ' + bi_index2\
                   + '\n\nBLB (Berean Literal Bible) - ' + bi_index3\
                   + '\n\nBSB (Berean Study Bible) - ' + bi_index4 + '\n\n'
-            self.textUpdate(returnBerean)
+            self.textUpdate(bereanLabel)
 
         elif self.radioButtonKJV.isChecked():
             returnedVerses = self.kjv_search(self.getSearchBox())
@@ -766,3 +798,4 @@ if __name__ == '__main__':
 # https://stackoverflow.com/questions/12602179/pyqt-dynamically-append-to-qtextedit-from-function
 
 # NEED TO BE ABLE TO ZOOM IN ON TEXT (OR CHANGE TEXT SIZE), AND ALSO MAP DIALOG ETC.
+# REFACTOR CODE WHEN DONE
