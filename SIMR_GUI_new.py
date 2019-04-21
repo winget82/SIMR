@@ -116,6 +116,16 @@ class ScriptureBankWindow(QMainWindow):
         self.setGeometry(840, 840, 840, 400)
 
 
+class ReadingWindow(QMainWindow):
+
+    def __init__(self, parent=None):
+        super(ReadingWindow, self).__init__(parent)
+
+        statusbar = self.statusBar()
+
+        self.setGeometry(840, 840, 840, 400)
+
+
 class SIMR(QMainWindow):
     
     def __init__(self, parent=None):
@@ -257,7 +267,16 @@ class SIMR(QMainWindow):
         searchAll.setStatusTip('Search resources')
         searchAll.triggered.connect(self.radioSearch)
 
-        # Read Menu Options
+         # Read Menu Options
+        launchReadingWindow = QAction(QIcon('./toolbar_icons/iconfinder_weather-sun_basic_yellow_70186.png'), '&Reading Window', self)
+        launchReadingWindow.setStatusTip('Launch the reading window')
+        self.readingWindow = ReadingWindow(self)
+        self.readingWindow.setWindowTitle('Reading Window')
+        launchReadingWindow.triggered.connect(self.readingWindow.show)
+        #readingMenuBar = self.MenuBar()
+        """
+        # --------------------------------------------------------------------------------------------------------------------------
+        # Read Menu Options - MOVE THESE TO READING WINODW------------------------------------------------------------------------
         readKJV = QAction(QIcon('./toolbar_icons/iconfinder_book-open-bookmark_basic_blue_69442'), '&King James Version', self)
         readKJV.setStatusTip('Read from the King James Version')
         #readKJV.triggered.connect(self.)
@@ -286,7 +305,9 @@ class SIMR(QMainWindow):
         witnessOfTheStars = QAction('&Witness Of The Stars', self)
         witnessOfTheStars.setStatusTip('Read from "Witness of the Stars" by E. W. Bullinger')
         #witnessOfTheStars.triggered.connect(self.)
-
+        # --------------------------------------------------------------------------------------------------------------------------
+        # --------------------------------------------------------------------------------------------------------------------------
+        """
         # TWI Menu Options
         scriptureIndex = QAction('&Scripture Index', self)
         scriptureIndex.setStatusTip('Get scripture index for The Way International resources')
@@ -362,18 +383,20 @@ class SIMR(QMainWindow):
         searchMenu = menubar.addMenu('&Search')
         searchMenu.addAction(searchAll)
 
+        
         # Read Menu
         readMenu = menubar.addMenu('&Read')
-        readMenu.addAction(readKJV)
-        readMenu.addAction(readKJVwStrongs)
-        readMenu.addAction(readSept)
-        readMenu.addAction(readBerean)
+        readMenu.addAction(launchReadingWindow)
 
+        """
+        #-----------MOVE THESE TO READINGWINDOW-----------------------------
         # Books Menu
         booksMenu = menubar.addMenu('&Books')
         booksMenu.addAction(numberInScripture)
         booksMenu.addAction(howToEnjoyTheBible)
         booksMenu.addAction(witnessOfTheStars)
+        #----------------------------------------------------------------------------
+        """
 
         # TWI Menu
         twiMenu = menubar.addMenu('&TWI')
@@ -409,17 +432,20 @@ class SIMR(QMainWindow):
         self.mainToolbar.addAction(undoAction)
         self.mainToolbar.addAction(redoAction)
         self.mainToolbar.addAction(appSettings)
+        self.mainToolbar.addAction(launchReadingWindow)
         self.mainToolbar.addAction(visitScriptureBank)
         self.mainToolbar.addAction(drawMap)
         self.mainToolbar.addAction(appDocumentation)
         self.mainToolbar.addAction(aboutApp)
 
-        # Reading Toolbar
+        """
+        # Reading Toolbar ---MOVE TO READING WINDOW----
         self.readingToolbar = self.addToolBar('Reading Toolbar')
         self.readingToolbar.addAction(readKJV)
         self.readingToolbar.addAction(readKJVwStrongs)
         self.readingToolbar.addAction(readSept)
         self.readingToolbar.addAction(readBerean)
+        """
 
         # GreekHebrew Toolbar
         self.greekHebrewToolbar = self.addToolBar('Greek Hebrew Toolbar')
