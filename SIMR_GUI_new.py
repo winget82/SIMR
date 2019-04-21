@@ -668,19 +668,45 @@ class SIMR(QMainWindow):
         map.exec_()
     
     def radioSearch(self):
+
         if self.radioButtonBerean.isChecked():
-            self.textUpdate(self.berean_search(self.getSearchBox()))
+            self.textUpdate(self.berean_search(self.getSearchBox()))# returning an integer and crashing
+        
         elif self.radioButtonKJV.isChecked():
-            #self.textUpdate(self.kjv_search(self.getSearchBox()))
-            pass
+            returnedVerses = self.kjv_search(self.getSearchBox())
+        
+            for verse in returnedVerses:
+                self.textUpdate(verse)
+        
         elif self.radioButtonKJVwStrongs.isChecked():
-            pass
+            try:
+                kjvs = self.kjvstrnumOT_search(self.getSearchBox())
+            except:
+                kjvs = self.kjvstrnumNT_search(self.getSearchBox())
+            kjvsLabel = "KJV w/Strong's - " + ' - '.join(kjvs)
+            self.textUpdate(kjvsLabel)# Not understading what is causing error at this point
+            #lines 500, 504, 683, 685
+        
         elif self.radioButtonScriptureIndex.isChecked():
-            self.textUpdate(self.twi_scripture_index(self.getSearchBox()))
+            try:
+                twi = self.twi_scripture_index(self.getSearchBox())
+                twiLabel = "Scripture Index : \n" + ' '.join(twi)
+            except:
+                twiLabel = "Nothing found in Scripture Index for your search..."
+            self.textUpdate(twiLabel)
+        
         elif self.radioButtonSearchAll.isChecked():
             self.textUpdate(self.searchAll(self.getSearchBox()))
+        
         elif self.radioButtonSeptuagint.isChecked():
-            self.textUpdate(self.septuagint_search(self.getSearchBox()))
+            try:
+                sept = self.septuagint_search(self.getSearchBox())    
+                septLabel = "Septuagint - " + ' - '.join(sept)
+            except:
+                sept = "No verse found in Septuagint for your search..."
+                septLabel = "Septuagint - " + sept
+            self.textUpdate(septLabel)
+        
         else:
             self.textUpdate(self.searchAll(self.getSearchBox()))
     
