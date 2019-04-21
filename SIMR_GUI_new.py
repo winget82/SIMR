@@ -670,8 +670,20 @@ class SIMR(QMainWindow):
     def radioSearch(self):
 
         if self.radioButtonBerean.isChecked():
-            self.textUpdate(self.berean_search(self.getSearchBox()))# returning an integer and crashing
-        
+            
+            bi = self.berean_search(self.getSearchBox())
+            bi_index0 = berean[bi]
+            bi_index1 = berean[bi + 1]
+            bi_index2 = berean[bi + 2]
+            bi_index3 = berean[bi + 3]
+            bi_index4 = berean[bi + 4]
+            returnBerean = bi_index0\
+                  + '\nBGB (Berean Greek Bible) - ' + bi_index1\
+                  + '\n\nBIB (Berean Interlinear Bible) - ' + bi_index2\
+                  + '\n\nBLB (Berean Literal Bible) - ' + bi_index3\
+                  + '\n\nBSB (Berean Study Bible) - ' + bi_index4 + '\n\n'
+            self.textUpdate(returnBerean)
+
         elif self.radioButtonKJV.isChecked():
             returnedVerses = self.kjv_search(self.getSearchBox())
         
