@@ -694,7 +694,7 @@ class SIMR(QMainWindow):
 
         # BEREAN
         try:
-            bi = self.berean_search(self.getSearchBox())
+            bi = self.berean_search(searchText)
             bi_index0 = berean[bi]
             bi_index1 = berean[bi + 1]
             bi_index2 = berean[bi + 2]
@@ -705,7 +705,7 @@ class SIMR(QMainWindow):
                   + '\n\nBIB (Berean Interlinear Bible) - ' + bi_index2\
                   + '\n\nBLB (Berean Literal Bible) - ' + bi_index3\
                   + '\n\nBSB (Berean Study Bible) - ' + bi_index4 + '\n\n'
-                      # NOT SURE WHY THIS IS NOT WORKING, SAME THING WORKS IN A SEPERATE FUNCTION
+
         except:
             bereanLabel = "Berean Bible - No verse found in the Berean Bible for your search..."
 
