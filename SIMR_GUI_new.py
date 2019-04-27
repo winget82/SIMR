@@ -109,6 +109,8 @@ class MapWindow(QMainWindow):
         self.setGeometry(840, 840, 840, 400)
 
 
+
+
 class ScriptureBankWindow(QMainWindow):
 
     def __init__(self, parent=None):
@@ -120,6 +122,32 @@ class ScriptureBankWindow(QMainWindow):
         statusbar = self.statusBar()
 
         self.setGeometry(840, 840, 840, 400)
+        
+        depositVerse = QAction('&Deposit Verse', self)
+        depositVerse.setStatusTip('Deposit a verse into your Scripture Bank')
+        #depositVerse.triggered.connect(self.)
+
+        checkBalance = QAction('&Check Balance', self)
+        checkBalance.setStatusTip('Check you Scripture Bank account balance')
+        #checkBalance.triggered.connect(self.)
+
+        withdrawVerse = QAction('&Withdraw Verse', self)
+        withdrawVerse.setStatusTip('Withdraw a verse from your Scripture Bank')
+        #withdrawVerse.triggered.connect(self.)
+        
+        scriptureBankMenubar = self.menuBar()
+
+        # File Menu
+        scriptureBankMenu = self.scriptureBankMenubar.addMenu('&Scripture Bank')
+        scriptureBankMenu.addAction(depositVerse)
+        scriptureBankMenu.addAction(checkBalance)
+        scriptureBankMenu.addAction(withdrawVerse)
+        
+
+        self.scriptureBankToolbar = self.addToolBar('Scripture Bank Toolbar')
+        self.scriptureBankToolbar.addAction(depositVerse)
+        self.scriptureBankToolbar.addAction(checkBalance)
+        self.scriptureBankToolbar.addAction(withdrawVerse)
 
 
 class ReadingWindow(QMainWindow):
@@ -164,15 +192,13 @@ class ReadingWindow(QMainWindow):
         witnessOfTheStars.setStatusTip('Read from "Witness of the Stars" by E. W. Bullinger')
         #witnessOfTheStars.triggered.connect(self.)
 
-        """
-        #-----------MOVE THESE TO READINGWINDOW-----------------------------
+        readingMenubar = self.menuBar()
+        
         # Books Menu
-        booksMenu = menubar.addMenu('&Books')
+        booksMenu = readingMenubar.addMenu('&Books')
         booksMenu.addAction(numberInScripture)
         booksMenu.addAction(howToEnjoyTheBible)
         booksMenu.addAction(witnessOfTheStars)
-        #----------------------------------------------------------------------------
-        """
 
         self.readingToolbar = self.addToolBar('Reading Toolbar')
         self.readingToolbar.addAction(readKJV)
@@ -182,8 +208,6 @@ class ReadingWindow(QMainWindow):
         self.readingToolbar.addAction(numberInScripture)
         self.readingToolbar.addAction(howToEnjoyTheBible)
         self.readingToolbar.addAction(witnessOfTheStars)
-
-
 
 
 class SIMR(QMainWindow):
@@ -346,19 +370,6 @@ class SIMR(QMainWindow):
         self.scriptureBankWindow.setWindowTitle('Scripture Bank Window')
         visitScriptureBank.triggered.connect(self.scriptureBankWindow.show)
         
-
-        depositVerse = QAction('&Deposit Verse', self)
-        depositVerse.setStatusTip('Deposit a verse into your Scripture Bank')
-        #depositVerse.triggered.connect(self.)
-
-        checkBalance = QAction('&Check Balance', self)
-        checkBalance.setStatusTip('Check you Scripture Bank account balance')
-        #checkBalance.triggered.connect(self.)
-
-        withdrawVerse = QAction('&Withdraw Verse', self)
-        withdrawVerse.setStatusTip('Withdraw a verse from your Scripture Bank')
-        #withdrawVerse.triggered.connect(self.)
-
         # Mapping Menu Options
         drawMap = QAction(QIcon('./toolbar_icons/iconfinder_compass_basic_blue_69477.png'), 'Draw Map', self)
         drawMap.setStatusTip('Draw Bible map')
@@ -420,9 +431,7 @@ class SIMR(QMainWindow):
         # Scripture Bank
         scriptureBankMenu = menubar.addMenu('&Scripture Bank')
         scriptureBankMenu.addAction(visitScriptureBank)
-        scriptureBankMenu.addAction(depositVerse)
-        scriptureBankMenu.addAction(checkBalance)
-        scriptureBankMenu.addAction(withdrawVerse)
+        
 
         # Mapping Menu
         mappingMenu = menubar.addMenu('&Mapping')
