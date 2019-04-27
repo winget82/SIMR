@@ -170,6 +170,11 @@ class ReadingWindow(QMainWindow):
 
         self.setGeometry(840, 840, 840, 400)
 
+        # SEE QTextBrowser (supports hypertext which would make easier navigation) for reading text
+        # https://doc.qt.io/qtforpython/PySide2/QtWidgets/QTextBrowser.html
+        # https://stackoverflow.com/questions/49852012/python-pyqt5-set-text-to-qtextbrowser-with-different-colors
+        # https://www.programcreek.com/python/example/108079/PyQt5.QtWidgets.QTextBrowser
+
         # Read Menu Options
         readKJV = QAction(QIcon('./toolbar_icons/iconfinder_book-open-bookmark_basic_blue_69442'), '&King James Version', self)
         readKJV.setStatusTip('Read from the King James Version')
@@ -198,7 +203,7 @@ class ReadingWindow(QMainWindow):
 
         witnessOfTheStars = QAction('&Witness Of The Stars', self)
         witnessOfTheStars.setStatusTip('Read from "Witness of the Stars" by E. W. Bullinger')
-        #witnessOfTheStars.triggered.connect(self.)
+        witnessOfTheStars.triggered.connect(lambda: self.printOut(stars))
 
         readingMenubar = self.menuBar()
         
