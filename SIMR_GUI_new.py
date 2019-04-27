@@ -100,6 +100,9 @@ class MapWindow(QMainWindow):
 
     def __init__(self, parent=None):
         super(MapWindow, self).__init__(parent)
+        self.userInterfaceMapping()
+
+    def userInterfaceMapping(self):
 
         statusbar = self.statusBar()
 
@@ -110,6 +113,9 @@ class ScriptureBankWindow(QMainWindow):
 
     def __init__(self, parent=None):
         super(ScriptureBankWindow, self).__init__(parent)
+        self.userInterfaceScriptureBank()
+
+    def userInterfaceScriptureBank(self):
 
         statusbar = self.statusBar()
 
@@ -120,17 +126,71 @@ class ReadingWindow(QMainWindow):
 
     def __init__(self, parent=None):
         super(ReadingWindow, self).__init__(parent)
+        self.userInterfaceReading()
+
+    def userInterfaceReading(self):
 
         statusbar = self.statusBar()
 
         self.setGeometry(840, 840, 840, 400)
+
+        # Read Menu Options
+        readKJV = QAction(QIcon('./toolbar_icons/iconfinder_book-open-bookmark_basic_blue_69442'), '&King James Version', self)
+        readKJV.setStatusTip('Read from the King James Version')
+        #readKJV.triggered.connect(self.)
+
+        readKJVwStrongs = QAction(QIcon('./toolbar_icons/iconfinder_book-bookmark_basic_blue_69441'), "&KJV w/ Strong's", self)
+        readKJVwStrongs.setStatusTip("Read from the KJV with Strong's numbers")
+        #readKJVwStrongs.triggered.connect(self.)
+
+        readSept = QAction(QIcon('./toolbar_icons/iconfinder_book-open-bookmark_basic_yellow_70018'), '&Septuagint', self)
+        readSept.setStatusTip('Read from the Septuagint')
+        #readSept.triggered.connect(self.)
+
+        readBerean = QAction(QIcon('./toolbar_icons/iconfinder_book-open-bookmark_basic_green_69634'), '&Berean', self)
+        readBerean.setStatusTip('Read from the Berean Bible')
+        #readBerean.triggered.connect(self.)
+
+        # Books Menu Options
+        numberInScripture = QAction('&Number In Scripture', self)
+        numberInScripture.setStatusTip('Read from "Number in Scripture" by E. W. Bullinger')
+        #numberInScripture.triggered.connect(self.)
+
+        howToEnjoyTheBible = QAction('&How To Enjoy The Bible', self)
+        howToEnjoyTheBible.setStatusTip('Read from "How to Enjoy the Bible" by E. W. Bullinger')
+        #howToEnjoyTheBible.triggered.connect(self.)
+
+        witnessOfTheStars = QAction('&Witness Of The Stars', self)
+        witnessOfTheStars.setStatusTip('Read from "Witness of the Stars" by E. W. Bullinger')
+        #witnessOfTheStars.triggered.connect(self.)
+
+        """
+        #-----------MOVE THESE TO READINGWINDOW-----------------------------
+        # Books Menu
+        booksMenu = menubar.addMenu('&Books')
+        booksMenu.addAction(numberInScripture)
+        booksMenu.addAction(howToEnjoyTheBible)
+        booksMenu.addAction(witnessOfTheStars)
+        #----------------------------------------------------------------------------
+        """
+
+        self.readingToolbar = self.addToolBar('Reading Toolbar')
+        self.readingToolbar.addAction(readKJV)
+        self.readingToolbar.addAction(readKJVwStrongs)
+        self.readingToolbar.addAction(readSept)
+        self.readingToolbar.addAction(readBerean)
+        self.readingToolbar.addAction(numberInScripture)
+        self.readingToolbar.addAction(howToEnjoyTheBible)
+        self.readingToolbar.addAction(witnessOfTheStars)
+
+
 
 
 class SIMR(QMainWindow):
     
     def __init__(self, parent=None):
         super(SIMR, self).__init__(parent)
-        self.program()
+        self.userInterface()
 
         #Text for Pop Ups
         self.about = """\n\n
@@ -188,7 +248,7 @@ class SIMR(QMainWindow):
         YOU ARE GOD'S BEST!!!
         \n\n"""
         
-    def program(self):
+    def userInterface(self):
 
         self.textEditor = QTextEdit(self)
         self.setCentralWidget(self.textEditor)
@@ -273,41 +333,7 @@ class SIMR(QMainWindow):
         self.readingWindow = ReadingWindow(self)
         self.readingWindow.setWindowTitle('Reading Window')
         launchReadingWindow.triggered.connect(self.readingWindow.show)
-        #readingMenuBar = self.MenuBar()
-        """
-        # --------------------------------------------------------------------------------------------------------------------------
-        # Read Menu Options - MOVE THESE TO READING WINODW------------------------------------------------------------------------
-        readKJV = QAction(QIcon('./toolbar_icons/iconfinder_book-open-bookmark_basic_blue_69442'), '&King James Version', self)
-        readKJV.setStatusTip('Read from the King James Version')
-        #readKJV.triggered.connect(self.)
-
-        readKJVwStrongs = QAction(QIcon('./toolbar_icons/iconfinder_book-bookmark_basic_blue_69441'), "&KJV w/ Strong's", self)
-        readKJVwStrongs.setStatusTip("Read from the KJV with Strong's numbers")
-        #readKJVwStrongs.triggered.connect(self.)
-
-        readSept = QAction(QIcon('./toolbar_icons/iconfinder_book-open-bookmark_basic_yellow_70018'), '&Septuagint', self)
-        readSept.setStatusTip('Read from the Septuagint')
-        #readSept.triggered.connect(self.)
-
-        readBerean = QAction(QIcon('./toolbar_icons/iconfinder_book-open-bookmark_basic_green_69634'), '&Berean', self)
-        readBerean.setStatusTip('Read from the Berean Bible')
-        #readBerean.triggered.connect(self.)
-
-        # Books Menu Options
-        numberInScripture = QAction('&Number In Scripture', self)
-        numberInScripture.setStatusTip('Read from "Number in Scripture" by E. W. Bullinger')
-        #numberInScripture.triggered.connect(self.)
-
-        howToEnjoyTheBible = QAction('&How To Enjoy The Bible', self)
-        howToEnjoyTheBible.setStatusTip('Read from "How to Enjoy the Bible" by E. W. Bullinger')
-        #howToEnjoyTheBible.triggered.connect(self.)
-
-        witnessOfTheStars = QAction('&Witness Of The Stars', self)
-        witnessOfTheStars.setStatusTip('Read from "Witness of the Stars" by E. W. Bullinger')
-        #witnessOfTheStars.triggered.connect(self.)
-        # --------------------------------------------------------------------------------------------------------------------------
-        # --------------------------------------------------------------------------------------------------------------------------
-        """
+        
         # TWI Menu Options
         scriptureIndex = QAction('&Scripture Index', self)
         scriptureIndex.setStatusTip('Get scripture index for The Way International resources')
@@ -382,22 +408,11 @@ class SIMR(QMainWindow):
         # Search Menu
         searchMenu = menubar.addMenu('&Search')
         searchMenu.addAction(searchAll)
-
         
         # Read Menu
         readMenu = menubar.addMenu('&Read')
         readMenu.addAction(launchReadingWindow)
-
-        """
-        #-----------MOVE THESE TO READINGWINDOW-----------------------------
-        # Books Menu
-        booksMenu = menubar.addMenu('&Books')
-        booksMenu.addAction(numberInScripture)
-        booksMenu.addAction(howToEnjoyTheBible)
-        booksMenu.addAction(witnessOfTheStars)
-        #----------------------------------------------------------------------------
-        """
-
+      
         # TWI Menu
         twiMenu = menubar.addMenu('&TWI')
         twiMenu.addAction(scriptureIndex)
@@ -437,15 +452,6 @@ class SIMR(QMainWindow):
         self.mainToolbar.addAction(drawMap)
         self.mainToolbar.addAction(appDocumentation)
         self.mainToolbar.addAction(aboutApp)
-
-        """
-        # Reading Toolbar ---MOVE TO READING WINDOW----
-        self.readingToolbar = self.addToolBar('Reading Toolbar')
-        self.readingToolbar.addAction(readKJV)
-        self.readingToolbar.addAction(readKJVwStrongs)
-        self.readingToolbar.addAction(readSept)
-        self.readingToolbar.addAction(readBerean)
-        """
 
         # GreekHebrew Toolbar
         self.greekHebrewToolbar = self.addToolBar('Greek Hebrew Toolbar')
