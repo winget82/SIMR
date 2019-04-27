@@ -110,6 +110,11 @@ class MapWindow(QMainWindow):
 
 
 
+        mapMenuBar = self.menuBar()
+
+
+
+
 
 class ScriptureBankWindow(QMainWindow):
 
@@ -137,13 +142,12 @@ class ScriptureBankWindow(QMainWindow):
         
         scriptureBankMenubar = self.menuBar()
 
-        # File Menu
-        scriptureBankMenu = self.scriptureBankMenubar.addMenu('&Scripture Bank')
-        scriptureBankMenu.addAction(depositVerse)
-        scriptureBankMenu.addAction(checkBalance)
-        scriptureBankMenu.addAction(withdrawVerse)
+        # Bank Menu
+        bank = scriptureBankMenubar.addMenu('&Scripture Bank')
+        bank.addAction(depositVerse)
+        bank.addAction(checkBalance)
+        bank.addAction(withdrawVerse)
         
-
         self.scriptureBankToolbar = self.addToolBar('Scripture Bank Toolbar')
         self.scriptureBankToolbar.addAction(depositVerse)
         self.scriptureBankToolbar.addAction(checkBalance)
@@ -366,7 +370,7 @@ class SIMR(QMainWindow):
         # Scripture Bank Menu Options
         visitScriptureBank = QAction(QIcon('./toolbar_icons/iconfinder_bank_basic_red_69821.png'), '&Visit Scripture Bank', self)
         visitScriptureBank.setStatusTip('Visit your Scripture Bank')
-        self.scriptureBankWindow = MapWindow(self)
+        self.scriptureBankWindow = ScriptureBankWindow(self)
         self.scriptureBankWindow.setWindowTitle('Scripture Bank Window')
         visitScriptureBank.triggered.connect(self.scriptureBankWindow.show)
         
