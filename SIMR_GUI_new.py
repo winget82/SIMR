@@ -108,12 +108,16 @@ class MapWindow(QMainWindow):
 
         self.setGeometry(840, 840, 840, 400)
 
-
+        findLocation = QAction('&Find Location', self)
+        findLocation.setStatusTip('Search for a location')
+        #checkBalance.triggered.connect(self.)
 
         mapMenuBar = self.menuBar()
+        mapMenu = mapMenuBar.addMenu('&Search')
+        mapMenu.addAction(findLocation)
 
-
-
+        self.mappingToolbar = self.addToolBar('Mapping Toolbar')
+        self.mappingToolbar.addAction(findLocation)
 
 
 class ScriptureBankWindow(QMainWindow):
@@ -133,7 +137,7 @@ class ScriptureBankWindow(QMainWindow):
         #depositVerse.triggered.connect(self.)
 
         checkBalance = QAction('&Check Balance', self)
-        checkBalance.setStatusTip('Check you Scripture Bank account balance')
+        checkBalance.setStatusTip('Check your Scripture Bank account balance')
         #checkBalance.triggered.connect(self.)
 
         withdrawVerse = QAction('&Withdraw Verse', self)
