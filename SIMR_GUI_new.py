@@ -119,6 +119,10 @@ class MapWindow(QMainWindow):
         self.mappingToolbar = self.addToolBar('Mapping Toolbar')
         self.mappingToolbar.addAction(findLocation)
 
+        # https://stackoverflow.com/questions/36768033/pyqt-how-to-open-new-window
+        # https://stackoverflow.com/questions/46415572/python-embedding-matplolib-basemap-in-pyqt-application
+        # https://stackoverflow.com/questions/48140576/matplotlib-toolbar-in-a-pyqt5-application
+
 
 class ScriptureBankWindow(QMainWindow):
 
@@ -390,10 +394,6 @@ class SIMR(QMainWindow):
         self.mapWindow.setWindowTitle('Map Window')
         drawMap.triggered.connect(self.mapWindow.show)
         
-        # https://stackoverflow.com/questions/36768033/pyqt-how-to-open-new-window
-        # https://stackoverflow.com/questions/46415572/python-embedding-matplolib-basemap-in-pyqt-application
-        # https://stackoverflow.com/questions/48140576/matplotlib-toolbar-in-a-pyqt5-application
-
         # Help Menu Options
         aboutApp = QAction(QIcon('./toolbar_icons/iconfinder_information_basic_green_69706.png'), 'About', self)
         aboutApp.setStatusTip('See information about this application')
@@ -444,7 +444,6 @@ class SIMR(QMainWindow):
         # Scripture Bank
         scriptureBankMenu = menubar.addMenu('&Scripture Bank')
         scriptureBankMenu.addAction(visitScriptureBank)
-        
 
         # Mapping Menu
         mappingMenu = menubar.addMenu('&Mapping')
@@ -486,7 +485,6 @@ class SIMR(QMainWindow):
         self.searchHebrewGreekBox = QLineEdit()
         self.greekHebrewToolbar.addWidget(self.searchHebrewGreekBox)
         
-
         searchGreekHebrew = QAction(QIcon('./toolbar_icons/iconfinder_search_basic_blue_69571.png'), '&Search Hebrew Greek', self)
         searchGreekHebrew.setStatusTip('Search for Hebrew and Greek definitions')
         #searchGreekHebrew.triggered.connect(self.)
@@ -505,7 +503,6 @@ class SIMR(QMainWindow):
                 radioButtonName.setStyleSheet("color: black")
 
         #https://pythonbasics.org/pyqt-radiobutton/
-
         #https://www.tutorialspoint.com/pyqt/pyqt_qradiobutton_widget.htm
 
         self.radioButtonSearchAll = QRadioButton("Search All")
@@ -521,7 +518,6 @@ class SIMR(QMainWindow):
         self.radioButtonScriptureIndex = QRadioButton("Scripture Index")
         self.radioButtonScriptureIndex.toggled.connect(lambda: radioButtonColorChange(self.radioButtonScriptureIndex))
         
-
         self.searchToolbar.addWidget(self.radioButtonSearchAll)
         self.searchToolbar.addWidget(self.radioButtonKJV)
         self.searchToolbar.addWidget(self.radioButtonKJVwStrongs)
@@ -534,12 +530,12 @@ class SIMR(QMainWindow):
         self.searchToolbar.addAction(searchAll)
         
         #https://stackoverflow.com/questions/42288320/python-how-to-get-qlineedit-text?rq=1
-
         # SEE - http://zetcode.com/gui/pyqt5/menustoolbars/
 
-        self.setGeometry(840, 840, 840, 400)
-        self.setWindowTitle('SIMR - Scripture Indices and Ministry Resources')    
-        self.show()
+        self.setWindowTitle('SIMR - Scripture Indices and Ministry Resources')
+
+        # Open main window defaulted to maximized window
+        self.showMaximized()
 
 
 # /////////////////////////////////////////////////////////////////////
@@ -721,7 +717,6 @@ class SIMR(QMainWindow):
         except:
             twiLabel = "Nothing found in Scripture Index for your search..."
 
-
         #GET ALL GREEK AND HEBREW DEFINITIONS HERE...
         try:
             ots = self.kjvstrnumOT_search(searchText)
@@ -809,7 +804,7 @@ class SIMR(QMainWindow):
             self.textUpdate(self.searchAll(self.getSearchBox()))
     
 
-        # FOR WINDOW INSTEAD OF DIALOG SEE THIS - https://stackoverflow.com/questions/36768033/pyqt-how-to-open-new-window
+# FOR WINDOW INSTEAD OF DIALOG SEE THIS - https://stackoverflow.com/questions/36768033/pyqt-how-to-open-new-window
 #---------------------------------------------------------------------------------------------
 
     # Make a popup window asking where to save the file and what to name it
@@ -817,19 +812,14 @@ class SIMR(QMainWindow):
     # AND THIS - https://pythonprogramming.net/file-saving-pyqt-tutorial/
     # ** https://www.tutorialspoint.com/pyqt/pyqt_qfiledialog_widget.htm **
 
-
     # NEW PROJECT
     #def newProject(self):
-
 
     # OPEN PROJECT
     #def openProject(self):
 
-
     # SAVE PROJECT
-    def saveProject(self):
-
-        
+    def saveProject(self):        
 
         # TEMPORARY Write all text from QTextEdit (textEditor) to the text file
         with open("NewProject.txt", "w", encoding='utf-8') as txtFile:
