@@ -122,7 +122,8 @@ class MapWindow(QMainWindow):
         # https://stackoverflow.com/questions/36768033/pyqt-how-to-open-new-window
         # https://stackoverflow.com/questions/46415572/python-embedding-matplolib-basemap-in-pyqt-application
         # https://stackoverflow.com/questions/48140576/matplotlib-toolbar-in-a-pyqt5-application
-
+        # https://pythonspot.com/pyqt5-matplotlib/
+        
 
 class ScriptureBankWindow(QMainWindow):
 
