@@ -488,7 +488,7 @@ class SIMR(QMainWindow):
         
         searchGreekHebrew = QAction(QIcon('./toolbar_icons/iconfinder_search_basic_blue_69571.png'), '&Search Hebrew Greek', self)
         searchGreekHebrew.setStatusTip('Search for Hebrew and Greek definitions')
-        #searchGreekHebrew.triggered.connect(self.)
+        searchGreekHebrew.triggered.connect(self.greekHebrewRadioSearch)
 
         self.greekHebrewToolbar.addAction(searchGreekHebrew)
 
@@ -803,7 +803,61 @@ class SIMR(QMainWindow):
         
         else:
             self.textUpdate(self.searchAll(self.getSearchBox()))
-    
+
+    def greekHebrewRadioSearch(self):
+
+        retrieved = self.searchHebrewGreekBox.text()
+        self.searchHebrewGreekBox.setText('')
+
+        retrieved = retrieved.upper()
+
+        if self.radioButtonHebrew.isChecked():
+
+            if 'H' in retrieved:
+                pass
+            else:
+                retrieved = 'H' + retrieved
+
+            try:
+                sc = self.strongs_search(retrieved)
+                sc_index0 = strongscsvlst[sc]
+                sc_index1 = strongscsvlst[sc + 1]
+                sc_index2 = strongscsvlst[sc + 2]
+                sc_index3 = strongscsvlst[sc + 3]
+                sc_index4 = strongscsvlst[sc + 4]
+                sc_index5 = strongscsvlst[sc + 5]
+                sc_index6 = strongscsvlst[sc + 6]
+                txt = ('\n' + sc_index0 + ' - ' + sc_index1 + ' - '
+                      + sc_index2 + ' (' + sc_index3 + ') ' + sc_index4 +
+                      ' ' + sc_index5 + ', ' + sc_index6)
+                self.textUpdate(txt)
+
+            except:
+                self.textUpdate("No Hebrew definitions found for your search.")
+
+        elif self.radioButtonGreek.isChecked():
+            
+            if 'G' in retrieved:
+                pass
+            else:
+                retrieved = 'G' + retrieved
+
+            try:
+                sc = self.strongs_search(retrieved)
+                sc_index0 = strongscsvlst[sc]
+                sc_index1 = strongscsvlst[sc + 1]
+                sc_index2 = strongscsvlst[sc + 2]
+                sc_index3 = strongscsvlst[sc + 3]
+                sc_index4 = strongscsvlst[sc + 4]
+                sc_index5 = strongscsvlst[sc + 5]
+                sc_index6 = strongscsvlst[sc + 6]
+                txt = ('\n' + sc_index0 + ' - ' + sc_index1 + ' - '
+                      + sc_index2 + ' (' + sc_index3 + ') ' + sc_index4 +
+                      ' ' + sc_index5 + ', ' + sc_index6)
+                self.textUpdate(txt)
+
+            except:
+                self.textUpdate("No Greek definitions found for your search.")
 
 # FOR WINDOW INSTEAD OF DIALOG SEE THIS - https://stackoverflow.com/questions/36768033/pyqt-how-to-open-new-window
 #---------------------------------------------------------------------------------------------
