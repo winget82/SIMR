@@ -22,6 +22,7 @@ import time
 # OPENING OF FILES & GENERATING OF DICTIONARIES AND LISTS
 # ---------------------------------------------------------------------
 
+# Set filepath directory for json files
 fpath = './json_files/'
 
 # Berean Bibles
@@ -218,6 +219,7 @@ class ReadingWindow(QMainWindow):
         booksMenu.addAction(howToEnjoyTheBible)
         booksMenu.addAction(witnessOfTheStars)
 
+        # Reading Toolbar
         self.readingToolbar = self.addToolBar('Reading Toolbar')
         self.readingToolbar.addAction(readKJV)
         self.readingToolbar.addAction(readKJVwStrongs)
@@ -234,7 +236,7 @@ class SIMR(QMainWindow):
         super(SIMR, self).__init__(parent)
         self.userInterface()
 
-        #Text for Pop Ups
+        # Text for Pop Ups
         self.about = """\n\n
         About this program:
         --------------------------\n
@@ -294,9 +296,6 @@ class SIMR(QMainWindow):
 
         self.textEditor = QTextEdit(self)
         self.setCentralWidget(self.textEditor)
-        
-        #how to append text to text edit area
-        #self.textEditor.append('type text here')
 
         # SEE THIS FIRST - http://zetcode.com/gui/pyqt5/widgets2/
         # SEE - https://www.tutorialspoint.com/pyqt/pyqt_qsplitter_widget.htm
@@ -410,6 +409,7 @@ class SIMR(QMainWindow):
 
         statusbar = self.statusBar()
 
+        # Menu Bar
         menubar = self.menuBar()
 
         # File Menu
@@ -492,20 +492,12 @@ class SIMR(QMainWindow):
 
         self.greekHebrewToolbar.addAction(searchGreekHebrew)
 
+        # Break between toolbars
         self.addToolBarBreak()
 
         # Search Toolbar
         self.searchToolbar = self.addToolBar('Search Toolbar')
         
-        def radioButtonColorChange(radioButtonName):
-            if radioButtonName.isChecked():
-                radioButtonName.setStyleSheet("color: red")
-            else:
-                radioButtonName.setStyleSheet("color: black")
-
-        #https://pythonbasics.org/pyqt-radiobutton/
-        #https://www.tutorialspoint.com/pyqt/pyqt_qradiobutton_widget.htm
-
         self.radioButtonSearchAll = QRadioButton("Search All")
         self.radioButtonSearchAll.toggled.connect(lambda: radioButtonColorChange(self.radioButtonSearchAll))
         self.radioButtonKJV = QRadioButton("KJV")
@@ -530,6 +522,15 @@ class SIMR(QMainWindow):
         self.searchToolbar.addWidget(self.searchBox)
         self.searchToolbar.addAction(searchAll)
         
+        # Function to change color of selected radio button and text
+        def radioButtonColorChange(radioButtonName):
+            if radioButtonName.isChecked():
+                radioButtonName.setStyleSheet("color: red")
+            else:
+                radioButtonName.setStyleSheet("color: black")
+
+        #https://pythonbasics.org/pyqt-radiobutton/
+        #https://www.tutorialspoint.com/pyqt/pyqt_qradiobutton_widget.htm
         #https://stackoverflow.com/questions/42288320/python-how-to-get-qlineedit-text?rq=1
         # SEE - http://zetcode.com/gui/pyqt5/menustoolbars/
 
@@ -545,7 +546,7 @@ class SIMR(QMainWindow):
 
     def textUpdate(self, text):
         self.textEditor.append(text)
-
+    
     # WRITE A FUNCTION TO SEARCH FOR WORD OR PHRASE TYPED OR SELECTED (RIGHT CLICK MENU)
     # AND RETURN LIST OF VERSES CONTAINING THE SEARCH STRING
     def find_txt(self,text):
@@ -564,11 +565,11 @@ class SIMR(QMainWindow):
         return returnedVerses
 
     # Search KJV w/ Strong's verse
-    #Old Testament
+    # Old Testament
     def kjvstrnumOT_search(self, searchOT_ks):
         found_snOT = next(i for i in OT_sn if searchOT_ks in i)
         return found_snOT
-    #New Testament
+    # New Testament
     def kjvstrnumNT_search(self, searchNT_ks):
         found_snNT = next(i for i in NT_sn if searchNT_ks in i)
         return found_snNT
@@ -673,25 +674,25 @@ class SIMR(QMainWindow):
 
     def searchAll(self, searchText):
                 
-        #GET KJV
+        # GET KJV
         kjv = self.kjv_search(searchText)
         kjvLabel = "KJV:\n" + '\n\n'.join(kjv)
         
-        #GET KJV W/STRONGS
+        # GET KJV W/STRONGS
         try:
             kjvs = self.kjvstrnumOT_search(searchText)
         except:
             kjvs = self.kjvstrnumNT_search(searchText)
         kjvsLabel = "KJV w/Strong's - " + ' - '.join(kjvs)
         
-        #GET SEPTUAGINT
+        # GET SEPTUAGINT
         try:
             sept = self.septuagint_search(searchText)    
             septLabel = "Septuagint - " + ' - '.join(sept)
         except:
             sept = "No verse found in Septuagint for your search..."
             septLabel = "Septuagint - " + sept
-        #ISSUES WITH SEPTUAGINT TRY GENESIS 1:1 ALSO SOME JEREMIAH VERSES FOR EXAMPLE - LOOK INTO JSON FILE -
+        # ISSUES WITH SEPTUAGINT TRY GENESIS 1:1 ALSO SOME JEREMIAH VERSES FOR EXAMPLE - LOOK INTO JSON FILE -
         # json showing first index as "\ufeffGenesis 1:1" - that's the issue
 
         # BEREAN
@@ -711,14 +712,14 @@ class SIMR(QMainWindow):
         except:
             bereanLabel = "Berean Bible - No verse found in the Berean Bible for your search..."
 
-        #GET TWI SCRIPTURE INDEX
+        # GET TWI SCRIPTURE INDEX
         try:
             twi = self.twi_scripture_index(searchText)
             twiLabel = "Scripture Index : \n" + ' '.join(twi)
         except:
             twiLabel = "Nothing found in Scripture Index for your search..."
 
-        #GET ALL GREEK AND HEBREW DEFINITIONS HERE...
+        # GET ALL GREEK AND HEBREW DEFINITIONS HERE...
         try:
             ots = self.kjvstrnumOT_search(searchText)
             ots1 = self.strnumOT(ots)
@@ -733,6 +734,7 @@ class SIMR(QMainWindow):
         return kjvLabel + '\n\n' + kjvsLabel + '\n\n' + strongsDefinitions\
              + '\n\n' + septLabel + '\n\n' + bereanLabel + '\n\n' + twiLabel
 
+    # Retrieve text from searchBox
     def getSearchBox(self):
         retrieved = self.searchBox.text()
         self.searchBox.setText('')
@@ -742,13 +744,8 @@ class SIMR(QMainWindow):
     def clearTxt(self):
         self.textEditor.clear()
         #self.statusBar['text'] = "Ready..."
-
-    def showMap(self, title):
-        map = QDialog()
-        map.setWindowTitle('Map of ' + title)
-        map.show()
-        map.exec_()
     
+    # Radio button search for searchToolbar
     def radioSearch(self):
 
         if self.radioButtonBerean.isChecked():
@@ -804,6 +801,7 @@ class SIMR(QMainWindow):
         else:
             self.textUpdate(self.searchAll(self.getSearchBox()))
 
+    # Radio button search for greekHebrew
     def greekHebrewRadioSearch(self):
 
         retrieved = self.searchHebrewGreekBox.text()
@@ -897,4 +895,5 @@ if __name__ == '__main__':
 # https://stackoverflow.com/questions/12602179/pyqt-dynamically-append-to-qtextedit-from-function
 
 # NEED TO BE ABLE TO ZOOM IN ON TEXT (OR CHANGE TEXT SIZE), AND ALSO MAP DIALOG ETC.
-# REFACTOR CODE WHEN DONE
+
+# ***REFACTOR CODE WHEN DONE - eliminate duplicate code in search functions***
