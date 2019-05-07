@@ -3,11 +3,10 @@ from shapely.geometry import Point
 import geopandas as gpd
 import matplotlib.pyplot as plt
 
-world = gpd.read_file(r'/home/lapdog/GIS/NaturalEarth/ne_10m_land/ne_10m_land.shp')
-cities = pd.read_csv(r'/home/lapdog/Documents/Python/SIMR/ref_files/OpenBible.Info/places_edited.csv')
-countries = gpd.read_file(r'/home/lapdog/GIS/NaturalEarth/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp')
-#wgs84 = gpd.read_file(r'P:\GIS\NaturalEarthData\10m_physical\ne_10m_wgs84_bounding_box.shp')
-oceans = gpd.read_file(r'/home/lapdog/GIS/NaturalEarth/ne_10m_ocean/ne_10m_ocean.shp')
+world = gpd.read_file(r'./ref_files/NaturalEarth/ne_10m_land/ne_10m_land.shp')
+cities = pd.read_csv(r'./ref_files/OpenBible.Info/places_edited.csv')
+countries = gpd.read_file(r'./ref_files/NaturalEarth/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp')
+oceans = gpd.read_file(r'./ref_files/NaturalEarth/ne_10m_ocean/ne_10m_ocean.shp')
 
 #plot world to map
 base = world.plot(color='tan', edgecolor='black')
