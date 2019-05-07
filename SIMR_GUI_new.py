@@ -162,11 +162,6 @@ class MapWindow(QMainWindow):
 
         # plt.show()
 
-        # https://stackoverflow.com/questions/36768033/pyqt-how-to-open-new-window
-        # https://stackoverflow.com/questions/46415572/python-embedding-matplolib-basemap-in-pyqt-application
-        # https://stackoverflow.com/questions/48140576/matplotlib-toolbar-in-a-pyqt5-application
-        # https://pythonspot.com/pyqt5-matplotlib/        
-        # check into this pyqt embed matplotlib
         # https://stackoverflow.com/questions/12459811/how-to-embed-matplotlib-in-pyqt-for-dummies
      
 
@@ -340,10 +335,6 @@ class SIMR(QMainWindow):
 
         self.textEditor = QTextEdit(self)
         self.setCentralWidget(self.textEditor)
-
-        # SEE THIS FIRST - http://zetcode.com/gui/pyqt5/widgets2/
-        # SEE - https://www.tutorialspoint.com/pyqt/pyqt_qsplitter_widget.htm
-        # SEE - https://www.binpress.com/building-text-editor-pyqt-1/
 
         # File Menu Options
         newProject = QAction(QIcon('./toolbar_icons/iconfinder_document_basic_blue_69485.png'), '&New Project', self)
@@ -572,11 +563,6 @@ class SIMR(QMainWindow):
                 radioButtonName.setStyleSheet("color: red")
             else:
                 radioButtonName.setStyleSheet("color: black")
-
-        #https://pythonbasics.org/pyqt-radiobutton/
-        #https://www.tutorialspoint.com/pyqt/pyqt_qradiobutton_widget.htm
-        #https://stackoverflow.com/questions/42288320/python-how-to-get-qlineedit-text?rq=1
-        # SEE - http://zetcode.com/gui/pyqt5/menustoolbars/
 
         self.setWindowTitle('SIMR - Scripture Indices and Ministry Resources')
 
@@ -937,6 +923,14 @@ if __name__ == '__main__':
 
 # ADD A SCRIPTURE BANK WHERE YOU CAN DEPOSIT AND WITHDRAW SCRIPTURES
 # https://stackoverflow.com/questions/12602179/pyqt-dynamically-append-to-qtextedit-from-function
+
+# SEE THIS FIRST - http://zetcode.com/gui/pyqt5/widgets2/
+# SEE - https://www.tutorialspoint.com/pyqt/pyqt_qsplitter_widget.htm
+# SEE - https://www.binpress.com/building-text-editor-pyqt-1/
+# https://pythonbasics.org/pyqt-radiobutton/
+# https://www.tutorialspoint.com/pyqt/pyqt_qradiobutton_widget.htm
+# https://stackoverflow.com/questions/42288320/python-how-to-get-qlineedit-text?rq=1
+# SEE - http://zetcode.com/gui/pyqt5/menustoolbars/
 
 # NEED TO BE ABLE TO ZOOM IN ON TEXT (OR CHANGE TEXT SIZE), AND ALSO MAP DIALOG ETC.
 
