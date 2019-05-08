@@ -202,6 +202,9 @@ class ScriptureBankWindow(QMainWindow):
         self.scriptureBankToolbar.addAction(checkBalance)
         self.scriptureBankToolbar.addAction(withdrawVerse)
 
+        # ADD A SECTION FOR MAKING / READING NOTES - COULD UTILIZE A DICTIONARY, WITH KEY BEING THE VERSE AND VALUE BEING A LIST OF NOTE STRINGS
+
+
 
 class ReadingWindow(QMainWindow):
 
@@ -267,6 +270,8 @@ class ReadingWindow(QMainWindow):
         self.readingToolbar.addAction(numberInScripture)
         self.readingToolbar.addAction(howToEnjoyTheBible)
         self.readingToolbar.addAction(witnessOfTheStars)
+
+        # ADD A SECTION FOR MAKING / READING NOTES - COULD UTILIZE A DICTIONARY, WITH KEY BEING THE VERSE AND VALUE BEING A LIST OF NOTE STRINGS
 
 
 class SIMR(QMainWindow):
@@ -935,3 +940,6 @@ if __name__ == '__main__':
 # NEED TO BE ABLE TO ZOOM IN ON TEXT (OR CHANGE TEXT SIZE), AND ALSO MAP DIALOG ETC.
 
 # ***REFACTOR CODE WHEN DONE - eliminate duplicate code in search functions***
+
+        # ADD A SECTION FOR MAKING / READING NOTES - COULD UTILIZE A DICTIONARY, WITH KEY BEING THE VERSE AND VALUE BEING A LIST OF NOTE STRINGS
+
