@@ -8,7 +8,7 @@
 # IMPORTS - PACKAGES & MODULES UTILIZED
 # ---------------------------------------------------------------------
 import sys
-from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox, QLineEdit, QTextEdit, QSplitter, QFrame, QHBoxLayout, QStyleFactory, QFileDialog, QInputDialog, QDialog, QRadioButton
+from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox, QLineEdit, QTextEdit, QSplitter, QFrame, QHBoxLayout, QSizePolicy, QVBoxLayout, QStyleFactory, QFileDialog, QInputDialog, QDialog, QRadioButton
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 import re
@@ -16,10 +16,7 @@ import codecs
 import json
 import ctypes
 import time
-import pandas as pd
-from shapely.geometry import Point
-import geopandas as gpd
-import matplotlib.pyplot as plt
+
 
 
 # ---------------------------------------------------------------------
@@ -109,13 +106,26 @@ class MapWindow(QMainWindow):
 
     def userInterfaceMapping(self):
 
+        import pandas as pd
+        from shapely.geometry import Point
+        import geopandas as gpd
+        from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+        from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
+        import matplotlib.pyplot as plt
+
+        # https://pythonspot.com/pyqt5-matplotlib/
+
+        # https://stackoverflow.com/questions/24675484/different-dataframe-plotting-behaviour-when-using-figurecanvasqtagg
+
+        # https://stackoverflow.com/questions/12459811/how-to-embed-matplotlib-in-pyqt-for-dummies
+
         statusbar = self.statusBar()
 
         self.setGeometry(840, 840, 840, 400)
 
         findLocation = QAction('&Find Location', self)
         findLocation.setStatusTip('Search for a location')
-        #checkBalance.triggered.connect(self.)
+        # findLocation.triggered.connect(self.plot)
 
         mapMenuBar = self.menuBar()
         mapMenu = mapMenuBar.addMenu('&Search')
@@ -125,18 +135,18 @@ class MapWindow(QMainWindow):
         self.mappingToolbar.addAction(findLocation)
 
         # Will need to acknowledge sources of shapefile in credits section - Natural Earth
-        world = gpd.read_file(r'./ref_files/NaturalEarth/ne_10m_land/ne_10m_land.shp')
-        cities = pd.read_csv(r'./ref_files/OpenBible.Info/places_edited.csv')
-        countries = gpd.read_file(r'./ref_files/NaturalEarth/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp')
-        oceans = gpd.read_file(r'./ref_files/NaturalEarth/ne_10m_ocean/ne_10m_ocean.shp')
+        self.world = gpd.read_file(r'./ref_files/NaturalEarth/ne_10m_land/ne_10m_land.shp')
+        self.cities = pd.read_csv(r'./ref_files/OpenBible.Info/places_edited.csv')
+        self.countries = gpd.read_file(r'./ref_files/NaturalEarth/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp')
+        self.oceans = gpd.read_file(r'./ref_files/NaturalEarth/ne_10m_ocean/ne_10m_ocean.shp')    
 
         # plot world to map
-        base = world.plot(color='tan', edgecolor='black')
+        base = self.world.plot(color='tan', edgecolor='black')
 
         # convert csv city points to geometry
-        geometry = [Point(xy) for xy in zip(cities['Lon'], cities['Lat'])]
+        geometry = [Point(xy) for xy in zip(self.cities['Lon'], self.cities['Lat'])]
         crs = {'init': 'epsg:4326'}#set crs to wgs84
-        gdf = gpd.GeoDataFrame(cities, crs=crs, geometry=geometry)
+        gdf = gpd.GeoDataFrame(self.cities, crs=crs, geometry=geometry)
 
         # plot cities to map
         pl = gdf.plot(ax=base, marker='o', color='r', markersize=5)
@@ -149,20 +159,16 @@ class MapWindow(QMainWindow):
         # wgs84.plot(ax=base, facecolor='none', edgecolor = 'cyan')
 
         # add countries' borders
-        countries.plot(ax=base, facecolor='none', edgecolor = 'black')
+        self.countries.plot(ax=base, facecolor='none', edgecolor = 'black')
 
         # plot oceans
-        oceans.plot(ax=base, color='lightblue')
+        self.oceans.plot(ax=base, color='lightblue')
 
         # set layers to same crs as cities (coordinate reference system as cities)
-        world = world.to_crs(gdf.crs)
+        self.world = self.world.to_crs(gdf.crs)
         # wgs84 = wgs84.to_crs(gdf.crs)
-        countries = countries.to_crs(gdf.crs)
-        oceans = oceans.to_crs(gdf.crs)
-
-        # plt.show()
-
-        # https://stackoverflow.com/questions/12459811/how-to-embed-matplotlib-in-pyqt-for-dummies
+        self.countries = self.countries.to_crs(gdf.crs)
+        self.oceans = self.oceans.to_crs(gdf.crs)
      
 
 class ScriptureBankWindow(QMainWindow):
@@ -203,7 +209,6 @@ class ScriptureBankWindow(QMainWindow):
         self.scriptureBankToolbar.addAction(withdrawVerse)
 
         # ADD A SECTION FOR MAKING / READING NOTES - COULD UTILIZE A DICTIONARY, WITH KEY BEING THE VERSE AND VALUE BEING A LIST OF NOTE STRINGS
-
 
 
 class ReadingWindow(QMainWindow):
@@ -778,7 +783,6 @@ class SIMR(QMainWindow):
     # A METHOD TO CLEAR ALL TEXT
     def clearTxt(self):
         self.textEditor.clear()
-        #self.statusBar['text'] = "Ready..."
     
     # Radio button search for searchToolbar
     def radioSearch(self):
@@ -811,7 +815,7 @@ class SIMR(QMainWindow):
                 kjvs = self.kjvstrnumNT_search(self.getSearchBox())
             kjvsLabel = "KJV w/Strong's - " + ' - '.join(kjvs)
             self.textUpdate(kjvsLabel)# Not understading what is causing error at this point
-            #lines 500, 504, 683, 685
+            # NEED TO DEGUB HERE
         
         elif self.radioButtonScriptureIndex.isChecked():
             try:
