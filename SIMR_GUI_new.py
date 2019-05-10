@@ -416,6 +416,10 @@ class SIMR(QMainWindow):
         searchAll.setStatusTip('Search resources')
         searchAll.triggered.connect(self.radioSearch)
 
+        findText = QAction(QIcon('./toolbar_icons/iconfinder_search_basic_blue_69571.png'), '&Find', self)
+        findText.setStatusTip('Search for text')
+        findText.triggered.connect(lambda: self.textUpdate(self.find_txt(self.getTextSearchBox())))
+
          # Read Menu Options
         launchReadingWindow = QAction(QIcon('./toolbar_icons/iconfinder_weather-sun_basic_yellow_70186.png'), '&Reading Window', self)
         launchReadingWindow.setStatusTip('Launch the reading window')
@@ -570,6 +574,15 @@ class SIMR(QMainWindow):
         self.searchToolbar.addWidget(self.searchBox)
         self.searchToolbar.addAction(searchAll)
         
+        # Break between toolbars
+        self.addToolBarBreak()
+
+        # Text Search Toolbar
+        self.textSearchToolbar = self.addToolBar('Text Search Toolbar')
+        self.textSearchBox = QLineEdit()
+        self.textSearchToolbar.addWidget(self.textSearchBox)
+        self.textSearchToolbar.addAction(findText)
+
         # Function to change color of selected radio button and text
         def radioButtonColorChange(radioButtonName):
             if radioButtonName.isChecked():
@@ -594,6 +607,9 @@ class SIMR(QMainWindow):
     # AND RETURN LIST OF VERSES CONTAINING THE SEARCH STRING
     def find_txt(self,text):
         returnedVerses = [i for i in scriptures_lst if text.upper() in i[1].upper()] # THIS IS RETURNING A LIST OF LISTS OF ALL MATCHES (NESTED LIST)
+        # join lists and nested lists to a string to be returned
+        versesFound = list(map(' - '.join, returnedVerses))
+        returnedVerses = '\n'.join(versesFound)
         return returnedVerses
         #CURRENTLY ONLY SETUP TO SEARCH THE KJV
 
@@ -782,6 +798,12 @@ class SIMR(QMainWindow):
         retrieved = self.searchBox.text()
         self.searchBox.setText('')
         return retrieved     
+
+    # Retrieve text from TextSearchBox
+    def getTextSearchBox(self):
+        retrieved = self.textSearchBox.text()
+        self.textSearchBox.setText('')
+        return retrieved
 
     # A METHOD TO CLEAR ALL TEXT
     def clearTxt(self):
