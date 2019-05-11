@@ -36,6 +36,15 @@ KJV_file = 'KJV_json.json'
 with open(fpath + KJV_file) as filekjv:
     scriptures_lst = json.load(filekjv)
 
+# Generate Notes list (currently KJV only)
+notes_lst = []
+for i in scriptures_lst:
+    notes_lst.append(next(j for j in i))# This generates a list of only book chapter:verse
+    # Turn all of these list items into dictionary keys with empty lists for values
+notes_dictionary_kjv = dict((keys, []) for keys in notes_lst)
+    # when loading in notes, these list values will need to be populated from previously saved data if loaded
+    # will need to do this same type of thing for each version of the bible, unless you come up with a better way of doing it
+
 books = 'KJVbooks_json.json'
 with open(fpath + books) as filebk:
     alph_books = json.load(filebk)
@@ -98,6 +107,41 @@ def sequenceOfFunctions(*functions):
 # Classes
 # ---------------------------------------------------------------------
 
+class NotesWindow(QMainWindow):
+
+    def __init__(self, parent=None):
+        super(NotesWindow, self).__init__(parent)
+        self.userInterfaceNotes()
+
+    def userInterfaceNotes(self):
+
+        statusbar = self.statusBar()
+
+        self.setGeometry(500, 500, 840, 400)
+
+        viewNotes = QAction('&View Notes', self)
+        viewNotes.setStatusTip('Look at my notes')
+        #depositVerse.triggered.connect(self.)
+
+        notesMenuBar = self.menuBar()
+        notesMenu = notesMenuBar.addMenu('&My Notes')
+        notesMenu.addAction(viewNotes)
+
+        # SEE notes_dictionary_kjv
+
+        # Add a notes section using dictionaries, with keys being the book chapter and verse and values being a list of strings
+        # for example:
+        # notes_dictionary_kjv['Acts 1:1'].append('This is a great verse')
+        # >>>notes_dictionary_kjv['Acts 1:1'][0]
+        # 'This is a great verse'
+
+        # ***Look into making notes window dockable***
+
+        # MAY NEED TO DO A REGEX OR SOMETHING ABOUT WHEN THE STRING FOR A PERSON'S NOTE CONTAINS A ' OR A " TO ESCAPE IT SO IT WILL PRINT CORRECTLY AND NOT ERROR
+        # THIS NOTES DICTIONARY WILL NEED SAVED AS A FILE 
+        # ALSO MAY WANT TO HAVE A DROP DOWN, DRAG AND DROP, OR VARIABLE OR SOMETHING TO KNOW WHAT VERSE TO ADD AS THE KEY, CLEANLY
+
+
 class MapWindow(QMainWindow):
 
     def __init__(self, parent=None):
@@ -124,7 +168,7 @@ class MapWindow(QMainWindow):
 
         statusbar = self.statusBar()
 
-        self.setGeometry(840, 840, 840, 400)
+        self.setGeometry(200, 200, 840, 400)
 
         findLocation = QAction('&Find Location', self)
         findLocation.setStatusTip('Search for a location')
@@ -184,7 +228,7 @@ class ScriptureBankWindow(QMainWindow):
 
         statusbar = self.statusBar()
 
-        self.setGeometry(840, 840, 840, 400)
+        self.setGeometry(300, 300, 840, 400)
         
         depositVerse = QAction('&Deposit Verse', self)
         depositVerse.setStatusTip('Deposit a verse into your Scripture Bank')
@@ -224,7 +268,7 @@ class ReadingWindow(QMainWindow):
 
         statusbar = self.statusBar()
 
-        self.setGeometry(840, 840, 840, 400)
+        self.setGeometry(400, 400, 840, 400)
 
         # SEE QTextBrowser (supports hypertext which would make easier navigation) for reading text
         # https://doc.qt.io/qtforpython/PySide2/QtWidgets/QTextBrowser.html
@@ -446,6 +490,14 @@ class SIMR(QMainWindow):
         self.mapWindow.setWindowTitle('Map Window')
         drawMap.triggered.connect(self.mapWindow.show)
         
+        # Notes Menu Options
+        notes = QAction(QIcon('./toolbar_icons/iconfinder_quill_basic_blue_69566.png'), 'Notes', self)
+        notes.setStatusTip('Edit Notes')
+        self.notesWindow = NotesWindow(self)
+        self.notesWindow.setWindowTitle('Notes Window')
+        notes.triggered.connect(self.notesWindow.show)
+
+
         # Help Menu Options
         aboutApp = QAction(QIcon('./toolbar_icons/iconfinder_information_basic_green_69706.png'), 'About', self)
         aboutApp.setStatusTip('See information about this application')
@@ -502,6 +554,10 @@ class SIMR(QMainWindow):
         mappingMenu = menubar.addMenu('&Mapping')
         mappingMenu.addAction(drawMap)
 
+        # Notes Menu
+        notesMenu = menubar.addMenu('&Notes')
+        notesMenu.addAction(notes)
+
         # Help Menu
         helpMenu = menubar.addMenu('&Help')
         helpMenu.addAction(appDocumentation)
@@ -521,6 +577,7 @@ class SIMR(QMainWindow):
         self.mainToolbar.addAction(undoAction)
         self.mainToolbar.addAction(redoAction)
         self.mainToolbar.addAction(appSettings)
+        self.mainToolbar.addAction(notes)
         self.mainToolbar.addAction(launchReadingWindow)
         self.mainToolbar.addAction(visitScriptureBank)
         self.mainToolbar.addAction(drawMap)
@@ -968,21 +1025,7 @@ if __name__ == '__main__':
 # NEED TO BE ABLE TO ZOOM IN ON TEXT (OR CHANGE TEXT SIZE), AND ALSO MAP DIALOG ETC.
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-# Add a notes section using dictionaries, with keys being the book chapter and verse and values being a list of strings
-# for example:
-# notes = {}
-# notes['Acts 1:1'] = ['I will put a note on this verse']
-# notes['Acts 1:1'].append('This is a great verse')
-# >>>notes
-# {'Acts 1:1':['I will put a note on this verse','This is a great verse']}
-# >>>notes['Acts 1:1'][0]
-# 'I will put a not on this verse'
-# >>>notes['Acts 1:1'][1]
-# 'This is a great verse'
-
-# MAY NEED TO DO A REGEX OR SOMETHING ABOUT WHEN THE STRING FOR A PERSON'S NOTE CONTAINS A ' OR A " TO ESCAPE IT SO IT WILL PRINT CORRECTLY AND NOT ERROR
-# THIS NOTES DICTIONARY WILL NEED SAVED AS A FILE 
-# ALSO MAY WANT TO HAVE A DROP DOWN, DRAG AND DROP, OR VARIABLE OR SOMETHING TO KNOW WHAT VERSE TO ADD AS THE KEY, CLEANLY
+# LOOK INTO MAKING WINDOWS DOCKABLE
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 # ***REFACTOR CODE WHEN DONE - eliminate duplicate code in search functions***
