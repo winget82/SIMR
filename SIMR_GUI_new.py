@@ -955,20 +955,34 @@ if __name__ == '__main__':
     sys.exit(app.exec_())
 
 
-# ADD A SCRIPTURE BANK WHERE YOU CAN DEPOSIT AND WITHDRAW SCRIPTURES
-# https://stackoverflow.com/questions/12602179/pyqt-dynamically-append-to-qtextedit-from-function
-
-# SEE THIS FIRST - http://zetcode.com/gui/pyqt5/widgets2/
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+# SEE - http://zetcode.com/gui/pyqt5/widgets2/
 # SEE - https://www.tutorialspoint.com/pyqt/pyqt_qsplitter_widget.htm
 # SEE - https://www.binpress.com/building-text-editor-pyqt-1/
-# https://pythonbasics.org/pyqt-radiobutton/
-# https://www.tutorialspoint.com/pyqt/pyqt_qradiobutton_widget.htm
-# https://stackoverflow.com/questions/42288320/python-how-to-get-qlineedit-text?rq=1
+# SEE - https://pythonbasics.org/pyqt-radiobutton/
+# SEE - https://www.tutorialspoint.com/pyqt/pyqt_qradiobutton_widget.htm
+# SEE - https://stackoverflow.com/questions/42288320/python-how-to-get-qlineedit-text?rq=1
 # SEE - http://zetcode.com/gui/pyqt5/menustoolbars/
 
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 # NEED TO BE ABLE TO ZOOM IN ON TEXT (OR CHANGE TEXT SIZE), AND ALSO MAP DIALOG ETC.
 
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Add a notes section using dictionaries, with keys being the book chapter and verse and values being a list of strings
+# for example:
+# notes = {}
+# notes['Acts 1:1'] = ['I will put a note on this verse']
+# notes['Acts 1:1'].append('This is a great verse')
+# >>>notes
+# {'Acts 1:1':['I will put a note on this verse','This is a great verse']}
+# >>>notes['Acts 1:1'][0]
+# 'I will put a not on this verse'
+# >>>notes['Acts 1:1'][1]
+# 'This is a great verse'
+
+# MAY NEED TO DO A REGEX OR SOMETHING ABOUT WHEN THE STRING FOR A PERSON'S NOTE CONTAINS A ' OR A " TO ESCAPE IT SO IT WILL PRINT CORRECTLY AND NOT ERROR
+# THIS NOTES DICTIONARY WILL NEED SAVED AS A FILE 
+# ALSO MAY WANT TO HAVE A DROP DOWN, DRAG AND DROP, OR VARIABLE OR SOMETHING TO KNOW WHAT VERSE TO ADD AS THE KEY, CLEANLY
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 # ***REFACTOR CODE WHEN DONE - eliminate duplicate code in search functions***
-
-        # ADD A SECTION FOR MAKING / READING NOTES - COULD UTILIZE A DICTIONARY, WITH KEY BEING THE VERSE AND VALUE BEING A LIST OF NOTE STRINGS
-
