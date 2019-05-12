@@ -16,7 +16,7 @@ import codecs
 import json
 import ctypes
 import time
-
+import _pickle as cpickle
 
 
 # ---------------------------------------------------------------------
@@ -140,6 +140,11 @@ class NotesWindow(QMainWindow):
         # MAY NEED TO DO A REGEX OR SOMETHING ABOUT WHEN THE STRING FOR A PERSON'S NOTE CONTAINS A ' OR A " TO ESCAPE IT SO IT WILL PRINT CORRECTLY AND NOT ERROR
         # THIS NOTES DICTIONARY WILL NEED SAVED AS A FILE 
         # ALSO MAY WANT TO HAVE A DROP DOWN, DRAG AND DROP, OR VARIABLE OR SOMETHING TO KNOW WHAT VERSE TO ADD AS THE KEY, CLEANLY
+
+    def loadNotes(self):
+        # load notes dictionary from pickle file
+        with open("notes_kjv.dat", 'rb') as f:
+        notes_dictionary_kjv = cpickle.load(f)
 
 
 class MapWindow(QMainWindow):
@@ -990,14 +995,28 @@ class SIMR(QMainWindow):
     #def newProject(self):
 
     # OPEN PROJECT
-    #def openProject(self):
+    def openProject(self):
+
+        # load the txt file
+        # code to load text file here...
+
+        # load the notes dictionary from pickle file
+        with open("notes_kjv.dat", 'rb') as f:
+        notes_dictionary_kjv = cpickle.load(f)
+
 
     # SAVE PROJECT
     def saveProject(self):        
 
-        # TEMPORARY Write all text from QTextEdit (textEditor) to the text file
+        # Write all text from QTextEdit (textEditor) to the text file
         with open("NewProject.txt", "w", encoding='utf-8') as txtFile:
             txtFile.write(self.textEditor.toPlainText())
+
+        # save notes dictionary to a pickle file
+        with open("notes_kjv.dat","wb") as f:
+            cpickle.dump(notes_dictionary_kjv,f)
+        
+        f.close()
 
 
 # ---------------------------------------------------------------------
