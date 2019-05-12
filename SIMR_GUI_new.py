@@ -8,7 +8,7 @@
 # IMPORTS - PACKAGES & MODULES UTILIZED
 # ---------------------------------------------------------------------
 import sys
-from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox, QLineEdit, QTextEdit, QSplitter, QFrame, QHBoxLayout, QSizePolicy, QVBoxLayout, QStyleFactory, QFileDialog, QInputDialog, QDialog, QRadioButton
+from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox, QLineEdit, QTextEdit, QSplitter, QFrame, QHBoxLayout, QSizePolicy, QVBoxLayout, QStyleFactory, QFileDialog, QInputDialog, QDialog, QRadioButton, QComboBox
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 import re
@@ -141,10 +141,47 @@ class NotesWindow(QMainWindow):
         # THIS NOTES DICTIONARY WILL NEED SAVED AS A FILE 
         # ALSO MAY WANT TO HAVE A DROP DOWN, DRAG AND DROP, OR VARIABLE OR SOMETHING TO KNOW WHAT VERSE TO ADD AS THE KEY, CLEANLY
 
+        # https://pythonprogramming.net/drop-down-button-window-styles-pyqt-tutorial/
+
+        comboBoxBooks = QComboBox(self)
+        comboBoxChapters = QComboBox(self)
+        comboBoxVerses = QComboBox(self)
+        
+        cbBooks = []
+        cbChapters = []
+        cbVerses = []
+
+        for i in notes_lst:
+
+            pass
+            # need to split by space between book and chapter
+            # need to split by : between chapter and verse
+            # then append i[0] to cbBooks
+            # then append i[1] to cbChapters
+            # then append i[2] to cbVerses
+            # THIS WILL HAVE TO BE DYNAMIC PER BOOK SELECTED, THEN PER CHAPTER SELECTED
+            # OTHERWISE IT WILL NOT POPULATE CORRECTLY
+        
+        for book in cbBooks:
+            comboBoxBooks.addItem(book)
+
+        for chapter in cbChapters:
+            comboBoxChapters.addItem(chapter)
+
+        for verse in cbVerses:
+            comboBoxVerses.addItem(verse)
+
+        comboBoxBooks.move(20, 30)
+        comboBoxChapters.move(220, 30)
+        comboBoxVerses.move(420, 30)
+
+        #comboBox.activated[str].connect(self.style_choice)
+
+
     def loadNotes(self):
         # load notes dictionary from pickle file
         with open("notes_kjv.dat", 'rb') as f:
-        notes_dictionary_kjv = cpickle.load(f)
+            notes_dictionary_kjv = cpickle.load(f)
 
 
 class MapWindow(QMainWindow):
@@ -1002,7 +1039,7 @@ class SIMR(QMainWindow):
 
         # load the notes dictionary from pickle file
         with open("notes_kjv.dat", 'rb') as f:
-        notes_dictionary_kjv = cpickle.load(f)
+            notes_dictionary_kjv = cpickle.load(f)
 
 
     # SAVE PROJECT
