@@ -17,6 +17,7 @@ import json
 import ctypes
 import time
 import _pickle as cpickle
+from collections import OrderedDict
 
 
 # ---------------------------------------------------------------------
@@ -157,14 +158,19 @@ class NotesWindow(QMainWindow):
             # THIS WILL HAVE TO BE DYNAMIC PER BOOK SELECTED, THEN PER CHAPTER SELECTED
             # OTHERWISE IT WILL NOT POPULATE CORRECTLY
         
-        for verseReference in kjvBreakLst:
-            comboBoxBooks.addItem(verseReference[0])
+        kjvBooks = []
 
         for verseReference in kjvBreakLst:
-            comboBoxChapters.addItem(verseReference[1])
+            kjvBooks.append(verseReference[0])
+        
+        kjvBooksFinal = list(OrderedDict.fromkeys(kjvBooks))
 
-        for verseReference in kjvBreakLst:
-            comboBoxVerses.addItem(verseReference[2])
+        for book in kjvBooksFinal:
+            comboBoxBooks.addItem(book)
+
+            #comboBoxChapters.addItem(verseReference[1])
+
+            #comboBoxVerses.addItem(verseReference[2])
 
         comboBoxBooks.move(20, 30)
         comboBoxChapters.move(220, 30)
