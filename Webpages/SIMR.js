@@ -239,3 +239,12 @@ function populateVerses(selectedChoiceBook, selectedChoiceChapter) {
 
 }
 */
+
+/*
+******************************************************************
+This regex worked in python to divide up the kjv books like this:
+['1 John','2','8'] etc.
+re.split(r'\s(\d+):', i)
+try something similar for web page
+******************************************************************
+*/

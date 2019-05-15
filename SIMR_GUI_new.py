@@ -147,29 +147,24 @@ class NotesWindow(QMainWindow):
         comboBoxChapters = QComboBox(self)
         comboBoxVerses = QComboBox(self)
         
-        cbBooks = []
-        cbChapters = []
-        cbVerses = []
+        # Split into nested lists [['1 Samuel','1','12'], ['2 Corinthians','2','1']], etc.
+        kjvBreakLst = []
 
         for i in notes_lst:
-
-            pass
-            # need to split by space between book and chapter
-            # need to split by : between chapter and verse
-            # then append i[0] to cbBooks
-            # then append i[1] to cbChapters
-            # then append i[2] to cbVerses
+            temp = re.split(r'\s(\d+):', i)
+            kjvBreakLst.append(temp)
+            
             # THIS WILL HAVE TO BE DYNAMIC PER BOOK SELECTED, THEN PER CHAPTER SELECTED
             # OTHERWISE IT WILL NOT POPULATE CORRECTLY
         
-        for book in cbBooks:
-            comboBoxBooks.addItem(book)
+        for verseReference in kjvBreakLst:
+            comboBoxBooks.addItem(verseReference[0])
 
-        for chapter in cbChapters:
-            comboBoxChapters.addItem(chapter)
+        for verseReference in kjvBreakLst:
+            comboBoxChapters.addItem(verseReference[1])
 
-        for verse in cbVerses:
-            comboBoxVerses.addItem(verse)
+        for verseReference in kjvBreakLst:
+            comboBoxVerses.addItem(verseReference[2])
 
         comboBoxBooks.move(20, 30)
         comboBoxChapters.move(220, 30)
