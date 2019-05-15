@@ -144,40 +144,66 @@ class NotesWindow(QMainWindow):
 
         # https://pythonprogramming.net/drop-down-button-window-styles-pyqt-tutorial/
 
-        comboBoxBooks = QComboBox(self)
-        comboBoxChapters = QComboBox(self)
-        comboBoxVerses = QComboBox(self)
+        self.comboBoxBooks = QComboBox(self)
+        self.comboBoxChapters = QComboBox(self)
+        #self.comboBoxChapters.setDuplicatesEnabled(False) #this is NOT preventing duplicates
+        self.comboBoxVerses = QComboBox(self)
         
         # Split into nested lists [['1 Samuel','1','12'], ['2 Corinthians','2','1']], etc.
-        kjvBreakLst = []
+        self.kjvBreakLst = []
 
         for i in notes_lst:
             temp = re.split(r'\s(\d+):', i)
-            kjvBreakLst.append(temp)
+            self.kjvBreakLst.append(temp)
             
             # THIS WILL HAVE TO BE DYNAMIC PER BOOK SELECTED, THEN PER CHAPTER SELECTED
             # OTHERWISE IT WILL NOT POPULATE CORRECTLY
         
         kjvBooks = []
 
-        for verseReference in kjvBreakLst:
+        for verseReference in self.kjvBreakLst:
             kjvBooks.append(verseReference[0])
         
         kjvBooksFinal = list(OrderedDict.fromkeys(kjvBooks))
 
         for book in kjvBooksFinal:
-            comboBoxBooks.addItem(book)
+            self.comboBoxBooks.addItem(book)
 
-            #comboBoxChapters.addItem(verseReference[1])
+        self.comboBoxBooks.activated.connect(lambda: self.chapters(book))
+        self.comboBoxChapters.activated.connect(lambda: self.verses(book))
 
             #comboBoxVerses.addItem(verseReference[2])
 
-        comboBoxBooks.move(20, 30)
-        comboBoxChapters.move(220, 30)
-        comboBoxVerses.move(420, 30)
+        self.comboBoxBooks.move(20, 30)
+        self.comboBoxChapters.move(220, 30)
+        self.comboBoxVerses.move(420, 30)
 
-        #comboBox.activated[str].connect(self.style_choice)
 
+    def chapters(self, book):
+
+        self.comboBoxChapters.clear()
+        self.comboBoxVerses.clear()
+        temp = [] #temporary list to prevent duplicates by adding the number to the list after added to combobox
+        currentBook = str(self.comboBoxBooks.currentText())
+        for verseReference in self.kjvBreakLst:
+            if currentBook in verseReference[0]:                
+                if verseReference[1] not in temp:
+                    self.comboBoxChapters.addItem(verseReference[1])
+                    temp.append(verseReference[1])
+
+
+    def verses(self, book):
+
+        self.comboBoxVerses.clear()
+        temp = [] #temporary list to prevent duplicates by adding the number to the list after added to combobox
+        currentBook = str(self.comboBoxBooks.currentText())
+        currentChapter = str(self.comboBoxChapters.currentText())
+        for verseReference in self.kjvBreakLst:
+            if currentBook in verseReference[0]: 
+                if currentChapter in verseReference[1]:                
+                    if verseReference[2] not in temp:
+                        self.comboBoxVerses.addItem(verseReference[2])
+                        temp.append(verseReference[2])
 
     def loadNotes(self):
         # load notes dictionary from pickle file
