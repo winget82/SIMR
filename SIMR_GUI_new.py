@@ -119,11 +119,19 @@ class NotesWindow(QMainWindow):
         statusbar = self.statusBar()
 
         self.setGeometry(500, 500, 840, 400)
+        #self.spacer = QFrame(self) # could try using a QFrame as spacer
+        # look into sizepolicy
 
         self.notesEditor = QTextEdit(self)
-        self.setCentralWidget(self.notesEditor)
-        # need to set size of QTextEdit notesEditor to not be behind pulldown comboboxes
-
+        #self.setCentralWidget(self.notesEditor)
+        #self.notesEditor.move(0,70)# - this moves notesEditor down if setCentralWidget not used
+        self.notesEditor.setGeometry(0, 70, 840, 330)
+        self.notesEditor.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        # need to determine how to set the horizontal to expand with the window
+        # MAY PUT THE SIZING ISSUES ABOVE OFF UNTIL LATER AND FOCUS ON GETTING THE NOTES TO PULL IN AND SAVE OUT ETC.********************
+        
+        #self.notesEditor.setTextColor() # set text to blue
+        
         viewNotes = QAction('&View Notes', self)
         viewNotes.setStatusTip('Look at my notes')
         #depositVerse.triggered.connect(self.)
@@ -213,7 +221,7 @@ class NotesWindow(QMainWindow):
 
 
     def pullNotes(self):
-        
+
         book = self.comboBoxBooks.currentText()
         chapter = self.comboBoxChapters.currentText()
         verse = self.comboBoxVerses.currentText()
@@ -222,9 +230,13 @@ class NotesWindow(QMainWindow):
         scriptureReference = book + ' ' + chapter + ':' + verse
         
         # clear notes from text window
+        self.notesEditor.clear()
+
         # pull notes for selected verse and update text on window
-        # have another method (button) to save current note changes
-        
+       
+
+
+    # have a toolbar button to save current note changes    
     def saveNotes(self):
         pass
 
@@ -1128,7 +1140,8 @@ if __name__ == '__main__':
 # SEE - http://zetcode.com/gui/pyqt5/menustoolbars/
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-# NEED TO BE ABLE TO ZOOM IN ON TEXT (OR CHANGE TEXT SIZE), AND ALSO MAP DIALOG ETC.
+# NEED TO BE ABLE TO ZOOM IN ON TEXT (OR CHANGE TEXT SIZE), AND ALSO MAP DIALOG ETC. - https://doc.qt.io/qt-5/qtextedit.html
+# font sizes, color, etc. - https://www.binpress.com/building-text-editor-pyqt-2/
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 # LOOK INTO MAKING WINDOWS DOCKABLE
