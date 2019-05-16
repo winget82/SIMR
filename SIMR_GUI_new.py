@@ -120,6 +120,10 @@ class NotesWindow(QMainWindow):
 
         self.setGeometry(500, 500, 840, 400)
 
+        self.notesEditor = QTextEdit(self)
+        self.setCentralWidget(self.notesEditor)
+        # need to set size of QTextEdit notesEditor to not be behind pulldown comboboxes
+
         viewNotes = QAction('&View Notes', self)
         viewNotes.setStatusTip('Look at my notes')
         #depositVerse.triggered.connect(self.)
@@ -172,11 +176,13 @@ class NotesWindow(QMainWindow):
         self.comboBoxBooks.activated.connect(lambda: self.chapters(book))
         self.comboBoxChapters.activated.connect(lambda: self.verses(book))
 
-            #comboBoxVerses.addItem(verseReference[2])
+        # here I need an action when verse is selected, to automatically pull up any notes for that verse - in text editor
+        # need to pull value of each combo box into a variable scriptureReference
+        self.comboBoxVerses.activated.connect(lambda: self.pullNotes())
 
         self.comboBoxBooks.move(20, 30)
-        self.comboBoxChapters.move(220, 30)
-        self.comboBoxVerses.move(420, 30)
+        self.comboBoxChapters.move(120, 30)
+        self.comboBoxVerses.move(220, 30)
 
 
     def chapters(self, book):
@@ -204,6 +210,23 @@ class NotesWindow(QMainWindow):
                     if verseReference[2] not in temp:
                         self.comboBoxVerses.addItem(verseReference[2])
                         temp.append(verseReference[2])
+
+
+    def pullNotes(self):
+        
+        book = self.comboBoxBooks.currentText()
+        chapter = self.comboBoxChapters.currentText()
+        verse = self.comboBoxVerses.currentText()
+
+        # combine into scriptureReference
+        scriptureReference = book + ' ' + chapter + ':' + verse
+        
+        # clear notes from text window
+        # pull notes for selected verse and update text on window
+        # have another method (button) to save current note changes
+        
+    def saveNotes(self):
+        pass
 
     def loadNotes(self):
         # load notes dictionary from pickle file
