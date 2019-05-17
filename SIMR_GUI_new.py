@@ -8,9 +8,9 @@
 # IMPORTS - PACKAGES & MODULES UTILIZED
 # ---------------------------------------------------------------------
 import sys
-from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox, QLineEdit, QTextEdit, QSplitter, QFrame, QHBoxLayout, QSizePolicy, QVBoxLayout, QStyleFactory, QFileDialog, QInputDialog, QDialog, QRadioButton, QComboBox
+from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox, QLineEdit, QTextEdit, QSplitter, QFrame, QHBoxLayout, QSizePolicy, QVBoxLayout, QStyleFactory, QFileDialog, QInputDialog, QDialog, QRadioButton, QComboBox, QPushButton
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSlot
 import re
 import codecs
 import json
@@ -126,19 +126,24 @@ class NotesWindow(QMainWindow):
         #self.setCentralWidget(self.notesEditor)
         #self.notesEditor.move(0,70)# - this moves notesEditor down if setCentralWidget not used
         self.notesEditor.setGeometry(0, 70, 840, 330)
-        self.notesEditor.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        #self.notesEditor.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         # need to determine how to set the horizontal to expand with the window
         # MAY PUT THE SIZING ISSUES ABOVE OFF UNTIL LATER AND FOCUS ON GETTING THE NOTES TO PULL IN AND SAVE OUT ETC.********************
         
         #self.notesEditor.setTextColor() # set text to blue
         
         viewNotes = QAction('&View Notes', self)
-        viewNotes.setStatusTip('Look at my notes')
-        #depositVerse.triggered.connect(self.)
+        viewNotes.setStatusTip('Look at notes')
+        viewNotes.triggered.connect(self.pullNotes)
+
+        saveNotes = QAction('&Save Notes', self)
+        saveNotes.setStatusTip('Save notes')
+        saveNotes.triggered.connect(self.saveNotes)
 
         notesMenuBar = self.menuBar()
         notesMenu = notesMenuBar.addMenu('&My Notes')
         notesMenu.addAction(viewNotes)
+        notesMenu.addAction(saveNotes)
 
         # SEE notes_dictionary_kjv
 
@@ -157,10 +162,13 @@ class NotesWindow(QMainWindow):
         # https://pythonprogramming.net/drop-down-button-window-styles-pyqt-tutorial/
 
         self.comboBoxBooks = QComboBox(self)
+        self.comboBoxBooks.setToolTip('Choose Book')
         self.comboBoxChapters = QComboBox(self)
+        self.comboBoxChapters.setToolTip('Choose Chapter')
         #self.comboBoxChapters.setDuplicatesEnabled(False) #this is NOT preventing duplicates
         self.comboBoxVerses = QComboBox(self)
-        
+        self.comboBoxVerses.setToolTip('Choose Verse')
+
         # Split into nested lists [['1 Samuel','1','12'], ['2 Corinthians','2','1']], etc.
         self.kjvBreakLst = []
 
@@ -186,15 +194,26 @@ class NotesWindow(QMainWindow):
 
         # here I need an action when verse is selected, to automatically pull up any notes for that verse - in text editor
         # need to pull value of each combo box into a variable scriptureReference
-        self.comboBoxVerses.activated.connect(lambda: self.pullNotes())
+        self.comboBoxVerses.activated.connect(self.pullNotes)
 
+        self.saveNotesButton = QPushButton('Save Notes', self)
+        self.saveNotesButton.setToolTip('Save your notes for selected verse')
+        self.saveNotesButton.clicked.connect(self.saveNotes)
+
+        self.deleteNotesButton = QPushButton('Delete Notes', self)
+        self.deleteNotesButton.setToolTip('Delete your notes for selected verse')
+        self.deleteNotesButton.clicked.connect(self.deleteNotes)
+
+        
         self.comboBoxBooks.move(20, 30)
         self.comboBoxChapters.move(120, 30)
         self.comboBoxVerses.move(220, 30)
+        self.saveNotesButton.move(420, 30)
+        self.deleteNotesButton.move(520, 30)
 
 
     def chapters(self, book):
-
+        self.notesEditor.clear()
         self.comboBoxChapters.clear()
         self.comboBoxVerses.clear()
         temp = [] #temporary list to prevent duplicates by adding the number to the list after added to combobox
@@ -207,7 +226,7 @@ class NotesWindow(QMainWindow):
 
 
     def verses(self, book):
-
+        self.notesEditor.clear()
         self.comboBoxVerses.clear()
         temp = [] #temporary list to prevent duplicates by adding the number to the list after added to combobox
         currentBook = str(self.comboBoxBooks.currentText())
@@ -220,7 +239,7 @@ class NotesWindow(QMainWindow):
                         temp.append(verseReference[2])
 
 
-    def pullNotes(self):
+    def getScriptureReference(self):
 
         book = self.comboBoxBooks.currentText()
         chapter = self.comboBoxChapters.currentText()
@@ -228,17 +247,40 @@ class NotesWindow(QMainWindow):
 
         # combine into scriptureReference
         scriptureReference = book + ' ' + chapter + ':' + verse
-        
+
+        return scriptureReference
+
+
+    def pullNotes(self):
+
+        scriptureReference = self.getScriptureReference()
         # clear notes from text window
         self.notesEditor.clear()
 
         # pull notes for selected verse and update text on window
-       
+        for note in notes_dictionary_kjv[scriptureReference]:
+            self.notesEditor.append(note)
 
 
     # have a toolbar button to save current note changes    
     def saveNotes(self):
-        pass
+
+        scriptureReference = self.getScriptureReference()
+
+        notes = self.notesEditor.toPlainText()
+        #replace previous value
+        notes_dictionary_kjv[scriptureReference] = [notes]
+        # save to pickle file also
+
+        #FOUND AN ERROR - NO JOHN 2:26 IN notes_dictionary_kjv - WILL NEED TO RUN TESTS TO MAKE SURE ALL VERSES ARE ACCOUNTED FOR
+
+    def deleteNotes(self):
+        
+        self.notesEditor.clear()
+        scriptureReference = self.getScriptureReference()
+
+        #replace previous value with empty list
+        notes_dictionary_kjv[scriptureReference] = []
 
     def loadNotes(self):
         # load notes dictionary from pickle file
