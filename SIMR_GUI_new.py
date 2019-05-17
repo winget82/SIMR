@@ -275,7 +275,7 @@ class NotesWindow(QMainWindow):
         #FOUND AN ERROR - NO JOHN 2:26 IN notes_dictionary_kjv - WILL NEED TO RUN TESTS TO MAKE SURE ALL VERSES ARE ACCOUNTED FOR
 
     def deleteNotes(self):
-        
+
         self.notesEditor.clear()
         scriptureReference = self.getScriptureReference()
 
@@ -1173,6 +1173,7 @@ if __name__ == '__main__':
 
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+# FOR REFERENCE WHILE INITIALLY CODING OUT
 # SEE - http://zetcode.com/gui/pyqt5/widgets2/
 # SEE - https://www.tutorialspoint.com/pyqt/pyqt_qsplitter_widget.htm
 # SEE - https://www.binpress.com/building-text-editor-pyqt-1/
@@ -1190,3 +1191,4 @@ if __name__ == '__main__':
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 # ***REFACTOR CODE WHEN DONE - eliminate duplicate code in search functions***
+# ***LEARN TO WRITE TESTS & CHECK TO VERIFY ALL VERSES ACCOUNTED FOR***
