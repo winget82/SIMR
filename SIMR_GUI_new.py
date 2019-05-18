@@ -3,6 +3,12 @@
 #Program written by N. Flesher
 
 """Program for study of the scriptures"""
+# Dependencies:
+# PyQT5
+# pandas
+# geopandas (it has dependencies that must be installed in a specific order)
+# shapely
+# matplotlib
 
 # ---------------------------------------------------------------------
 # IMPORTS - PACKAGES & MODULES UTILIZED
