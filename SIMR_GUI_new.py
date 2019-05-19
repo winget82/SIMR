@@ -1198,3 +1198,5 @@ if __name__ == '__main__':
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 # ***REFACTOR CODE WHEN DONE - eliminate duplicate code in search functions***
 # ***LEARN TO WRITE TESTS & CHECK TO VERIFY ALL VERSES ACCOUNTED FOR***
+
+#NEED TO CHANGE TEXT BEING RETURNED FROM QLINEEDIT TO TEXT.TITLE() BECAUSE SEARCH FUNCTIONS NOT WORKING WHEN EVERYTHING IN CAPS
