@@ -1189,14 +1189,18 @@ if __name__ == '__main__':
 # SEE - http://zetcode.com/gui/pyqt5/menustoolbars/
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-# NEED TO BE ABLE TO ZOOM IN ON TEXT (OR CHANGE TEXT SIZE), AND ALSO MAP DIALOG ETC. - https://doc.qt.io/qt-5/qtextedit.html
-# font sizes, color, etc. - https://www.binpress.com/building-text-editor-pyqt-2/
+# IDEAS
 
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 # LOOK INTO MAKING WINDOWS DOCKABLE
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+# ERRORS / BUGS / ISSUES TO CORRECT
+
 # ***REFACTOR CODE WHEN DONE - eliminate duplicate code in search functions***
 # ***LEARN TO WRITE TESTS & CHECK TO VERIFY ALL VERSES ACCOUNTED FOR***
+# John 3 is showing up with 38 verses instead of 36 in notes section - the error will be in kjvBreakLst
 
 #NEED TO CHANGE TEXT BEING RETURNED FROM QLINEEDIT TO TEXT.TITLE() BECAUSE SEARCH FUNCTIONS NOT WORKING WHEN EVERYTHING IN CAPS
+
+# NEED TO BE ABLE TO ZOOM IN ON TEXT (OR CHANGE TEXT SIZE), AND ALSO MAP DIALOG ETC. - https://doc.qt.io/qt-5/qtextedit.html
+# font sizes, color, etc. - https://www.binpress.com/building-text-editor-pyqt-2/
