@@ -138,6 +138,7 @@ class NotesWindow(QMainWindow):
         
         #self.notesEditor.setTextColor() # set text to blue
         
+        #THIS VIEW NOTES IN THE END WILL PROBABLY NOT BE NEEDED SINCE NOTES ARE PULLED AUTOMATICALLY
         viewNotes = QAction('&View Notes', self)
         viewNotes.setStatusTip('Look at notes')
         viewNotes.triggered.connect(self.pullNotes)
