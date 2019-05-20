@@ -146,10 +146,15 @@ class NotesWindow(QMainWindow):
         saveNotes.setStatusTip('Save notes')
         saveNotes.triggered.connect(self.saveNotes)
 
+        openNotes = QAction('&Load Notes', self)
+        openNotes.setStatusTip('Load Notes')
+        openNotes.triggered.connect(self.loadNotes)
+
         notesMenuBar = self.menuBar()
         notesMenu = notesMenuBar.addMenu('&My Notes')
         notesMenu.addAction(viewNotes)
         notesMenu.addAction(saveNotes)
+        notesMenu.addAction(openNotes)
 
         # SEE notes_dictionary_kjv
 
@@ -276,7 +281,10 @@ class NotesWindow(QMainWindow):
         notes = self.notesEditor.toPlainText()
         #replace previous value
         notes_dictionary_kjv[scriptureReference] = [notes]
-        # save to pickle file also
+        
+        # save notes dictionary to a pickle file
+        with open("notes_kjv.dat","wb") as f:
+            cpickle.dump(notes_dictionary_kjv,f)
 
         #FOUND AN ERROR - NO JOHN 2:26 IN notes_dictionary_kjv - WILL NEED TO RUN TESTS TO MAKE SURE ALL VERSES ARE ACCOUNTED FOR
 
@@ -288,10 +296,13 @@ class NotesWindow(QMainWindow):
         #replace previous value with empty list
         notes_dictionary_kjv[scriptureReference] = []
 
-    def loadNotes(self):
+    def loadNotes(self):#THIS NEEDS FIXED NOT WORKING THE WAY I WANT
         # load notes dictionary from pickle file
+        notes_dictionary_kjv.clear()
         with open("notes_kjv.dat", 'rb') as f:
-            notes_dictionary_kjv = cpickle.load(f)
+            notes_load = cpickle.load(f)
+        notes_dictionary_kjv.update(notes_load)
+        self.pullNotes()
 
 
 class MapWindow(QMainWindow):
