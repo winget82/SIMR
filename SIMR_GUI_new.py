@@ -579,17 +579,17 @@ class SIMR(QMainWindow):
 
         # Edit Menu Options
         copyAction = QAction(QIcon('./toolbar_icons/iconfinder_documents_basic_blue_69488'), '&Copy', self)
-        copyAction.setStatusTip('Undo your last action')
+        copyAction.setStatusTip('Copy to clipboard')
         copyAction.setShortcut('Ctrl+X')
         copyAction.triggered.connect(self.textEditor.copy)
         
         cutAction = QAction(QIcon('./toolbar_icons/iconfinder_scissors_basic_blue_69570'), '&Cut', self)
-        cutAction.setStatusTip('Undo your last action')
+        cutAction.setStatusTip('Cut to clipboard')
         cutAction.setShortcut('Ctrl+C')
         cutAction.triggered.connect(self.textEditor.cut)
 
         pasteAction = QAction(QIcon('./toolbar_icons/iconfinder_clipboard_basic_green_69665'), '&Paste', self)
-        pasteAction.setStatusTip('Undo your last action')
+        pasteAction.setStatusTip('Paste from clipboard')
         pasteAction.setShortcut('Ctrl+V')
         pasteAction.triggered.connect(self.textEditor.paste)
         
@@ -757,6 +757,7 @@ class SIMR(QMainWindow):
         self.greekHebrewToolbar.addWidget(self.radioButtonHebrew)
         self.greekHebrewToolbar.addWidget(self.radioButtonGreek)
         self.searchHebrewGreekBox = QLineEdit()
+        self.searchHebrewGreekBox.returnPressed.connect(self.greekHebrewRadioSearch)
         self.greekHebrewToolbar.addWidget(self.searchHebrewGreekBox)
         
         searchGreekHebrew = QAction(QIcon('./toolbar_icons/iconfinder_search_basic_blue_69571.png'), '&Search Hebrew Greek', self)
@@ -792,6 +793,7 @@ class SIMR(QMainWindow):
         self.searchToolbar.addWidget(self.radioButtonScriptureIndex)
 
         self.searchBox = QLineEdit()
+        self.searchBox.returnPressed.connect(self.radioSearch)
         self.searchToolbar.addWidget(self.searchBox)
         self.searchToolbar.addAction(searchAll)
         
@@ -801,6 +803,7 @@ class SIMR(QMainWindow):
         # Text Search Toolbar
         self.textSearchToolbar = self.addToolBar('Text Search Toolbar')
         self.textSearchBox = QLineEdit()
+        self.textSearchBox.returnPressed.connect(lambda: self.textUpdate(self.find_txt(self.getTextSearchBox())))
         self.textSearchToolbar.addWidget(self.textSearchBox)
         self.textSearchToolbar.addAction(findText)
 
