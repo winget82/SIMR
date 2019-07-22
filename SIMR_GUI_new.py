@@ -566,7 +566,7 @@ class SIMR(QMainWindow):
         openProject = QAction(QIcon('./toolbar_icons/iconfinder_folder_basic_blue_69500.png'), '&Open Project', self)
         openProject.setStatusTip('Open an existing project')
         openProject.setShortcut('Ctrl+O')
-        #openProject.triggered.connect(self.)
+        openProject.triggered.connect(self.openProject)
 
         saveProject = QAction(QIcon('./toolbar_icons/iconfinder_floppy-disk_basic_yellow_70075.png'), '&Save Project', self)        
         saveProject.setStatusTip('Save your current project')
@@ -1159,13 +1159,16 @@ class SIMR(QMainWindow):
     # OPEN PROJECT
     def openProject(self):
 
-        # load the txt file
-        # code to load text file here...
+        name = QFileDialog.getOpenFileName(self, 'Open File')
+        file = open(name[0],'r')
+
+        with file:
+            text = file.read()
+            self.textEditor.setText(text)
 
         # load the notes dictionary from pickle file
         with open("notes_kjv.dat", 'rb') as f:
             notes_dictionary_kjv = cpickle.load(f)
-
 
     # SAVE PROJECT
     def saveProject(self):        
