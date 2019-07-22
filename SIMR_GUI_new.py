@@ -1170,10 +1170,10 @@ class SIMR(QMainWindow):
     # SAVE PROJECT
     def saveProject(self):        
 
-        # Write all text from QTextEdit (textEditor) to the text file
-        with open("NewProject.txt", "w", encoding='utf-8') as txtFile:
+        name = QFileDialog.getSaveFileName(self, 'Save File')
+        with open(name[0], "w", encoding='utf-8') as txtFile:
             txtFile.write(self.textEditor.toPlainText())
-
+        
         # save notes dictionary to a pickle file
         with open("notes_kjv.dat","wb") as f:
             cpickle.dump(notes_dictionary_kjv,f)
