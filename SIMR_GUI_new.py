@@ -25,6 +25,10 @@ import time
 import _pickle as cpickle
 from collections import OrderedDict
 
+import os
+
+cwd = os.getcwd()
+print(cwd)
 
 # ---------------------------------------------------------------------
 # OPENING OF FILES & GENERATING OF DICTIONARIES AND LISTS
