@@ -14,7 +14,7 @@
 # IMPORTS - PACKAGES & MODULES UTILIZED
 # ---------------------------------------------------------------------
 import sys
-from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox, QLineEdit, QTextEdit, QSplitter, QFrame, QHBoxLayout, QSizePolicy, QVBoxLayout, QStyleFactory, QFileDialog, QInputDialog, QDialog, QRadioButton, QComboBox, QPushButton
+from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox, QLineEdit, QTextEdit, QSplitter, QFrame, QHBoxLayout, QSizePolicy, QVBoxLayout, QStyleFactory, QFileDialog, QInputDialog, QDialog, QRadioButton, QComboBox, QPushButton, QLabel, QWidget, QComboBox
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt, pyqtSlot
 import re
@@ -437,6 +437,9 @@ class ReadingWindow(QMainWindow):
         statusbar = self.statusBar()
 
         self.setGeometry(400, 400, 840, 400)
+        self.book_chapter_layout = QHBoxLayout()
+        self.layout1 = QVBoxLayout()
+        self.widget = QWidget()
 
         # SEE QTextBrowser (supports hypertext which would make easier navigation) for reading text
         # https://doc.qt.io/qtforpython/PySide2/QtWidgets/QTextBrowser.html
@@ -446,7 +449,7 @@ class ReadingWindow(QMainWindow):
         # Read Menu Options
         readKJV = QAction(QIcon('./toolbar_icons/iconfinder_book-open-bookmark_basic_blue_69442'), '&King James Version', self)
         readKJV.setStatusTip('Read from the King James Version')
-        #readKJV.triggered.connect(self.)
+        readKJV.triggered.connect(self.widget.show)
 
         readKJVwStrongs = QAction(QIcon('./toolbar_icons/iconfinder_book-bookmark_basic_blue_69441'), "&KJV w/ Strong's", self)
         readKJVwStrongs.setStatusTip("Read from the KJV with Strong's numbers")
@@ -490,6 +493,38 @@ class ReadingWindow(QMainWindow):
         self.readingToolbar.addAction(numberInScripture)
         self.readingToolbar.addAction(howToEnjoyTheBible)
         self.readingToolbar.addAction(witnessOfTheStars)
+
+        # Make a drop down button for book and a button for chapter that shows up once you click on a button to read kjv, strongs, or septuagint, etc.
+        # The drop downs can autopopulate per sqlite bible database
+        # Need to adjust the combobox widths
+        book_combobox = QComboBox()
+        self.book_chapter_layout.addWidget(book_combobox)
+
+        chapter_combobox = QComboBox()
+        self.book_chapter_layout.addWidget(chapter_combobox)
+
+        self.layout1.addLayout(self.book_chapter_layout)
+
+        # Make Inner Reading Window To Display Text
+        book_chapter_label = QLabel("Book and Chapter Label")
+        book_chapter_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        chapter_font = book_chapter_label.font()
+        chapter_font.setPointSize(30)
+        book_chapter_label.setFont(chapter_font)
+        book_chapter_label.setFixedHeight(40)
+        book_chapter_label.setStyleSheet('color: green')
+        self.layout1.addWidget(book_chapter_label)
+        
+        chapter_text = QLabel("Chapter Text - Need to set to scrollable.  Need buttons at top for book and chapter")
+        chapter_text.setAlignment(Qt.AlignLeft | Qt.AlignTop)
+        chapter_text_font = chapter_text.font()
+        chapter_text_font.setPointSize(16)
+        chapter_text.setFont(chapter_text_font)
+        self.layout1.addWidget(chapter_text)
+
+        self.widget.setLayout(self.layout1)
+        self.setCentralWidget(self.widget)
+        self.widget.hide()
 
         # ADD A SECTION FOR MAKING / READING NOTES - COULD UTILIZE A DICTIONARY, WITH KEY BEING THE VERSE AND VALUE BEING A LIST OF NOTE STRINGS
 
