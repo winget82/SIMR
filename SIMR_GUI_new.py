@@ -24,6 +24,7 @@ import ctypes
 import time
 import _pickle as cpickle
 from collections import OrderedDict
+import SIMRDatabaseHelper as dbh
 
 import os
 
@@ -36,6 +37,9 @@ print(cwd)
 
 # Set filepath directory for json files
 fpath = './json_files/'
+
+# Set database file
+db_file = "./ref_files/SIMR_Bible_Database.db"
 
 # Berean Bibles
 Berean_file = 'berean_json.json'
@@ -515,11 +519,14 @@ class ReadingWindow(QMainWindow):
         book_chapter_label.setStyleSheet('color: green')
         self.layout1.addWidget(book_chapter_label)
         
-        chapter_text = QLabel("Chapter Text - Need to set to scrollable.  Need buttons at top for book and chapter")
+        returned_chapter_txt = dbh.select_kjv_book_chapter(db_file, "Genesis", 1)
+
+        chapter_text = QLabel(returned_chapter_txt)
         chapter_text.setAlignment(Qt.AlignLeft | Qt.AlignTop)
         chapter_text_font = chapter_text.font()
         chapter_text_font.setPointSize(16)
         chapter_text.setFont(chapter_text_font)
+        chapter_text.setWordWrap(True)
         self.layout1.addWidget(chapter_text)
 
         self.widget.setLayout(self.layout1)
