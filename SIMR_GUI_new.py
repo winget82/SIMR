@@ -502,9 +502,15 @@ class ReadingWindow(QMainWindow):
         # The drop downs can autopopulate per sqlite bible database
         # Need to adjust the combobox widths
         book_combobox = QComboBox()
+        book_combobox.setToolTip("Choose Book")
+        #need to get current book selected into a variable to pass into next line
+        book_combobox.currentIndexChanged.connect(dbh.get_kjv_strongs_chapters(db_file, ))#get chapters for selected book
         self.book_chapter_layout.addWidget(book_combobox)
 
         chapter_combobox = QComboBox()
+        chapter_combobox.setToolTip("Choose Chapter")
+        #need to get current chapter selected into a variable to pass into next line
+        chapter_combobox.currentIndexChanged.connect(dbh.select_kjv_book_chapter(db_file, ))#get verses and scriptures for selected book and chapter
         self.book_chapter_layout.addWidget(chapter_combobox)
 
         self.layout1.addLayout(self.book_chapter_layout)
