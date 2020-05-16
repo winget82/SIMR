@@ -453,8 +453,8 @@ class ReadingWindow(QMainWindow):
         # Read Menu Options
         readKJV = QAction(QIcon('./toolbar_icons/iconfinder_book-open-bookmark_basic_blue_69442'), '&King James Version', self)
         readKJV.setStatusTip('Read from the King James Version')
-        readKJV.triggered.connect(self.widget.show)
-
+        readKJV.triggered.connect(self.widget.show)#and self.populate_kjv_book_combo_box()
+        
         readKJVwStrongs = QAction(QIcon('./toolbar_icons/iconfinder_book-bookmark_basic_blue_69441'), "&KJV w/ Strong's", self)
         readKJVwStrongs.setStatusTip("Read from the KJV with Strong's numbers")
         #readKJVwStrongs.triggered.connect(self.)
@@ -501,45 +501,75 @@ class ReadingWindow(QMainWindow):
         # Make a drop down button for book and a button for chapter that shows up once you click on a button to read kjv, strongs, or septuagint, etc.
         # The drop downs can autopopulate per sqlite bible database
         # Need to adjust the combobox widths
-        book_combobox = QComboBox()
-        book_combobox.setToolTip("Choose Book")
-        #need to get current book selected into a variable to pass into next line
-        book_combobox.currentIndexChanged.connect(dbh.get_kjv_strongs_chapters(db_file, ))#get chapters for selected book
-        self.book_chapter_layout.addWidget(book_combobox)
+        self.book_combobox = QComboBox()
+        self.book_combobox.setToolTip("Choose Book")
+        temp_books = []
+        temp_books = self.init_pop_kjv_book_combo_box(self.book_combobox)
+        self.book_combobox.addItems(temp_books)
+        
+        self.book_chapter_layout.addWidget(self.book_combobox)
 
-        chapter_combobox = QComboBox()
-        chapter_combobox.setToolTip("Choose Chapter")
+        self.chapter_combobox = QComboBox()
+        self.chapter_combobox.setToolTip("Choose Chapter")
         #need to get current chapter selected into a variable to pass into next line
-        chapter_combobox.currentIndexChanged.connect(dbh.select_kjv_book_chapter(db_file, ))#get verses and scriptures for selected book and chapter
-        self.book_chapter_layout.addWidget(chapter_combobox)
+        #chapter_combobox.currentIndexChanged.connect(dbh.select_kjv_book_chapter(db_file, ))#get verses and scriptures for selected book and chapter
 
+        self.chapter_combobox.addItem("test chapter")
+
+        self.book_chapter_layout.addWidget(self.chapter_combobox)
+
+        self.book_combobox.currentIndexChanged.connect(lambda: self.populate_kjv_chapter_combo_box(self.chapter_combobox, self.book_combobox))#get chapters for selected book
+        
         self.layout1.addLayout(self.book_chapter_layout)
 
         # Make Inner Reading Window To Display Text
-        book_chapter_label = QLabel("Book and Chapter Label")
-        book_chapter_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-        chapter_font = book_chapter_label.font()
+        self.book_chapter_label = QLabel("")
+        self.book_chapter_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        chapter_font = self.book_chapter_label.font()
         chapter_font.setPointSize(30)
-        book_chapter_label.setFont(chapter_font)
-        book_chapter_label.setFixedHeight(40)
-        book_chapter_label.setStyleSheet('color: green')
-        self.layout1.addWidget(book_chapter_label)
-        
-        returned_chapter_txt = dbh.select_kjv_book_chapter(db_file, "Genesis", 1)
+        self.book_chapter_label.setFont(chapter_font)
+        self.book_chapter_label.setFixedHeight(40)
+        self.book_chapter_label.setStyleSheet('color: green')
+        self.layout1.addWidget(self.book_chapter_label)
 
-        chapter_text = QLabel(returned_chapter_txt)
-        chapter_text.setAlignment(Qt.AlignLeft | Qt.AlignTop)
-        chapter_text_font = chapter_text.font()
-        chapter_text_font.setPointSize(16)
-        chapter_text.setFont(chapter_text_font)
-        chapter_text.setWordWrap(True)
-        self.layout1.addWidget(chapter_text)
+        self.chapter_text = QLabel("")
+        self.chapter_text.setAlignment(Qt.AlignLeft | Qt.AlignTop)
+        self.chapter_text_font = self.chapter_text.font()
+        self.chapter_text_font.setPointSize(16)
+        self.chapter_text.setFont(self.chapter_text_font)
+        self.chapter_text.setWordWrap(True)
+        self.layout1.addWidget(self.chapter_text)
+
+        self.chapter_combobox.currentIndexChanged.connect(lambda: self.populate_kjv_text(self.chapter_combobox, self.book_combobox, self.book_chapter_label, self.chapter_text))
 
         self.widget.setLayout(self.layout1)
         self.setCentralWidget(self.widget)
         self.widget.hide()
 
-        # ADD A SECTION FOR MAKING / READING NOTES - COULD UTILIZE A DICTIONARY, WITH KEY BEING THE VERSE AND VALUE BEING A LIST OF NOTE STRINGS
+    def init_pop_kjv_book_combo_box(self, book_combobox):
+        book_combobox.clear()
+        return dbh.get_kjv_strongs_books(db_file)
+
+    def populate_kjv_book_combo_box(self, book_combobox):
+        book_combobox.clear()
+        book_combobox.addItems(dbh.get_kjv_books(db_file))
+
+    def populate_kjv_chapter_combo_box(self, chapter_combobox, book_combobox):
+        chapter_combobox.clear()
+        book = book_combobox.currentText()
+        chapters = dbh.get_kjv_chapters(db_file, book)
+
+        for i in chapters:
+            chapter_combobox.addItem(str(i))
+        #chapter_combobox.addItems(chapters)
+        
+    def populate_kjv_text(self, chapter_combobox, book_combobox, book_chapter_label, chapter_text):
+        returned_book = book_combobox.currentText()
+        returned_chapter = chapter_combobox.currentText()
+        book_chapter_label.setText(returned_book + " - Chapter " + returned_chapter)
+        chapter_text.setText(dbh.select_kjv_book_chapter(db_file, returned_book, returned_chapter))
+
+    # ADD A SECTION FOR MAKING / READING NOTES - COULD UTILIZE A DICTIONARY, WITH KEY BEING THE VERSE AND VALUE BEING A LIST OF NOTE STRINGS
 
 
 class SIMR(QMainWindow):
