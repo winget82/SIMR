@@ -14,7 +14,7 @@
 # IMPORTS - PACKAGES & MODULES UTILIZED
 # ---------------------------------------------------------------------
 import sys
-from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox, QLineEdit, QTextEdit, QSplitter, QFrame, QHBoxLayout, QSizePolicy, QVBoxLayout, QStyleFactory, QFileDialog, QInputDialog, QDialog, QRadioButton, QComboBox, QPushButton, QLabel, QWidget, QComboBox
+from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication, QMessageBox, QLineEdit, QTextEdit, QSplitter, QFrame, QHBoxLayout, QSizePolicy, QVBoxLayout, QStyleFactory, QFileDialog, QInputDialog, QDialog, QRadioButton, QComboBox, QPushButton, QLabel, QWidget, QComboBox, QScrollArea
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt, pyqtSlot
 import re
@@ -444,6 +444,7 @@ class ReadingWindow(QMainWindow):
         self.book_chapter_layout = QHBoxLayout()
         self.layout1 = QVBoxLayout()
         self.widget = QWidget()
+        self.scroll = QScrollArea()
 
         # SEE QTextBrowser (supports hypertext which would make easier navigation) for reading text
         # https://doc.qt.io/qtforpython/PySide2/QtWidgets/QTextBrowser.html
@@ -514,7 +515,7 @@ class ReadingWindow(QMainWindow):
         #need to get current chapter selected into a variable to pass into next line
         #chapter_combobox.currentIndexChanged.connect(dbh.select_kjv_book_chapter(db_file, ))#get verses and scriptures for selected book and chapter
 
-        self.chapter_combobox.addItem("test chapter")
+        self.chapter_combobox.addItem("")
 
         self.book_chapter_layout.addWidget(self.chapter_combobox)
 
@@ -543,7 +544,13 @@ class ReadingWindow(QMainWindow):
         self.chapter_combobox.currentIndexChanged.connect(lambda: self.populate_kjv_text(self.chapter_combobox, self.book_combobox, self.book_chapter_label, self.chapter_text))
 
         self.widget.setLayout(self.layout1)
-        self.setCentralWidget(self.widget)
+
+        self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.scroll.setWidgetResizable(True)
+        self.scroll.setWidget(self.widget)
+
+        self.setCentralWidget(self.scroll)
         self.widget.hide()
 
     def init_pop_kjv_book_combo_box(self, book_combobox):
