@@ -553,7 +553,7 @@ class ReadingWindow(QMainWindow):
         self.setCentralWidget(self.scroll)
         self.widget.hide()
 
-    def init_pop_kjv_book_combo_box(self, book_combobox):
+    def init_pop_kjv_book_combo_box(self, book_combobox):#two psalms are showing up in KJV book dropdown, one does not work
         book_combobox.clear()
         return dbh.get_kjv_strongs_books(db_file)
 
