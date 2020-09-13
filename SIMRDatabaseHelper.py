@@ -14,7 +14,7 @@ def select_kjv_book_chapter(db_file, book, chapter):
         scripture_string = ""
         #print("Printing book ", book)
         for row in records:
-            scripture_string += '(' + str(row[4]) + ') ' + str(row[5]) + '  '
+            scripture_string += '(' + str(row[4]) + ') ' + str(row[5]) + '\n'
             #print("Bible = ", row[1])
             #print("Book = ", row[2])
             #print("Chapter = ", row[3])
@@ -149,7 +149,7 @@ def select_kjv_strongs_book_chapter(db_file, book, chapter):
         scripture_string = ""
         #print("Printing book ", book)
         for row in records:
-            scripture_string += '(' + str(row[4]) + ') ' + str(row[5]) + '  '
+            scripture_string += '(' + str(row[4]) + ') ' + str(row[5]) + '\n'
             #print("Bible = ", row[1])
             #print("Book = ", row[2])
             #print("Chapter = ", row[3])
